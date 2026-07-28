@@ -10,8 +10,12 @@ const MAX_QUANTITY = 99_999
  * Insertion order is preserved so the list doesn't reshuffle under the cursor
  * as quantities change — a Map, not a plain object.
  */
-export function useBuildList() {
-  const [quantities, setQuantities] = useState<Map<ItemId, number>>(new Map())
+export function useBuildList(initial: readonly BuildListEntry[] = []) {
+  const [quantities, setQuantities] = useState<Map<ItemId, number>>(
+    // Lazy initializer: restoring in an effect instead would flash an empty
+    // list on every load for anyone with a saved or shared build.
+    () => new Map(initial.map((entry) => [entry.itemId, clamp(entry.quantity)])),
+  )
 
   const add = useCallback((itemId: ItemId, amount = 1) => {
     setQuantities((prev) => {

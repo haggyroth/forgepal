@@ -1,6 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { gameData } from '@/data'
-import { buildIndex, calculate } from '@/lib/calculator'
+import { buildIndex, calculate, type GameIndex } from '@/lib/calculator'
+import {
+  buildShareUrl,
+  decodeState,
+  encodeState,
+  isEmptyState,
+  type SharedState,
+} from '@/lib/shareState'
+import { loadPersisted, savePersisted } from '@/lib/storage'
 import { useBuildList } from '@/hooks/useBuildList'
 import type { Entry } from '@/lib/search'
 import { hasAnythingToExport } from '@/lib/export'
@@ -21,10 +29,49 @@ export default function App() {
     [],
   )
 
-  const [playerLevel, setPlayerLevel] = useState<number | null>(null)
-  const { quantities, entries: buildEntries, add, setQuantity, remove, clear } = useBuildList()
+  // Resolved once, during the first render, so a saved or shared build is
+  // already on screen rather than appearing a frame later.
+  const [restored] = useState(() => resolveInitialState(index))
+
+  const [playerLevel, setPlayerLevel] = useState<number | null>(restored.state.playerLevel)
+  const { quantities, entries: buildEntries, add, setQuantity, remove, clear } = useBuildList(
+    restored.state.build,
+  )
+  const [shared, setShared] = useState(false)
+
   const result = useMemo(() => calculate(buildEntries, index), [buildEntries, index])
   const tech = useMemo(() => analyseTech(result, index, playerLevel), [result, index, playerLevel])
+
+  // Keep localStorage and the address bar in step with the current build.
+  // replaceState rather than pushState: every quantity tweak would otherwise
+  // add a history entry and make the back button useless.
+  useEffect(() => {
+    const state: SharedState = { build: buildEntries, playerLevel }
+    savePersisted(state)
+    const query = encodeState(state)
+    window.history.replaceState(
+      null,
+      '',
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
+    )
+  }, [buildEntries, playerLevel])
+
+  const copyShareLink = async () => {
+    const url = buildShareUrl(
+      { build: buildEntries, playerLevel },
+      window.location.origin,
+      window.location.pathname,
+    )
+    try {
+      await navigator.clipboard.writeText(url)
+      setShared(true)
+      setTimeout(() => setShared(false), 1800)
+    } catch {
+      // Clipboard permission can be refused; the address bar already holds the
+      // same URL, so there is nothing lost — just don't claim success.
+      setShared(false)
+    }
+  }
   const targetTotals = useMemo(
     () => new Map(result.targets.map((total) => [total.itemId, total])),
     [result],
@@ -34,6 +81,20 @@ export default function App() {
     <div className="relative z-10 min-h-screen">
       <div className="mx-auto max-w-[86rem] px-5 py-8 lg:px-8">
         <Header playerLevel={playerLevel} onPlayerLevelChange={setPlayerLevel} />
+
+        {/* A link shared before a data update can name items that no longer
+            exist. Say so rather than quietly handing over a short list. */}
+        {restored.unknownIds.length > 0 ? (
+          <p
+            role="status"
+            className="mt-4 rounded-sm border border-ember-700/40 bg-ember-700/10 px-3 py-2 font-mono text-[0.7rem] text-ember-400"
+          >
+            {restored.unknownIds.length === 1
+              ? '1 item from that link is no longer in the dataset and was skipped: '
+              : `${restored.unknownIds.length} items from that link are no longer in the dataset and were skipped: `}
+            {restored.unknownIds.join(', ')}
+          </p>
+        ) : null}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[22rem_1fr] lg:items-start">
           {/*
@@ -60,6 +121,8 @@ export default function App() {
                 onSetQuantity={setQuantity}
                 onRemove={remove}
                 onClear={clear}
+                onShare={copyShareLink}
+                shared={shared}
               />
             </Panel>
 
@@ -84,6 +147,19 @@ export default function App() {
       </div>
     </div>
   )
+}
+
+/**
+ * Where the initial build comes from.
+ *
+ * A URL wins over saved state: following someone's link should show their
+ * build, not silently resurrect your own over the top of it.
+ */
+function resolveInitialState(index: GameIndex): { state: SharedState; unknownIds: string[] } {
+  const isKnownId = (id: string) => index.byId.has(id)
+  const fromUrl = decodeState(window.location.search, isKnownId)
+  if (!isEmptyState(fromUrl.state)) return fromUrl
+  return { state: loadPersisted(isKnownId), unknownIds: [] }
 }
 
 function Header({
