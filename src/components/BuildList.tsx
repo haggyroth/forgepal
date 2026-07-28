@@ -1,4 +1,5 @@
 import type { GameIndex, MaterialTotal } from '@/lib/calculator'
+import { describeBatch, describeProduction } from '@/lib/describe'
 import type { ItemId } from '@/types/game'
 import { SectionHeading, Stepper } from './ui'
 
@@ -60,21 +61,18 @@ export function BuildList({
                       whole reason this line exists, so losing its tail to an
                       ellipsis on narrow screens defeats the point. */}
                   <div className="font-mono text-[0.68rem] leading-snug text-iron-600">
-                    {entry?.recipe?.stationName ?? 'no recipe'}
-                    {/*
-                      Batch recipes can't make a partial craft, so 15 Arrows is
-                      really 2 batches of 10. Say so here, where the quantity is
-                      being set, rather than letting the material totals look
-                      inexplicably high.
-                    */}
-                    {total && total.surplus > 0
-                      ? ` · ${total.crafts} × ${entry?.recipe?.yield} = ${total.produced}, ${total.surplus} spare`
-                      : entry?.recipe && entry.recipe.yield > 1
-                        ? ` · batches of ${entry.recipe.yield}`
-                        : ''}
-                    {total && total.required > quantity
-                      ? ` · ${total.required} needed incl. other recipes`
-                      : ''}
+                    {[
+                      describeProduction(entry, index),
+                      // Batch recipes can't make a partial craft, so 15 Arrows
+                      // is really 2 batches of 10. Say so next to the quantity
+                      // rather than letting the totals look inexplicably high.
+                      describeBatch(entry, total),
+                      total && total.required > quantity
+                        ? `${total.required} needed incl. other recipes`
+                        : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
                   </div>
                 </div>
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { CalculationResult, GameIndex, MaterialTotal } from '@/lib/calculator'
 import type { DropSource } from '@/types/game'
+import { toId } from '@/lib/id'
 import { Panel, SectionHeading, SourceBadge } from './ui'
 
 /** How many drop sources to show before collapsing the rest behind a count. */
@@ -51,6 +52,14 @@ export function Totals({ result, index }: { result: CalculationResult; index: Ga
                 {entry.stationName ? (
                   <span className="hidden shrink-0 font-mono text-[0.68rem] text-blueprint-400/70 sm:inline">
                     {entry.stationName}
+                    {/* Which Pal to put on it — the reason you care which
+                        station a sub-component needs in the first place. */}
+                    {stationWork(entry.stationName, index) ? (
+                      <span className="text-verdigris-400/70">
+                        {' · '}
+                        {stationWork(entry.stationName, index)}
+                      </span>
+                    ) : null}
                   </span>
                 ) : null}
                 <Quantity total={entry} />
@@ -80,6 +89,10 @@ export function Totals({ result, index }: { result: CalculationResult; index: Ga
       ) : null}
     </div>
   )
+}
+
+function stationWork(stationName: string, index: GameIndex): string | null {
+  return index.stationsById.get(toId(stationName))?.workSuitability ?? null
 }
 
 function RawRow({ entry, index }: { entry: MaterialTotal; index: GameIndex }) {
