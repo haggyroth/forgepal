@@ -158,9 +158,10 @@ function RawRow({ entry, index }: { entry: MaterialTotal; index: GameIndex }) {
 }
 
 function DropTable({ drops }: { drops: readonly DropSource[] }) {
-  // Best odds first — the point of this table is "who should I hunt".
+  // Best odds first — the point of this table is "who should I hunt". Sources
+  // with an unknown rate sort last rather than being treated as zero.
   const sorted = [...drops].sort(
-    (a, b) => b.chance - a.chance || b.quantity[1] - a.quantity[1],
+    (a, b) => (b.chance ?? -1) - (a.chance ?? -1) || b.quantity[1] - a.quantity[1],
   )
   const shown = sorted.slice(0, DROPS_SHOWN)
 
@@ -180,7 +181,13 @@ function DropTable({ drops }: { drops: readonly DropSource[] }) {
               {drop.quantity[1] !== drop.quantity[0] ? `–${drop.quantity[1]}` : ''}
             </span>
             <span className="w-10 shrink-0 text-right font-mono text-[0.72rem] tnum text-verdigris-400">
-              {Math.round(drop.chance * 100)}%
+              {drop.chance === null ? (
+                <span className="text-iron-600" title="Drop rate not recorded upstream">
+                  ?
+                </span>
+              ) : (
+                `${Math.round(drop.chance * 100)}%`
+              )}
             </span>
           </li>
         ))}

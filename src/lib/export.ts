@@ -38,17 +38,22 @@ export function describeSources(
   drops: readonly DropSource[],
 ): string {
   if (kind === 'gathered') return 'Gathered from the world'
+  if (kind === 'merchant') return 'Bought from a merchant'
   if (kind === 'unobtainable') return 'Unknown — no recipe or source in the dataset'
   if (drops.length === 0) return ''
 
-  // Best odds first: the point of this column is who to go and hunt.
-  const ranked = [...drops].sort((a, b) => b.chance - a.chance || b.quantity[1] - a.quantity[1])
+  // Best odds first: the point of this column is who to go and hunt. An unknown
+  // rate sorts last rather than counting as zero.
+  const ranked = [...drops].sort(
+    (a, b) => (b.chance ?? -1) - (a.chance ?? -1) || b.quantity[1] - a.quantity[1],
+  )
   const named = ranked.slice(0, SOURCES_NAMED).map((drop) => {
     const range =
       drop.quantity[0] === drop.quantity[1]
         ? `${drop.quantity[0]}`
         : `${drop.quantity[0]}–${drop.quantity[1]}`
-    return `${drop.source} ×${range} (${Math.round(drop.chance * 100)}%)`
+    const rate = drop.chance === null ? 'rate unknown' : `${Math.round(drop.chance * 100)}%`
+    return `${drop.source} ×${range} (${rate})`
   })
 
   const rest = ranked.length - named.length

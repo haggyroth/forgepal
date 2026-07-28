@@ -22,6 +22,7 @@ const SOURCE_STYLES: Record<SourceKind, { label: string; className: string }> = 
   craftable: { label: 'craft', className: 'text-blueprint-400 border-blueprint-500/30' },
   gathered: { label: 'gather', className: 'text-verdigris-400 border-verdigris-400/30' },
   drop: { label: 'drop', className: 'text-ember-400 border-ember-500/30' },
+  merchant: { label: 'buy', className: 'text-iron-300 border-iron-600' },
   unobtainable: { label: 'unknown', className: 'text-iron-600 border-iron-700' },
 }
 

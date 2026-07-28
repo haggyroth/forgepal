@@ -81,19 +81,26 @@ function toWorkSuitability(raw: string | null): WorkSuitability | null {
  * caller can file them under `otherSources` instead.
  */
 export function parseDropLine(line: string): DropSource | null {
-  const match = /^Dropped by (.+?)(?:\s+x(\d+)(?:[–\-—](\d+))?)?\s*\((\d+(?:\.\d+)?)%\)\s*$/.exec(
-    line,
-  )
+  const match =
+    /^Dropped by (.+?)(?:\s+x(\d+)(?:[–\-—](\d+))?)?\s*\((?:(\d+(?:\.\d+)?)%|\?)\)\s*$/.exec(line)
   if (!match) return null
 
   const [, source, minRaw, maxRaw, chanceRaw] = match
   const min = minRaw ? Number(minRaw) : 1
   const max = maxRaw ? Number(maxRaw) : min
 
+  // Upstream writes an unknown rate as "(?)". A literal "(0%)" is no more
+  // informative — 14 such lines exist, all naming Schematics as the "source",
+  // which is almost certainly a sub-0.5% rate rounded down or a table misparse.
+  // Both become null: the drop relationship is recorded, the rate is not
+  // claimed. Rendering 0% would tell the user it never drops, which is worse
+  // than admitting we don't know.
+  const chance = chanceRaw === undefined ? null : Number(chanceRaw) / 100
+
   return {
     source: source.trim(),
     quantity: [min, max],
-    chance: Number(chanceRaw) / 100,
+    chance: chance === 0 ? null : chance,
   }
 }
 
@@ -113,12 +120,29 @@ const GATHERING_HINTS = [
   'pickup',
   'node',
   'harvest',
+  // World loot and map spawns are still things you go out and collect, and
+  // they are the *only* recorded source for ~78 entries that would otherwise
+  // be reported as having no source at all.
+  'treasure chest',
+  'spawn on the map',
+  'egg spawn',
 ]
 
+/** Vendor sales. Weaker evidence than a world source — you can farm the latter. */
+const MERCHANT_HINTS = ['sold by', 'purchased from', 'merchant']
+
 function looksGathered(obtainedFrom: readonly string[]): boolean {
-  return obtainedFrom.some((line) => {
+  return matchesAny(obtainedFrom, GATHERING_HINTS)
+}
+
+function looksPurchasable(obtainedFrom: readonly string[]): boolean {
+  return matchesAny(obtainedFrom, MERCHANT_HINTS)
+}
+
+function matchesAny(lines: readonly string[], hints: readonly string[]): boolean {
+  return lines.some((line) => {
     const l = line.toLowerCase()
-    return GATHERING_HINTS.some((hint) => l.includes(hint))
+    return hints.some((hint) => l.includes(hint))
   })
 }
 
@@ -131,7 +155,7 @@ function looksGathered(obtainedFrom: readonly string[]): boolean {
  *      both have drop tables but are mined in practice
  *   3. a real recipe
  *   4. structured drop data — dozens of parsed Pal sources is hard evidence
- *   5. prose hints — the weakest signal, and last for that reason
+ *   5. prose hints, world sources before vendors — the weakest signal, last
  *
  * Steps 4 and 5 used to be the other way round, which let one stray phrase
  * outvote 45 parsed drop entries. Anything we cannot place becomes
@@ -150,7 +174,10 @@ export function classify(
   if (GATHERED_IDS.has(toId(name))) return 'gathered'
   if (recipe) return 'craftable'
   if (drops.length > 0) return 'drop'
+  // World sources before vendors: something you can farm beats something you
+  // have to find a merchant for, and many entries list both.
   if (looksGathered(obtainedFrom)) return 'gathered'
+  if (looksPurchasable(obtainedFrom)) return 'merchant'
   return 'unobtainable'
 }
 

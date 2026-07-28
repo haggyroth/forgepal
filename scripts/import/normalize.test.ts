@@ -51,6 +51,30 @@ describe('parseDropLine', () => {
     expect(parseDropLine('Dropped by Digtoise x2-3 (100%)')?.quantity).toEqual([2, 3])
   })
 
+  it('parses an unknown rate as null rather than zero', () => {
+    // Upstream writes "(?)" for rates it does not know. 108 lines use it, all
+    // bounty tokens from named bosses; the old regex rejected them outright.
+    expect(parseDropLine('Dropped by Dancer on the Steppe Chillet (?)')).toEqual({
+      source: 'Dancer on the Steppe Chillet',
+      quantity: [1, 1],
+      chance: null,
+    })
+  })
+
+  it('parses an unknown rate alongside a quantity', () => {
+    expect(parseDropLine('Dropped by Boss x2-4 (?)')).toEqual({
+      source: 'Boss',
+      quantity: [2, 4],
+      chance: null,
+    })
+  })
+
+  it('treats a literal 0% as unknown, not as never', () => {
+    // A 0% drop cannot inform a decision, and rendering "0%" would tell the
+    // user it never drops. Record the relationship, not a false rate.
+    expect(parseDropLine('Dropped by Beam Scatter Schematic 4 x1 (0%)')?.chance).toBeNull()
+  })
+
   it('returns null for lines that are not drops', () => {
     expect(parseDropLine('Found in treasure chests')).toBeNull()
     expect(parseDropLine('Sold by Vagrant Trader (Gold) - location unknown')).toBeNull()
@@ -121,5 +145,21 @@ describe('classify', () => {
 
   it('marks entries with no recipe and no source as unobtainable', () => {
     expect(classify('Mystery Item', noRecipe, ['Found somewhere'], [])).toBe('unobtainable')
+  })
+
+  it('treats world loot and map spawns as gathered', () => {
+    expect(classify('Mythical Wood', noRecipe, ['Found in treasure chests'], [])).toBe('gathered')
+    expect(classify('Common Egg', noRecipe, ['Wild egg spawn on the map'], [])).toBe('gathered')
+  })
+
+  it('classifies vendor-only entries as merchant', () => {
+    expect(classify('Token', noRecipe, ['Sold by Arena Merchant (Gold)'], [])).toBe('merchant')
+  })
+
+  it('prefers a world source over a vendor when both are listed', () => {
+    // You can farm a chest; you have to find a merchant.
+    expect(
+      classify('Thing', noRecipe, ['Sold by Wandering Merchant', 'Found in treasure chests'], []),
+    ).toBe('gathered')
   })
 })

@@ -33,7 +33,10 @@ export function describeProduction(entry: Entry | undefined, index: GameIndex): 
   }
 
   if (!entry.recipe) {
-    return entry.sourceKind === 'drop' ? 'Dropped, not crafted' : 'Gathered, not crafted'
+    if (entry.sourceKind === 'drop') return 'Dropped, not crafted'
+    if (entry.sourceKind === 'merchant') return 'Bought from a merchant'
+    if (entry.sourceKind === 'unobtainable') return 'No known source'
+    return 'Gathered, not crafted'
   }
 
   const { stationName, stationId } = entry.recipe
