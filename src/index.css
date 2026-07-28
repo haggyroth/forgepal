@@ -1,17 +1,90 @@
 @import 'tailwindcss';
 
+/*
+ * ForgePal is dark-only by design. The aesthetic is a smithy ledger — cold
+ * iron and blueprint ink for structure, ember heat reserved almost entirely
+ * for the raw-material requisition, which is the thing you came here for.
+ * A light theme would dilute that to no benefit for a tool used beside a game.
+ */
 @theme {
-  --color-forge-50: oklch(0.97 0.01 260);
-  --color-forge-200: oklch(0.88 0.03 260);
-  --color-forge-400: oklch(0.7 0.08 255);
-  --color-forge-600: oklch(0.52 0.11 255);
-  --color-forge-800: oklch(0.33 0.07 260);
-  --color-forge-900: oklch(0.25 0.05 260);
-  --color-forge-950: oklch(0.18 0.03 260);
-  --color-ember-400: oklch(0.78 0.15 60);
-  --color-ember-600: oklch(0.63 0.18 45);
+  /* Iron — surfaces, from deepest to lifted */
+  --color-iron-950: oklch(0.15 0.012 255);
+  --color-iron-900: oklch(0.185 0.014 255);
+  --color-iron-850: oklch(0.215 0.016 255);
+  --color-iron-800: oklch(0.25 0.018 255);
+  --color-iron-700: oklch(0.32 0.02 255);
+  --color-iron-600: oklch(0.42 0.02 255);
+  --color-iron-400: oklch(0.62 0.018 255);
+  --color-iron-300: oklch(0.73 0.014 255);
+  --color-iron-100: oklch(0.92 0.008 255);
+
+  /* Ember — the accent. Used sparingly so it still means something. */
+  --color-ember-700: oklch(0.52 0.16 45);
+  --color-ember-500: oklch(0.68 0.19 52);
+  --color-ember-400: oklch(0.78 0.16 62);
+
+  /* Blueprint — cool counterpoint for structures and stations */
+  --color-blueprint-500: oklch(0.66 0.12 235);
+  --color-blueprint-400: oklch(0.75 0.1 235);
+
+  /* Verdigris — gathered/farmed materials */
+  --color-verdigris-400: oklch(0.76 0.11 165);
+
+  --font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
+  scrollbar-color: var(--color-iron-700) transparent;
+}
+
+body {
+  background-color: var(--color-iron-950);
+  /*
+   * Two cold pools of light in the upper corners with a faint ember bloom
+   * beneath, so the page reads as a lit workshop rather than a flat panel.
+   */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% -10%, oklch(0.3 0.05 245 / 0.5), transparent),
+    radial-gradient(ellipse 60% 40% at 85% 0%, oklch(0.28 0.06 280 / 0.35), transparent),
+    radial-gradient(ellipse 90% 60% at 50% 110%, oklch(0.4 0.1 50 / 0.14), transparent);
+  background-attachment: fixed;
+}
+
+/* Film grain, so large dark areas have tooth instead of reading as dead space. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hairline rule that fades out — used to close off section headings. */
+@utility rule-fade {
+  background-image: linear-gradient(to right, var(--color-iron-700), transparent);
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus ring consistent with the ember accent, applied via :focus-visible only. */
+@layer base {
+  *:focus-visible {
+    outline: 2px solid var(--color-ember-500);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
