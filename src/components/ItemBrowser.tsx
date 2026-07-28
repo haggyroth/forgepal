@@ -6,29 +6,45 @@ import {
   searchEntries,
   type Entry,
 } from '@/lib/search'
-import type { ItemCategory, ItemId } from '@/types/game'
+import { isLocked } from '@/lib/tech'
+import type { ItemCategory, ItemId, Station } from '@/types/game'
 import { SectionHeading, SourceBadge } from './ui'
 
 const RESULT_LIMIT = 60
 
 export function ItemBrowser({
   entries,
+  stations,
+  playerLevel,
   onAdd,
   inList,
 }: {
   entries: readonly Entry[]
+  stations: readonly Station[]
+  /** Null when the user hasn't said what level they are; nothing is gated then. */
+  playerLevel: number | null
   onAdd: (itemId: ItemId) => void
   inList: ReadonlySet<ItemId>
 }) {
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ReadonlySet<ItemCategory>>(new Set())
   const [craftableOnly, setCraftableOnly] = useState(true)
+  const [hideLocked, setHideLocked] = useState(false)
+  const [stationId, setStationId] = useState<ItemId | null>(null)
 
   const available = useMemo(() => orderedCategories(entries), [entries])
 
+  // Hiding locked entries only means anything once we know the player's level.
+  const maxTechLevel = hideLocked ? playerLevel : null
+
   const { results, total } = useMemo(
-    () => searchEntries(entries, { ...emptyFilters, query, categories, craftableOnly }, RESULT_LIMIT),
-    [entries, query, categories, craftableOnly],
+    () =>
+      searchEntries(
+        entries,
+        { ...emptyFilters, query, categories, craftableOnly, stationId, maxTechLevel },
+        RESULT_LIMIT,
+      ),
+    [entries, query, categories, craftableOnly, stationId, maxTechLevel],
   )
 
   const toggleCategory = (category: ItemCategory) => {
@@ -53,10 +69,30 @@ export function ItemBrowser({
         className="w-full rounded-sm border border-iron-700 bg-iron-950/60 px-3 py-2 font-mono text-sm text-iron-100 placeholder:text-iron-600 focus:border-ember-700"
       />
 
+      <select
+        value={stationId ?? ''}
+        onChange={(event) => setStationId(event.target.value || null)}
+        aria-label="Filter by crafting station"
+        className="mt-2 w-full rounded-sm border border-iron-700 bg-iron-950/60 px-2 py-1.5 font-mono text-[0.72rem] text-iron-300 focus:border-ember-700"
+      >
+        <option value="">any station</option>
+        {stations.map((station) => (
+          <option key={station.id} value={station.id}>
+            {station.name}
+            {station.techLevel !== null ? ` — Tech ${station.techLevel}` : ''}
+          </option>
+        ))}
+      </select>
+
       <div className="mt-3 flex flex-wrap gap-1">
         <FilterChip active={craftableOnly} onClick={() => setCraftableOnly((v) => !v)}>
           craftable
         </FilterChip>
+        {playerLevel !== null ? (
+          <FilterChip active={hideLocked} onClick={() => setHideLocked((v) => !v)}>
+            unlocked only
+          </FilterChip>
+        ) : null}
         {available.map((category) => (
           <FilterChip
             key={category}
@@ -79,12 +115,25 @@ export function ItemBrowser({
               aria-label={`Add ${entry.name} to build list`}
               className="group flex w-full items-center gap-2 rounded-sm border border-transparent px-2 py-1.5 text-left transition-colors hover:border-iron-700 hover:bg-iron-850"
             >
-              <span className="min-w-0 flex-1 truncate font-mono text-sm text-iron-100">
+              <span
+                className={`min-w-0 flex-1 truncate font-mono text-sm ${
+                  isLocked(entry, playerLevel) ? 'text-iron-400' : 'text-iron-100'
+                }`}
+              >
                 {entry.name}
               </span>
-              {entry.techLevel ? (
-                <span className="shrink-0 font-mono text-[0.65rem] text-iron-600">
-                  T{entry.techLevel}
+              {entry.techLevel !== null ? (
+                <span
+                  className={`shrink-0 font-mono text-[0.65rem] ${
+                    isLocked(entry, playerLevel) ? 'text-ember-500' : 'text-iron-600'
+                  }`}
+                  title={
+                    isLocked(entry, playerLevel)
+                      ? `Unlocks at Technology ${entry.techLevel}`
+                      : undefined
+                  }
+                >
+                  {isLocked(entry, playerLevel) ? '🔒 ' : ''}T{entry.techLevel}
                 </span>
               ) : null}
               <SourceBadge kind={entry.sourceKind} />
