@@ -8,7 +8,7 @@ ForgePal is a **Palworld crafting calculator**. The user picks items and structu
 
 The differentiator versus existing tools (palcraft.xyz, palworld.gg) is the **build list**: many items at many quantities, aggregated. Single-item costing is table stakes.
 
-Repo is `palforge`; the product is called **ForgePal**. Both names are intentional — don't "fix" one to match the other.
+Repo, package, and product are all **ForgePal** / `forgepal`.
 
 ## Stack
 
@@ -111,7 +111,7 @@ Batch recipes round up per craft, and the surplus is reported (`MaterialTotal.su
 
 ## Deployment
 
-GitHub Pages via `.github/workflows/deploy.yml`, on push to `main`. `vite.config.ts` sets `base` to `/palforge/` when `GITHUB_ACTIONS` is set and `/` otherwise — if the repo is ever renamed, that string must change too.
+GitHub Pages via `.github/workflows/deploy.yml`, on push to `main`. `vite.config.ts` sets `base` to `/forgepal/` when `GITHUB_ACTIONS` is set and `/` otherwise — if the repo is ever renamed, that string must change too, or every asset 404s in production.
 
 ## Git workflow
 

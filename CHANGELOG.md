@@ -15,6 +15,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - chore: 21 unit tests, including a suite that runs against the committed dataset to catch bad imports
 - chore: CI workflow (lint, test, build) and GitHub Pages deployment workflow
 
+### Changed
+
+- chore: rename the repository and npm package from `palforge` to `forgepal`, matching the product name. Updates the GitHub Pages base path, which every production asset URL depends on
+
 ### Fixed
 
 - chore(data): correct upstream recipes where alternative crafting paths were flattened into a single AND-list, which produced impossible material costs and 15 recipe cycles. Affects Paldium Fragment and the four Pal Soul tiers
