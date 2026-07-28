@@ -10,6 +10,8 @@ export function BuildList({
   onSetQuantity,
   onRemove,
   onClear,
+  onShare,
+  shared,
 }: {
   quantities: ReadonlyMap<ItemId, number>
   index: GameIndex
@@ -18,6 +20,9 @@ export function BuildList({
   onSetQuantity: (itemId: ItemId, quantity: number) => void
   onRemove: (itemId: ItemId) => void
   onClear: () => void
+  onShare: () => void
+  /** True briefly after copying, to confirm the link is on the clipboard. */
+  shared: boolean
 }) {
   const rows = [...quantities]
 
@@ -26,13 +31,22 @@ export function BuildList({
       <SectionHeading
         aside={
           rows.length > 0 ? (
-            <button
-              type="button"
-              onClick={onClear}
-              className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
-            >
-              clear all
-            </button>
+            <span className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={onShare}
+                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+              >
+                {shared ? 'link copied ✓' : 'copy link'}
+              </button>
+              <button
+                type="button"
+                onClick={onClear}
+                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+              >
+                clear all
+              </button>
+            </span>
           ) : undefined
         }
       >
