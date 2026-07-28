@@ -2,7 +2,7 @@
   "meta": {
     "gameVersion": "1.0",
     "updated": "2026-07-14",
-    "importedAt": "2026-07-28T07:53:42.473Z",
+    "importedAt": "2026-07-28T08:17:26.710Z",
     "sources": [
       "https://paldb.cc/en/Items and per-category pages (Material, Ingredient, Consumable, Weapon, Armor, Accessory, Ammo, Sphere, Sphere_Module, Key_Items, Glider) — item inventory: names, slugs, categories (fetched 2026-07-14)",
       "https://paldb.cc/en/<item_slug> (1260 per-item pages) — recipes (station + materials), tech level, drop tables, merchant/treasure sources, item stats (fetched 2026-07-14)",
@@ -2878,7 +2878,7 @@
       "id": "mythical-wood",
       "name": "Mythical Wood",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3712,7 +3712,7 @@
       "id": "common-egg",
       "name": "Common Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3725,7 +3725,7 @@
       "id": "large-common-egg",
       "name": "Large Common Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3738,7 +3738,7 @@
       "id": "huge-common-egg",
       "name": "Huge Common Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3751,7 +3751,7 @@
       "id": "scorching-egg",
       "name": "Scorching Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3764,7 +3764,7 @@
       "id": "large-scorching-egg",
       "name": "Large Scorching Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3777,7 +3777,7 @@
       "id": "huge-scorching-egg",
       "name": "Huge Scorching Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3790,7 +3790,7 @@
       "id": "damp-egg",
       "name": "Damp Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3803,7 +3803,7 @@
       "id": "large-damp-egg",
       "name": "Large Damp Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3816,7 +3816,7 @@
       "id": "huge-damp-egg",
       "name": "Huge Damp Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3829,7 +3829,7 @@
       "id": "verdant-egg",
       "name": "Verdant Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3842,7 +3842,7 @@
       "id": "large-verdant-egg",
       "name": "Large Verdant Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3855,7 +3855,7 @@
       "id": "huge-verdant-egg",
       "name": "Huge Verdant Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3868,7 +3868,7 @@
       "id": "electric-egg",
       "name": "Electric Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3881,7 +3881,7 @@
       "id": "large-electric-egg",
       "name": "Large Electric Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3894,7 +3894,7 @@
       "id": "huge-electric-egg",
       "name": "Huge Electric Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3907,7 +3907,7 @@
       "id": "frozen-egg",
       "name": "Frozen Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3920,7 +3920,7 @@
       "id": "large-frozen-egg",
       "name": "Large Frozen Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3933,7 +3933,7 @@
       "id": "huge-frozen-egg",
       "name": "Huge Frozen Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3946,7 +3946,7 @@
       "id": "rocky-egg",
       "name": "Rocky Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3959,7 +3959,7 @@
       "id": "large-rocky-egg",
       "name": "Large Rocky Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3972,7 +3972,7 @@
       "id": "huge-rocky-egg",
       "name": "Huge Rocky Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3985,7 +3985,7 @@
       "id": "dark-egg",
       "name": "Dark Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -3998,7 +3998,7 @@
       "id": "large-dark-egg",
       "name": "Large Dark Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -4011,7 +4011,7 @@
       "id": "huge-dark-egg",
       "name": "Huge Dark Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -4024,7 +4024,7 @@
       "id": "dragon-egg",
       "name": "Dragon Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -4037,7 +4037,7 @@
       "id": "large-dragon-egg",
       "name": "Large Dragon Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -4050,7 +4050,7 @@
       "id": "huge-dragon-egg",
       "name": "Huge Dragon Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -7062,7 +7062,7 @@
       "id": "pure-quartz",
       "name": "Pure Quartz",
       "category": "material",
-      "sourceKind": "drop",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -11928,7 +11928,7 @@
       "id": "life-lotus-s",
       "name": "Life Lotus (S)",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -11941,7 +11941,7 @@
       "id": "stamina-lotus-s",
       "name": "Stamina Lotus (S)",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -11954,7 +11954,7 @@
       "id": "power-lotus-s",
       "name": "Power Lotus (S)",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -11967,7 +11967,7 @@
       "id": "speed-lotus-s",
       "name": "Speed Lotus (S)",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -11980,7 +11980,7 @@
       "id": "carrying-lotus-s",
       "name": "Carrying Lotus (S)",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -13776,7 +13776,7 @@
       "id": "ancient-pal-manuscript",
       "name": "Ancient Pal Manuscript",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -13998,7 +13998,7 @@
       "id": "hexolite-quartz",
       "name": "Hexolite Quartz",
       "category": "material",
-      "sourceKind": "drop",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14020,7 +14020,7 @@
       "id": "battle-ticket",
       "name": "Battle Ticket",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14320,7 +14320,7 @@
       "id": "ominous-egg",
       "name": "Ominous Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14333,7 +14333,7 @@
       "id": "large-ominous-egg",
       "name": "Large Ominous Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14346,7 +14346,7 @@
       "id": "huge-ominous-egg",
       "name": "Huge Ominous Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14526,7 +14526,7 @@
       "id": "ground-radiant-gem",
       "name": "Ground Radiant Gem",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -14942,7 +14942,7 @@
       "id": "paloxite",
       "name": "Paloxite",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -17718,7 +17718,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Drone Launcher Schematic 1",
@@ -17750,7 +17750,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Plasma Rifle Schematic 1",
@@ -17782,7 +17782,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Beam Launcher Schematic 1",
@@ -17814,7 +17814,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Heat-Resistant Ancient Armor Schematic 1",
@@ -17846,7 +17846,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Cold-Resistant Ancient Armor Schematic 1",
@@ -17878,7 +17878,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         },
         {
           "source": "Lightweight Ancient Armor Schematic 1",
@@ -17910,7 +17910,7 @@
             1,
             1
           ],
-          "chance": 0
+          "chance": null
         }
       ],
       "otherSources": [
@@ -29942,7 +29942,7 @@
       "id": "huge-mutated-egg",
       "name": "Huge Mutated Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -30028,7 +30028,7 @@
       "id": "mutated-egg",
       "name": "Mutated Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -30041,7 +30041,7 @@
       "id": "large-mutated-egg",
       "name": "Large Mutated Egg",
       "category": "other",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -32490,7 +32490,7 @@
       "id": "cavern-mushroom",
       "name": "Cavern Mushroom",
       "category": "ingredient",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -32542,7 +32542,7 @@
       "id": "potato",
       "name": "Potato",
       "category": "ingredient",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -32577,7 +32577,7 @@
       "id": "onion",
       "name": "Onion",
       "category": "ingredient",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -34357,7 +34357,7 @@
       "id": "futuristic-technical-manual",
       "name": "Futuristic Technical Manual",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -34370,7 +34370,7 @@
       "id": "ancient-technical-manual",
       "name": "Ancient Technical Manual",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -37069,7 +37069,7 @@
       "id": "ripe-starfruit",
       "name": "Ripe Starfruit",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -38515,7 +38515,7 @@
       "id": "pal-reverser",
       "name": "Pal Reverser",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -38593,7 +38593,7 @@
       "id": "treasure-map",
       "name": "Treasure Map",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -38885,7 +38885,7 @@
       "id": "kinship-peach",
       "name": "Kinship Peach",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39038,7 +39038,7 @@
       "id": "little-kinship-peach",
       "name": "Little Kinship Peach",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39380,7 +39380,7 @@
       "id": "disposable-implant-double-edged-holy-sword",
       "name": "Disposable Implant: Double-Edged Holy Sword",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39393,7 +39393,7 @@
       "id": "disposable-implant-sacred-flesh",
       "name": "Disposable Implant: Sacred Flesh",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39406,7 +39406,7 @@
       "id": "disposable-implant-demonic-grasp",
       "name": "Disposable Implant: Demonic Grasp",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39419,7 +39419,7 @@
       "id": "disposable-implant-world-tree-s-bounty",
       "name": "Disposable Implant: World Tree's Bounty",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39432,7 +39432,7 @@
       "id": "disposable-implant-hermit",
       "name": "Disposable Implant: Hermit",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39445,7 +39445,7 @@
       "id": "disposable-implant-dimensional-leap",
       "name": "Disposable Implant: Dimensional Leap",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39458,7 +39458,7 @@
       "id": "disposable-implant-god-of-destruction",
       "name": "Disposable Implant: God of Destruction",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39471,7 +39471,7 @@
       "id": "disposable-implant-remarkable-craftsmanship",
       "name": "Disposable Implant: Remarkable Craftsmanship",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39484,7 +39484,7 @@
       "id": "disposable-implant-diamond-body",
       "name": "Disposable Implant: Diamond Body",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39497,7 +39497,7 @@
       "id": "disposable-implant-demon-god",
       "name": "Disposable Implant: Demon God",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39510,7 +39510,7 @@
       "id": "disposable-implant-mastery-of-fasting",
       "name": "Disposable Implant: Mastery of Fasting",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39523,7 +39523,7 @@
       "id": "disposable-implant-heart-of-the-immovable-king",
       "name": "Disposable Implant: Heart of the Immovable King",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39536,7 +39536,7 @@
       "id": "disposable-implant-swift",
       "name": "Disposable Implant: Swift",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39549,7 +39549,7 @@
       "id": "disposable-implant-eternal-engine",
       "name": "Disposable Implant: Eternal Engine",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39562,7 +39562,7 @@
       "id": "disposable-implant-vampiric",
       "name": "Disposable Implant: Vampiric",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39575,7 +39575,7 @@
       "id": "disposable-implant-king-of-the-waves",
       "name": "Disposable Implant: King of the Waves",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39588,7 +39588,7 @@
       "id": "world-tree-holy-water",
       "name": "World Tree Holy Water",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39699,7 +39699,7 @@
       "id": "disposable-implant-babysitter",
       "name": "Disposable Implant: Babysitter",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39712,7 +39712,7 @@
       "id": "disposable-implant-idiosyncratic",
       "name": "Disposable Implant: Idiosyncratic",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39725,7 +39725,7 @@
       "id": "disposable-implant-immortality",
       "name": "Disposable Implant: Immortality",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39738,7 +39738,7 @@
       "id": "disposable-implant-heavily-armored",
       "name": "Disposable Implant: Heavily Armored",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -39751,7 +39751,7 @@
       "id": "disposable-implant-skymarcher",
       "name": "Disposable Implant: Skymarcher",
       "category": "consumable",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47562,7 +47562,7 @@
       "id": "herbil-headband",
       "name": "Herbil Headband",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47575,7 +47575,7 @@
       "id": "jelliette-hat",
       "name": "Jelliette Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47588,7 +47588,7 @@
       "id": "turtacle-cap",
       "name": "Turtacle Cap",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47633,7 +47633,7 @@
       "id": "kingpaca-headband",
       "name": "Kingpaca Headband",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47646,7 +47646,7 @@
       "id": "gloopie-hat",
       "name": "Gloopie Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47659,7 +47659,7 @@
       "id": "croajiro-cap",
       "name": "Croajiro Cap",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47672,7 +47672,7 @@
       "id": "chikipi-cap",
       "name": "Chikipi Cap",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47685,7 +47685,7 @@
       "id": "dandilord-hat",
       "name": "Dandilord Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47698,7 +47698,7 @@
       "id": "shroomer-hat",
       "name": "Shroomer Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47711,7 +47711,7 @@
       "id": "ghangler-accessory",
       "name": "Ghangler Accessory",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47724,7 +47724,7 @@
       "id": "icelyn-hat",
       "name": "Icelyn Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47737,7 +47737,7 @@
       "id": "splatterina-hat",
       "name": "Splatterina Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -47750,7 +47750,7 @@
       "id": "tarantriss-hat",
       "name": "Tarantriss Hat",
       "category": "armor",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -57806,7 +57806,7 @@
       "id": "mysterious-accessory-box",
       "name": "Mysterious Accessory Box",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -57819,7 +57819,7 @@
       "id": "mystic-accessory-box",
       "name": "Mystic Accessory Box",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -58157,669 +58157,1061 @@
       "id": "chillet-bounty-token",
       "name": "Chillet Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Dancer on the Steppe Chillet (?)"
-      ]
+      "drops": [
+        {
+          "source": "Dancer on the Steppe Chillet",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "sweepa-bounty-token",
       "name": "Sweepa Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by King of the Floof Sweepa (?)"
-      ]
+      "drops": [
+        {
+          "source": "King of the Floof Sweepa",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "gumoss-bounty-token",
       "name": "Gumoss Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Suddenly Transformed Gumoss (?)"
-      ]
+      "drops": [
+        {
+          "source": "Suddenly Transformed Gumoss",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dumud-bounty-token",
       "name": "Dumud Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Perpetual Procrastinator Dumud (?)"
-      ]
+      "drops": [
+        {
+          "source": "Perpetual Procrastinator Dumud",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "penking-bounty-token",
       "name": "Penking Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Pioneer of the Frozen Sea Penking (?)"
-      ]
+      "drops": [
+        {
+          "source": "Pioneer of the Frozen Sea Penking",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "azurobe-bounty-token",
       "name": "Azurobe Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Lady of the Lake Azurobe (?)"
-      ]
+      "drops": [
+        {
+          "source": "Lady of the Lake Azurobe",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "grintale-bounty-token",
       "name": "Grintale Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Marshmallow Body Grintale (?)"
-      ]
+      "drops": [
+        {
+          "source": "Marshmallow Body Grintale",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "nitewing-bounty-token",
       "name": "Nitewing Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Wings of the Firmament Nitewing (?)"
-      ]
+      "drops": [
+        {
+          "source": "Wings of the Firmament Nitewing",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "quivern-bounty-token",
       "name": "Quivern Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Snow-White Soarer Quivern (?)"
-      ]
+      "drops": [
+        {
+          "source": "Snow-White Soarer Quivern",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "felbat-bounty-token",
       "name": "Felbat Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gloom-Shrouded Bloodsucker Felbat (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gloom-Shrouded Bloodsucker Felbat",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "kingpaca-bounty-token",
       "name": "Kingpaca Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Supreme Fluff Commander Kingpaca (?)"
-      ]
+      "drops": [
+        {
+          "source": "Supreme Fluff Commander Kingpaca",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "broncherry-bounty-token",
       "name": "Broncherry Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Winds of Spring Broncherry (?)"
-      ]
+      "drops": [
+        {
+          "source": "Winds of Spring Broncherry",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "katress-bounty-token",
       "name": "Katress Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Phantasmal Feline Katress (?)"
-      ]
+      "drops": [
+        {
+          "source": "Phantasmal Feline Katress",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "bushi-bounty-token",
       "name": "Bushi Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Vagrant Warrior Bushi (?)"
-      ]
+      "drops": [
+        {
+          "source": "Vagrant Warrior Bushi",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "fenglope-bounty-token",
       "name": "Fenglope Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Drifting Cloud Fenglope (?)"
-      ]
+      "drops": [
+        {
+          "source": "Drifting Cloud Fenglope",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "petallia-bounty-token",
       "name": "Petallia Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Lady of the Flower Garden Petallia (?)",
-        "Dropped by Lady of the Ashen Wastes Petallia Ignis (?)"
-      ]
+      "drops": [
+        {
+          "source": "Lady of the Flower Garden Petallia",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Lady of the Ashen Wastes Petallia Ignis",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "beakon-bounty-token",
       "name": "Beakon Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Wings of Thunderbolt Beakon (?)",
-        "Dropped by Wings of Frost Beakon Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Wings of Thunderbolt Beakon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Wings of Frost Beakon Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "warsect-bounty-token",
       "name": "Warsect Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Unyielding Colossus Warsect (?)"
-      ]
+      "drops": [
+        {
+          "source": "Unyielding Colossus Warsect",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "broncherry-aqua-bounty-token",
       "name": "Broncherry Aqua Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Waves of Summer Broncherry Aqua (?)"
-      ]
+      "drops": [
+        {
+          "source": "Waves of Summer Broncherry Aqua",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "elphidran-bounty-token",
       "name": "Elphidran Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gentle Sky Dragon Elphidran (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gentle Sky Dragon Elphidran",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "relaxaurus-bounty-token",
       "name": "Relaxaurus Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gluttonous Thunder Dragon Relaxaurus Lux (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gluttonous Thunder Dragon Relaxaurus Lux",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "univolt-bounty-token",
       "name": "Univolt Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Swift Deity Univolt (?)",
-        "Dropped by Blustery Blizzard Fiend Univolt Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Swift Deity Univolt",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Blustery Blizzard Fiend Univolt Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "elizabee-bounty-token",
       "name": "Elizabee Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Empress of the Hive Elizabee (?)"
-      ]
+      "drops": [
+        {
+          "source": "Empress of the Hive Elizabee",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "mossanda-lux-bounty-token",
       "name": "Mossanda Lux Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Inheritor of the Storm Mossanda Lux (?)"
-      ]
+      "drops": [
+        {
+          "source": "Inheritor of the Storm Mossanda Lux",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "lunaris-bounty-token",
       "name": "Lunaris Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Extraterrestrial Lunaris (?)"
-      ]
+      "drops": [
+        {
+          "source": "Extraterrestrial Lunaris",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "verdash-bounty-token",
       "name": "Verdash Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gale of the Forest Verdash (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gale of the Forest Verdash",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "wumpo-botan-bounty-token",
       "name": "Wumpo Botan Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian of the Grassy Fields Wumpo Botan (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian of the Grassy Fields Wumpo Botan",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "mammorest-bounty-token",
       "name": "Mammorest Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by King of the Forest Mammorest (?)"
-      ]
+      "drops": [
+        {
+          "source": "King of the Forest Mammorest",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "vaelet-bounty-token",
       "name": "Vaelet Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Voice of the Violets Vaelet (?)"
-      ]
+      "drops": [
+        {
+          "source": "Voice of the Violets Vaelet",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "sibelyx-bounty-token",
       "name": "Sibelyx Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Pallid Lady Sibelyx (?)",
-        "Dropped by Gilded Lady Sibelyx Primo (?)"
-      ]
+      "drops": [
+        {
+          "source": "Pallid Lady Sibelyx",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Gilded Lady Sibelyx Primo",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "menasting-bounty-token",
       "name": "Menasting Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Unstoppable Stinger Menasting (?)"
-      ]
+      "drops": [
+        {
+          "source": "Unstoppable Stinger Menasting",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "suzaku-bounty-token",
       "name": "Suzaku Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Ruler of the Crimson Dawn Suzaku (?)"
-      ]
+      "drops": [
+        {
+          "source": "Ruler of the Crimson Dawn Suzaku",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "jormuntide-bounty-token",
       "name": "Jormuntide Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Emperor of the Sea Jormuntide (?)"
-      ]
+      "drops": [
+        {
+          "source": "Emperor of the Sea Jormuntide",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "ice-kingpaca-bounty-token",
       "name": "Ice Kingpaca Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Azure Fluff Commander Kingpaca Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Azure Fluff Commander Kingpaca Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dinossom-lux-bounty-token",
       "name": "Dinossom Lux Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian of Lightning Dinossom Lux (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian of Lightning Dinossom Lux",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "anubis-bounty-token",
       "name": "Anubis Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian of the Dark Sun Anubis (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian of the Dark Sun Anubis",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "astegon-bounty-token",
       "name": "Astegon Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Draconic Monarch of Steel Astegon (?)"
-      ]
+      "drops": [
+        {
+          "source": "Draconic Monarch of Steel Astegon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "blazamut-bounty-token",
       "name": "Blazamut Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Cursed Tyrant Blazamut (?)"
-      ]
+      "drops": [
+        {
+          "source": "Cursed Tyrant Blazamut",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "lyleen-noct-bounty-token",
       "name": "Lyleen Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Empress of the Abyss Lyleen Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Empress of the Abyss Lyleen Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "menasting-terra-bounty-token",
       "name": "Menasting Terra Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gold-Piercing Spear Menasting Terra (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gold-Piercing Spear Menasting Terra",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "knocklem-bounty-token",
       "name": "Knocklem Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Suit of Armor Knocklem (?)",
-        "Dropped by Blazing Suit of Armor Knocklem Ignis (?)"
-      ]
+      "drops": [
+        {
+          "source": "Suit of Armor Knocklem",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Blazing Suit of Armor Knocklem Ignis",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "splatterina-bounty-token",
       "name": "Splatterina Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Crimson Butcher Splatterina (?)"
-      ]
+      "drops": [
+        {
+          "source": "Crimson Butcher Splatterina",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "azurmane-bounty-token",
       "name": "Azurmane Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Blue Lightning Steed Azurmane (?)"
-      ]
+      "drops": [
+        {
+          "source": "Blue Lightning Steed Azurmane",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "kitsun-noct-bounty-token",
       "name": "Kitsun Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian of the Dark Flame Kitsun Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian of the Dark Flame Kitsun Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "fenglope-lux-bounty-token",
       "name": "Fenglope Lux Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Drifting Thundercloud Fenglope Lux (?)"
-      ]
+      "drops": [
+        {
+          "source": "Drifting Thundercloud Fenglope Lux",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "celesdir-bounty-token",
       "name": "Celesdir Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Beast of Salvation Celesdir (?)"
-      ]
+      "drops": [
+        {
+          "source": "Beast of Salvation Celesdir",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "silvegis-bounty-token",
       "name": "Silvegis Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian Dragon of Ironclad Silvegis (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian Dragon of Ironclad Silvegis",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "faleris-aqua-bounty-token",
       "name": "Faleris Aqua Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Sentinel of the Tides Faleris Aqua (?)"
-      ]
+      "drops": [
+        {
+          "source": "Sentinel of the Tides Faleris Aqua",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "jetragon-bounty-token",
       "name": "Jetragon Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Legendary Celestial Dragon Jetragon (?)"
-      ]
+      "drops": [
+        {
+          "source": "Legendary Celestial Dragon Jetragon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "frostallion-bounty-token",
       "name": "Frostallion Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Legendary Steed of Ice Frostallion (?)"
-      ]
+      "drops": [
+        {
+          "source": "Legendary Steed of Ice Frostallion",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "twin-knights-bounty-token",
       "name": "Twin Knights Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Holy Knight of Legend Paladius (?)"
-      ]
+      "drops": [
+        {
+          "source": "Holy Knight of Legend Paladius",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "xenolord-saddle",
@@ -59338,218 +59730,351 @@
       "id": "smokie-bounty-token",
       "name": "Smokie Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Jet-Black Little Hero Smokie (?)",
-        "Dropped by Chilly Little Hero Smokie Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Jet-Black Little Hero Smokie",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Chilly Little Hero Smokie Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "nitemary-bounty-token",
       "name": "Nitemary Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Soul of the Dark Rabbit Nitemary (?)",
-        "Dropped by Soul of the Green Rabbit Nitemary Botan (?)"
-      ]
+      "drops": [
+        {
+          "source": "Soul of the Dark Rabbit Nitemary",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Soul of the Green Rabbit Nitemary Botan",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "starryon-bounty-token",
       "name": "Starryon Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Midnight Blue Mane Starryon (?)",
-        "Dropped by Silvermane Starryon Primo (?)"
-      ]
+      "drops": [
+        {
+          "source": "Midnight Blue Mane Starryon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        },
+        {
+          "source": "Silvermane Starryon Primo",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "prunelia-bounty-token",
       "name": "Prunelia Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Indigo Handmaiden Prunelia (?)"
-      ]
+      "drops": [
+        {
+          "source": "Indigo Handmaiden Prunelia",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "nyafia-bounty-token",
       "name": "Nyafia Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Night Shade Hunter Nyafia (?)"
-      ]
+      "drops": [
+        {
+          "source": "Night Shade Hunter Nyafia",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "gildane-bounty-token",
       "name": "Gildane Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian Beast of Twilight Gildane (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian Beast of Twilight Gildane",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "omascul-bounty-token",
       "name": "Omascul Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Hundred-Faced Apostle Omascul (?)"
-      ]
+      "drops": [
+        {
+          "source": "Hundred-Faced Apostle Omascul",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "tarantris-bounty-token",
       "name": "Tarantris Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Tactician of the Thread Realm Tarantriss (?)"
-      ]
+      "drops": [
+        {
+          "source": "Tactician of the Thread Realm Tarantriss",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "frostallion-noct-bounty-token",
       "name": "Frostallion Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Legendary Steed of Darkness Frostallion Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Legendary Steed of Darkness Frostallion Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "foxparks-cryst-bounty-token",
       "name": "Foxparks Cryst Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Icy Blossom Voyager Foxparks Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Icy Blossom Voyager Foxparks Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dazzi-noct-bounty-token",
       "name": "Dazzi Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Born of the Thunderclouds Dazzi Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Born of the Thunderclouds Dazzi Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "cryolinx-terra-bounty-token",
       "name": "Cryolinx Terra Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Predator of the Earth Cryolinx Terra (?)"
-      ]
+      "drops": [
+        {
+          "source": "Predator of the Earth Cryolinx Terra",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "caprity-noct-bounty-token",
       "name": "Caprity Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Tainted Farm Caprity Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Tainted Farm Caprity Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "loupmoon-cryst-bounty-token",
       "name": "Loupmoon Cryst Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Enraptured by the Frozen Moonlight Loupmoon Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Enraptured by the Frozen Moonlight Loupmoon Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "ribbuny-botan-bounty-token",
       "name": "Ribbuny Botan Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Sparkling Smile Ribbuny Botan (?)"
-      ]
+      "drops": [
+        {
+          "source": "Sparkling Smile Ribbuny Botan",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "warsect-terra-bounty-token",
       "name": "Warsect Terra Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gold-Armored Warrior Warsect Terra (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gold-Armored Warrior Warsect Terra",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "implant-serenity",
       "name": "Implant: Serenity",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -59562,7 +60087,7 @@
       "id": "implant-infinite-stamina",
       "name": "Implant: Infinite Stamina",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -59575,7 +60100,7 @@
       "id": "implant-runner",
       "name": "Implant: Runner",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -59588,7 +60113,7 @@
       "id": "implant-burly-body",
       "name": "Implant: Burly Body",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -59601,7 +60126,7 @@
       "id": "implant-artisan",
       "name": "Implant: Artisan",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -59614,7 +60139,7 @@
       "id": "implant-musclehead",
       "name": "Implant: Musclehead",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60213,40 +60738,61 @@
       "id": "whalaska-bounty-token",
       "name": "Whalaska Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gentle Ice Lance Whalaska (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gentle Ice Lance Whalaska",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "whalaska-ignis-bounty-token",
       "name": "Whalaska Ignis Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Gentle Crimson Lance Whalaska Ignis (?)"
-      ]
+      "drops": [
+        {
+          "source": "Gentle Crimson Lance Whalaska Ignis",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "neptilius-bounty-token",
       "name": "Neptilius Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Legend of the Seas Neptilius (?)"
-      ]
+      "drops": [
+        {
+          "source": "Legend of the Seas Neptilius",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dualith-saddle",
@@ -60422,7 +60968,7 @@
       "id": "implant-vanguard",
       "name": "Implant: Vanguard",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60435,7 +60981,7 @@
       "id": "implant-stronghold-strategist",
       "name": "Implant: Stronghold Strategist",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60448,7 +60994,7 @@
       "id": "implant-motivational-leader",
       "name": "Implant: Motivational Leader",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60461,7 +61007,7 @@
       "id": "implant-noble",
       "name": "Implant: Noble",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60474,7 +61020,7 @@
       "id": "implant-ace-swimmer",
       "name": "Implant: Ace Swimmer",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -60665,11 +61211,17 @@
             1
           ],
           "chance": 1
+        },
+        {
+          "source": "Highly Modified Grizzbolt",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
         }
       ],
-      "otherSources": [
-        "Dropped by Highly Modified Grizzbolt (?)"
-      ]
+      "otherSources": []
     },
     {
       "id": "extra-weapon-holster",
@@ -61741,384 +62293,587 @@
       "id": "pyrin-bounty-token",
       "name": "Pyrin Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Steed of Flames Pyrin (?)"
-      ]
+      "drops": [
+        {
+          "source": "Steed of Flames Pyrin",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "tetroise-bounty-token",
       "name": "Tetroise Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Sandsea Monolith Tetroise (?)"
-      ]
+      "drops": [
+        {
+          "source": "Sandsea Monolith Tetroise",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "reptyro-bounty-token",
       "name": "Reptyro Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Lava-Devouring Juggernaut Reptyro (?)"
-      ]
+      "drops": [
+        {
+          "source": "Lava-Devouring Juggernaut Reptyro",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "renjishi-bounty-token",
       "name": "Renjishi Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Scorching Ovation Renjishi (?)"
-      ]
+      "drops": [
+        {
+          "source": "Scorching Ovation Renjishi",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "moldron-cryst-bounty-token",
       "name": "Moldron Cryst Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Frigid Voyager Moldron Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Frigid Voyager Moldron Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dualith-bounty-token",
       "name": "Dualith Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Twinhearted Azure Construct Dualith (?)"
-      ]
+      "drops": [
+        {
+          "source": "Twinhearted Azure Construct Dualith",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "shroomly-bounty-token",
       "name": "Shroomly Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Cute as a Button Mycora (?)"
-      ]
+      "drops": [
+        {
+          "source": "Cute as a Button Mycora",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "celesdir-noct-bounty-token",
       "name": "Celesdir Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Beast of Chaos Celesdir Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Beast of Chaos Celesdir Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "kuprok-cryst-bounty-token",
       "name": "Kuprok Cryst Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Shuffling Glacier Pierdon Cryst (?)"
-      ]
+      "drops": [
+        {
+          "source": "Shuffling Glacier Pierdon Cryst",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "ophydia-bounty-token",
       "name": "Ophydia Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Pure Bloom Dragon Ophydia (?)"
-      ]
+      "drops": [
+        {
+          "source": "Pure Bloom Dragon Ophydia",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "flaracle-bounty-token",
       "name": "Flaracle Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Self-Serving Seer Flaracle (?)"
-      ]
+      "drops": [
+        {
+          "source": "Self-Serving Seer Flaracle",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dynamoff-bounty-token",
       "name": "Dynamoff Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Buzzy Bundle Dynamoff (?)"
-      ]
+      "drops": [
+        {
+          "source": "Buzzy Bundle Dynamoff",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "slowatt-bounty-token",
       "name": "Slowatt Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Shockingly Laid-Back Slowatt (?)"
-      ]
+      "drops": [
+        {
+          "source": "Shockingly Laid-Back Slowatt",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "snock-bounty-token",
       "name": "Snock Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Sluggish Blue Bolt Snock (?)"
-      ]
+      "drops": [
+        {
+          "source": "Sluggish Blue Bolt Snock",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "eidrolon-bounty-token",
       "name": "Eidrolon Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Wings of Freedom Eidrolon (?)"
-      ]
+      "drops": [
+        {
+          "source": "Wings of Freedom Eidrolon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "lyleen-bounty-token",
       "name": "Lyleen Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Empress of Lilies Lyleen (?)"
-      ]
+      "drops": [
+        {
+          "source": "Empress of Lilies Lyleen",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "grizzbolt-bounty-token",
       "name": "Grizzbolt Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Claws of Lightning Grizzbolt (?)"
-      ]
+      "drops": [
+        {
+          "source": "Claws of Lightning Grizzbolt",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "dualith-noct-bounty-token",
       "name": "Dualith Noct Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Twinhearted Violet Construct Dualith Noct (?)"
-      ]
+      "drops": [
+        {
+          "source": "Twinhearted Violet Construct Dualith Noct",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "blazehowl-bounty-token",
       "name": "Blazehowl Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Crimson Goliath Blazehowl (?)"
-      ]
+      "drops": [
+        {
+          "source": "Crimson Goliath Blazehowl",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "arsox-bounty-token",
       "name": "Arsox Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Blazing Brute Arsox (?)"
-      ]
+      "drops": [
+        {
+          "source": "Blazing Brute Arsox",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "foxicle-bounty-token",
       "name": "Foxicle Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Frostbound Fox Foxcicle (?)"
-      ]
+      "drops": [
+        {
+          "source": "Frostbound Fox Foxcicle",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "wixen-bounty-token",
       "name": "Wixen Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Fire-Licked Furball Wixen (?)"
-      ]
+      "drops": [
+        {
+          "source": "Fire-Licked Furball Wixen",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "tetroise-primo-bounty-token",
       "name": "Tetroise Primo Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Sandsea Wardenstone Tetroise Primo (?)"
-      ]
+      "drops": [
+        {
+          "source": "Sandsea Wardenstone Tetroise Primo",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "wistella-bounty-token",
       "name": "Wistella Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Mantle of the Night Sky Wistella (?)"
-      ]
+      "drops": [
+        {
+          "source": "Mantle of the Night Sky Wistella",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "prixter-lux-bounty-token",
       "name": "Prixter Lux Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Thunderboy Prixter Lux (?)"
-      ]
+      "drops": [
+        {
+          "source": "Thunderboy Prixter Lux",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "kuprok-bounty-token",
       "name": "Kuprok Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Shambling Vein Pierdon (?)"
-      ]
+      "drops": [
+        {
+          "source": "Shambling Vein Pierdon",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "moldron-bounty-token",
       "name": "Moldron Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Scorched Wanderer Moldron (?)"
-      ]
+      "drops": [
+        {
+          "source": "Scorched Wanderer Moldron",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "needoll-bounty-token",
       "name": "Needoll Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Prickly Welcome Needoll (?)"
-      ]
+      "drops": [
+        {
+          "source": "Prickly Welcome Needoll",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "aegidron-bounty-token",
       "name": "Aegidron Bounty Token",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "drop",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
-      "drops": [],
-      "otherSources": [
-        "Dropped by Guardian of Luminous Trails Aegidron (?)"
-      ]
+      "drops": [
+        {
+          "source": "Guardian of Luminous Trails Aegidron",
+          "quantity": [
+            1,
+            1
+          ],
+          "chance": null
+        }
+      ],
+      "otherSources": []
     },
     {
       "id": "implant-wellness-watcher",
       "name": "Implant: Wellness Watcher",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62131,7 +62886,7 @@
       "id": "implant-healing-coach",
       "name": "Implant: Healing Coach",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62144,7 +62899,7 @@
       "id": "implant-reload-master",
       "name": "Implant: Reload Master",
       "category": "key_item",
-      "sourceKind": "unobtainable",
+      "sourceKind": "merchant",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62795,7 +63550,7 @@
       "id": "blazamut-ryu-slab-fragment",
       "name": "Blazamut Ryu Slab Fragment",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62808,7 +63563,7 @@
       "id": "hartalis-slab-fragment",
       "name": "Hartalis Slab Fragment",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62832,7 +63587,7 @@
       "id": "xenolord-slab-fragment",
       "name": "Xenolord Slab Fragment",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62845,7 +63600,7 @@
       "id": "bellanoir-libero-s-slab-fragment",
       "name": "Bellanoir Libero's Slab Fragment",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],
@@ -62869,7 +63624,7 @@
       "id": "bellanoir-s-slab-fragment",
       "name": "Bellanoir's Slab Fragment",
       "category": "material",
-      "sourceKind": "unobtainable",
+      "sourceKind": "gathered",
       "techLevel": null,
       "recipe": null,
       "alternativeRecipes": [],

@@ -143,3 +143,24 @@ describe('hasAnythingToExport', () => {
     expect(hasAnythingToExport(new Map([['ingot', 1]]))).toBe(true)
   })
 })
+
+describe('describeSources with unknown rates', () => {
+  it('says the rate is unknown rather than printing 0%', () => {
+    const result = describeSources('drop', [
+      { source: 'Named Boss', quantity: [1, 1], chance: null },
+    ])
+    expect(result).toBe('Named Boss ×1 (rate unknown)')
+  })
+
+  it('ranks known rates above unknown ones', () => {
+    const result = describeSources('drop', [
+      { source: 'Unknown', quantity: [1, 1], chance: null },
+      { source: 'Certain', quantity: [1, 1], chance: 1 },
+    ])
+    expect(result.startsWith('Certain')).toBe(true)
+  })
+
+  it('describes vendor-only materials', () => {
+    expect(describeSources('merchant', [])).toBe('Bought from a merchant')
+  })
+})

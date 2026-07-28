@@ -26,7 +26,12 @@ export const GATHERED_MATERIALS: readonly string[] = [
   'Ore',
   'Coal',
   'Sulfur',
-  'Quartz',
+  // "Quartz" was listed here and matched nothing — the game has no item by that
+  // name. Pure Quartz was consequently classified as a drop despite upstream
+  // recording "Mining quartz nodes". Names here must match the dataset exactly;
+  // `npm run data:audit` now fails on any entry that doesn't.
+  'Pure Quartz',
+  'Hexolite Quartz',
   'Fiber',
   'Paldium Fragment',
   'Red Berries',
@@ -38,7 +43,6 @@ export const GATHERED_MATERIALS: readonly string[] = [
   'Lettuce Seeds',
   'Tomato Seeds',
   'Mushroom',
-  'Sulfuric Acid Bottle',
 ]
 
 /** Force a specific classification, overriding whatever the heuristics decide. */

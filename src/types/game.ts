@@ -30,11 +30,13 @@ export type ItemCategory =
  * How ForgePal treats an entry when expanding a recipe tree.
  *
  * - `craftable` — has a recipe; expand it.
- * - `gathered`  — harvested from the world (Ore, Wood, Stone, Paldium). Leaf node.
+ * - `gathered`  — harvested from the world: mined, chopped, farmed, looted from
+ *                 chests, or picked up as a wild egg. Leaf node.
  * - `drop`      — obtained from Pals/mobs (Leather, Wool, Bone). Leaf node.
+ * - `merchant`  — only purchasable from a vendor. Leaf node.
  * - `unobtainable` — no known recipe and no known source; leaf node, flagged in the UI.
  */
-export type SourceKind = 'craftable' | 'gathered' | 'drop' | 'unobtainable'
+export type SourceKind = 'craftable' | 'gathered' | 'drop' | 'merchant' | 'unobtainable'
 
 /** Pal work suitability required to operate a crafting station. */
 export type WorkSuitability =
@@ -82,8 +84,12 @@ export interface DropSource {
   source: string
   /** Quantity range per kill or capture, e.g. [1, 3]. */
   quantity: [number, number]
-  /** Drop chance as a fraction in [0, 1]. */
-  chance: number
+  /**
+   * Drop chance as a fraction in [0, 1], or null when upstream records the rate
+   * as unknown (written `(?)`). Null means "this drops, rate unknown" — it is
+   * not the same as a zero chance, and must not be rendered as 0%.
+   */
+  chance: number | null
 }
 
 export interface Item {
