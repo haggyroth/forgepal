@@ -16,8 +16,13 @@
 
 ## Next — exports
 
-- [ ] Export build list to Markdown
-- [ ] Export build list to `.xlsx`
+- [x] Export build list to Markdown (download, and copy to clipboard)
+- [ ] **Export build list to `.xlsx`** — deferred. A working implementation using
+      `xlsx-js-style` was built and backed out: the library adds ~863 kB to the
+      bundle for a format Markdown already covers, and cell styling did not
+      survive a write/read round-trip. Revisit with a lighter writer, or emit
+      CSV instead. `buildExportModel` is already format-agnostic, so only a
+      renderer is needed.
 
 ## Later — deferred from v1 scope
 

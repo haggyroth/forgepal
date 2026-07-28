@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { CalculationResult, GameIndex, MaterialTotal } from '@/lib/calculator'
 import type { DropSource } from '@/types/game'
 import { toId } from '@/lib/id'
@@ -7,7 +7,16 @@ import { Panel, SectionHeading, SourceBadge } from './ui'
 /** How many drop sources to show before collapsing the rest behind a count. */
 const DROPS_SHOWN = 4
 
-export function Totals({ result, index }: { result: CalculationResult; index: GameIndex }) {
+export function Totals({
+  result,
+  index,
+  exportBar,
+}: {
+  result: CalculationResult
+  index: GameIndex
+  /** Export controls, rendered in the Requisition header where the list lives. */
+  exportBar?: ReactNode
+}) {
   const hasAnything = result.targets.length > 0
 
   if (!hasAnything) {
@@ -30,6 +39,7 @@ export function Totals({ result, index }: { result: CalculationResult; index: Ga
       */}
       <Panel glow>
         <SectionHeading aside={`${result.raw.length} to gather`}>Requisition</SectionHeading>
+        {exportBar ? <div className="mb-4 -mt-1">{exportBar}</div> : null}
         <ul className="space-y-px">
           {result.raw.map((entry) => (
             <RawRow key={entry.itemId} entry={entry} index={index} />

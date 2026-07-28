@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-ForgePal is a **Palworld crafting calculator**. The user picks items and structures with quantities; ForgePal recursively expands every recipe down to raw materials and produces one consolidated shopping list, exportable to Markdown and `.xlsx`.
+ForgePal is a **Palworld crafting calculator**. The user picks items and structures with quantities; ForgePal recursively expands every recipe down to raw materials and produces one consolidated shopping list, exportable to Markdown.
 
 The differentiator versus existing tools (palcraft.xyz, palworld.gg) is the **build list**: many items at many quantities, aggregated. Single-item costing is table stakes.
 

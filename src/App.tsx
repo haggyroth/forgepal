@@ -3,7 +3,9 @@ import { gameData } from '@/data'
 import { buildIndex, calculate } from '@/lib/calculator'
 import { useBuildList } from '@/hooks/useBuildList'
 import type { Entry } from '@/lib/search'
+import { hasAnythingToExport } from '@/lib/export'
 import { BuildList } from '@/components/BuildList'
+import { ExportBar } from '@/components/ExportBar'
 import { ItemBrowser } from '@/components/ItemBrowser'
 import { RecipeTree } from '@/components/RecipeTree'
 import { Totals } from '@/components/Totals'
@@ -47,7 +49,18 @@ export default function App() {
               />
             </Panel>
 
-            <Totals result={result} index={index} />
+            <Totals
+              result={result}
+              index={index}
+              exportBar={
+                <ExportBar
+                  result={result}
+                  index={index}
+                  meta={gameData.meta}
+                  disabled={!hasAnythingToExport(quantities)}
+                />
+              }
+            />
             <RecipeTree quantities={quantities} index={index} />
           </div>
         </div>
