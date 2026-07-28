@@ -8,7 +8,7 @@ Pick any number of craftable items and structures, set quantities, and ForgePal 
 
 ## Why another calculator?
 
-The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](https://palworld.gg/items)) are good at costing a *single* item. ForgePal is built around a **build list** — many items, many quantities, one consolidated shopping list you can export to Markdown or `.xlsx`.
+The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](https://palworld.gg/items)) are good at costing a *single* item. ForgePal is built around a **build list** — many items, many quantities, one consolidated shopping list you can export.
 
 ## Features
 
@@ -16,14 +16,14 @@ The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](htt
 - **Build lists** — queue up multiple items at multiple quantities
 - **Drop sourcing** — raw materials show which Pals/mobs drop them, with rates
 - **Station & work info** — which workbench crafts it, and which Pal work suitability powers it
-- **Export** — Markdown and `.xlsx`
+- **Export** — Markdown, as a download or straight to the clipboard
 - **Fully static** — no backend, no tracking, deploys to GitHub Pages
 
 ## Status
 
 **Live at [haggyroth.github.io/forgepal](https://haggyroth.github.io/forgepal/).**
 
-The calculator works end to end: search the catalogue, queue items and structures, and get a full material list with drop sources. Markdown and `.xlsx` export are next — see [ROADMAP.md](ROADMAP.md).
+The calculator works end to end: search the catalogue, queue items and structures, get a full material list with drop sources, and export it as Markdown. See [ROADMAP.md](ROADMAP.md) for what's next.
 
 ## Development
 
