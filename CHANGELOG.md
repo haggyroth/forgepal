@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-07-28
+
+### Fixed
+
+- fix(data): stop free-text prose hints from outvoting parsed drop sources during import. The gathering-hint `farm` matched `Ranch: Flambelle (Farming)` — where "Farming" is a Pal work suitability — and the prose check ran ahead of the structured-drop check, so one substring match outweighed 45 parsed drop entries. Reclassifies 17 entries including Wool, Egg, Milk, Honey, Flame Organ, and the Ancient Relics; material totals are unaffected, but drop sources are now available for those materials
+
+### Added
+
+- test: unit coverage for the importer's drop-line, batch-yield, and station parsing, plus classification precedence. Vitest now includes `scripts/`
+
 ## [0.2.0] — 2026-07-28
 
 ### Added
