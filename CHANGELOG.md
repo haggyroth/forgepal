@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-07-28
+
+### Added
+
+- feat(ui): show the Pal work suitability needed to operate each crafting station, e.g. `Improved Furnace · Kindling`, on build-list rows and in the intermediates panel
+- feat(ui): flag structures that require power
+
+### Fixed
+
+- fix(ui): structures were labelled "no recipe" because they have no crafting station — they are placed from the build menu. Rows now read `Build menu · worked by Kindling · needs power`
+
 ## [0.2.1] — 2026-07-28
 
 ### Fixed

@@ -11,7 +11,7 @@
 - [x] Expandable recipe tree per item
 - [x] Drop sourcing UI — "where do I farm this?" for `drop` leaves
 - [x] Crafting station display, with batch-yield maths shown per build-list row
-- [ ] Pal work suitability on the station shown in the UI (data is imported, not yet surfaced)
+- [x] Pal work suitability shown for stations and structures, plus a power flag
 - [ ] Filter the catalogue by tech level and by crafting station
 
 ## Next — exports
