@@ -32,4 +32,4 @@ coverage
 !.env.example
 
 # Upstream data snapshots pulled by the importer (regenerate with `npm run data:import`)
-scripts/import/.cache
+scripts/import/sources/.cache/
