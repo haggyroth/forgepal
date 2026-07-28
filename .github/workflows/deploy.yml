@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        # vite.config.ts reads GITHUB_ACTIONS to set the /palforge/ base path.
+        # vite.config.ts reads GITHUB_ACTIONS to set the /forgepal/ base path.
         run: npm run build
 
       - uses: actions/configure-pages@v5
