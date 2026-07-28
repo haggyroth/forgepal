@@ -40,8 +40,9 @@ These were considered for v1 and consciously deferred, not dropped.
 
 - [ ] **Resolve the upstream licensing question** (see [NOTICE.md](NOTICE.md)) — ask `palworld-kb` to add an explicit license, or remove the dependency
 - [ ] **`.pak` source adapter** — let users with the game generate data from their own install, removing the third-party dependency
-- [ ] Audit the 318 entries classified `unobtainable` — mostly quest/key items, but some may be miscategorized
-- [ ] Verify the curated `GATHERED_MATERIALS` list against in-game reality; it is currently hand-written
+- [x] **Audit the entries classified `unobtainable`** — cut 319 → 111 by parsing drop lines with unknown rates and by treating treasure chests, wild egg spawns, and merchant sales as real sources. Coverage is now 91.6%. Repeatable via `npm run data:audit`, which also runs in CI
+- [x] **Verify the curated `GATHERED_MATERIALS` list** — found two names matching nothing (`Quartz`, `Sulfuric Acid Bottle`), which had let Pure Quartz regress to `drop`. The audit now fails on any stale entry
+- [ ] The remaining 111 entries have no source text upstream at all (Ancient Bark, Ancient Bone, Animal Skin, …). `palworld-kb` documents these as its own gaps — filling them needs a second data source
 - [ ] Automated upstream-refresh check (scheduled workflow that runs the importer and opens a PR on a diff)
 
 ## Technical debt

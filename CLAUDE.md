@@ -22,7 +22,12 @@ npm run build         # tsc -b && vite build
 npm test              # vitest run
 npm run lint          # oxlint
 npm run data:import   # regenerate src/data/game-data.json
+npm run data:audit    # data quality report (also runs in CI)
 ```
+
+`validate.ts` blocks a bad import; `scripts/audit/` reports on quality. The audit fails **only** on problems within our control — a curated override naming something that doesn't exist, or upstream text matching a pattern we claim to parse but didn't. Upstream's own gaps are reported, never treated as failures.
+
+Two silent-failure modes it exists to catch, both of which had already happened: a name in `GATHERED_MATERIALS` that matches no item does nothing at all, and a too-strict parser discards data without complaining.
 
 Run `npm test` and `npm run build` before committing. Both are enforced in CI.
 

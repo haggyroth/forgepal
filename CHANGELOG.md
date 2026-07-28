@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.6.1] — 2026-07-28
+
+### Added
+
+- chore(data): `npm run data:audit`, a standing data-quality report covering classification coverage, unparsed upstream text, stale curated overrides, and internal consistency. Runs in CI, failing only on problems within our control
+- feat(data): `merchant` source kind for vendor-only entries
+
+### Fixed
+
+- fix(data): the drop parser required a numeric percentage, silently discarding 108 `Dropped by <Boss> (?)` lines — every bounty token in the game lost its source. `DropSource.chance` is now `number | null`
+- fix(data): a literal `(0%)` drop rate is recorded as unknown rather than zero; rendering "0%" implied the item never drops
+- fix(data): `GATHERED_MATERIALS` listed `Quartz` and `Sulfuric Acid Bottle`, neither of which exists in the game. The dead `Quartz` entry had let Pure Quartz be classified as a drop despite upstream recording "Mining quartz nodes"
+- fix(data): treasure chests, wild egg spawns, and merchant sales now count as real sources. `unobtainable` falls from 319 to 111 — coverage 75.8% → 91.6%
+
 ## [0.6.0] — 2026-07-28
 
 ### Added

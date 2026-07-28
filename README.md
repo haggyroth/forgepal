@@ -43,6 +43,7 @@ Other commands:
 | `npm test` | Run the Vitest suite |
 | `npm run lint` | Oxlint |
 | `npm run data:import` | Regenerate `src/data/*.json` from upstream |
+| `npm run data:audit` | Report on data quality and coverage |
 
 ## Data
 
