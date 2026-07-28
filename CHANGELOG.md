@@ -6,6 +6,21 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-07-28
+
+### Added
+
+- feat(state): the build list and tech level persist across reloads via localStorage
+- feat(state): shareable URLs — state encodes into the query string as `?build=mega-sphere.20_arrow.15&level=25`, with a "copy link" action in the build-list header
+- feat(state): a link naming items no longer in the dataset reports what it skipped instead of silently showing a shorter list
+
+### Notes
+
+- The wire format uses item ids rather than array indices, so links stay correct across dataset regeneration; `.` and `_` are safe separators given ids are `[a-z0-9-]`, keeping URLs readable
+- A URL takes precedence over saved state, so following a link shows that build rather than restoring your own over it
+- `clear all` keeps your tech level, which describes your save rather than the build list
+- Storage key is versioned (`forgepal:build:v1`) to allow a clean migration later
+
 ## [0.5.0] — 2026-07-28
 
 ### Added

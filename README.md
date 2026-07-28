@@ -17,6 +17,7 @@ The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](htt
 - **Drop sourcing** — raw materials show which Pals/mobs drop them, with rates
 - **Station & work info** — which workbench crafts it, and which Pal work suitability powers it
 - **Export** — Markdown, as a download or straight to the clipboard
+- **Shareable & persistent** — your build survives a reload, and a link reproduces it for someone else
 - **Fully static** — no backend, no tracking, deploys to GitHub Pages
 
 ## Status

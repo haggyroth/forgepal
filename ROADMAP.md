@@ -29,11 +29,12 @@
 
 These were considered for v1 and consciously deferred, not dropped.
 
-- [ ] **Shareable URL state** — encode the build list in the URL
+- [x] **Shareable URL state** — the build list and tech level encode into the URL, with a copy-link action
+- [x] **Persistence** — the build list survives a reload via localStorage
 - [ ] **Inventory offset** — enter what you already have, see only the net remainder
 - [ ] **Tech point costs** — the dataset carries technology *levels* but no point costs, because upstream doesn't record them. Would need another source
 - [ ] **Alternative recipe selection** — `alternativeRecipes` is populated but unused. Let the user choose the Crusher path for Paldium, a higher-tier station, or a soul downgrade
-- [ ] Save named build lists to localStorage
+- [ ] Save *named* build lists, so several can be kept side by side (single-build persistence is done)
 
 ## Data quality
 
