@@ -97,7 +97,14 @@ export function parseDropLine(line: string): DropSource | null {
   }
 }
 
-/** Phrases that indicate a material is harvested from the world rather than dropped. */
+/**
+ * Phrases that indicate a material is harvested from the world rather than dropped.
+ *
+ * These are matched against free-text prose, so they must be specific enough not
+ * to collide with unrelated vocabulary. 'farm' was previously in this list and
+ * matched "Ranch: Flambelle (Farming)" — where "Farming" is a Pal *work
+ * suitability*, not a gathering verb — which misfiled two Pal drops as gathered.
+ */
 const GATHERING_HINTS = [
   'chopping',
   'mining',
@@ -106,7 +113,6 @@ const GATHERING_HINTS = [
   'pickup',
   'node',
   'harvest',
-  'farm',
 ]
 
 function looksGathered(obtainedFrom: readonly string[]): boolean {
@@ -119,9 +125,17 @@ function looksGathered(obtainedFrom: readonly string[]): boolean {
 /**
  * Decide how the calculator should treat this entry.
  *
- * Order matters: an explicit override always wins, then a real recipe, then the
- * gathered list, then heuristics. Anything we cannot place becomes
- * `unobtainable` so it shows up in the UI as a known gap rather than silently
+ * Order is by strength of evidence, strongest first:
+ *   1. an explicit override
+ *   2. the curated gathered list — beats drops on purpose, since Ore and Coal
+ *      both have drop tables but are mined in practice
+ *   3. a real recipe
+ *   4. structured drop data — dozens of parsed Pal sources is hard evidence
+ *   5. prose hints — the weakest signal, and last for that reason
+ *
+ * Steps 4 and 5 used to be the other way round, which let one stray phrase
+ * outvote 45 parsed drop entries. Anything we cannot place becomes
+ * `unobtainable` so it surfaces in the UI as a known gap rather than silently
  * costing zero.
  */
 export function classify(
@@ -135,8 +149,8 @@ export function classify(
 
   if (GATHERED_IDS.has(toId(name))) return 'gathered'
   if (recipe) return 'craftable'
-  if (looksGathered(obtainedFrom)) return 'gathered'
   if (drops.length > 0) return 'drop'
+  if (looksGathered(obtainedFrom)) return 'gathered'
   return 'unobtainable'
 }
 
