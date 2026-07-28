@@ -11,8 +11,9 @@
  *   npm run data:import
  */
 
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import type { GameData } from '../../src/types/game.ts'
 import { loadRawDataset } from './sources/palworld-kb.ts'
 import { normalize } from './normalize.ts'
 import { reportValidation, validate } from './validate.ts'
@@ -46,9 +47,35 @@ async function main() {
   console.log(`\n  classification: ${JSON.stringify(counts)}`)
 
   await mkdir(OUT_DIR, { recursive: true })
+
+  // Preserve the previous importedAt when nothing else changed, so a re-import
+  // is a genuine no-op. Without this the timestamp alone rewrites the file on
+  // every run, and the scheduled refresh workflow would open a PR every week
+  // announcing a change that isn't one.
+  const previous = await readExisting()
+  const unchanged = previous !== null && isSameIgnoringTimestamp(previous, data)
+  if (unchanged && previous) data.meta.importedAt = previous.meta.importedAt
+
   await writeFile(OUT_FILE, `${JSON.stringify(data, null, 2)}\n`)
-  console.log(`\n✓ wrote ${OUT_FILE}`)
+
+  console.log(`\n✓ ${unchanged ? 'no change' : 'wrote'} ${OUT_FILE}`)
   console.log(`  game version ${data.meta.gameVersion}, upstream updated ${data.meta.updated}\n`)
+}
+
+async function readExisting(): Promise<GameData | null> {
+  try {
+    return JSON.parse(await readFile(OUT_FILE, 'utf8')) as GameData
+  } catch {
+    // First run, or the file was deleted deliberately.
+    return null
+  }
+}
+
+/** Compare two datasets ignoring only the import timestamp. */
+function isSameIgnoringTimestamp(a: GameData, b: GameData): boolean {
+  const strip = (data: GameData) =>
+    JSON.stringify({ ...data, meta: { ...data.meta, importedAt: '' } })
+  return strip(a) === strip(b)
 }
 
 main().catch((error: unknown) => {

@@ -63,6 +63,10 @@ Data flows one way: `upstream -> adapter -> normalize -> overrides -> validate -
 
 The deployed site must not depend on a third-party host at runtime, and a diff on `game-data.json` makes every upstream change reviewable before it ships. Regenerating is a deliberate act (`npm run data:import`), not a build step.
 
+`.github/workflows/data-refresh.yml` re-runs the importer weekly and opens a PR **only** when the output actually changes. It never commits to `main` — reviewing the diff is the entire point.
+
+**The importer must stay idempotent** for that to work. `meta.importedAt` is deliberately preserved when nothing else changed; if it were stamped on every run, the refresh workflow would open a PR every week announcing a change that isn't one. Anything else non-deterministic added to the output has the same problem.
+
 ### Adding a new data source
 
 Write a new adapter in `scripts/import/sources/` returning the same `RawDataset`, then swap it in `index.ts`. Nothing else should need to change. If a source change ripples past `normalize.ts`, the abstraction has leaked — fix that rather than patching downstream.
