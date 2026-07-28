@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-07-28
+
+### Added
+
+- feat(export): export the build list as Markdown, either copied to the clipboard or downloaded as a `.md` file. Raw materials include a "where to get it" column naming the best Pal drop sources
+
+### Notes
+
+- `.xlsx` export was implemented and deliberately backed out: `xlsx-js-style` adds ~863 kB to the bundle for a format Markdown already covers, and its cell styling did not survive a write/read round-trip. Deferred to ROADMAP with that context; the export model is format-agnostic, so resuming needs only a renderer
+
 ## [0.3.0] — 2026-07-28
 
 ### Added
