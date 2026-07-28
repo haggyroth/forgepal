@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- chore(ci): scheduled weekly upstream data refresh (`.github/workflows/data-refresh.yml`). Re-imports and opens a PR only when the output actually changes; never commits to `main`
+
+### Fixed
+
+- fix(data): the importer is now idempotent. `meta.importedAt` was stamped on every run, so the output file always differed even when upstream had not changed — the refresh workflow would have opened a noise PR every week
+
+### Changed
+
+- docs: recorded the upstream licensing position in `NOTICE.md` — asking `palworld-kb` for an explicit license was drafted and deliberately shelved, with the reasoning and revisit conditions written down
+
 ## [0.6.1] — 2026-07-28
 
 ### Added
