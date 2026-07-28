@@ -30,5 +30,11 @@ jobs:
       - name: Test
         run: npm test
 
+      # Fails only on problems within our control — a stale curated override,
+      # or upstream text matching a pattern we claim to parse but didn't.
+      # Upstream's own gaps are reported, not treated as failures.
+      - name: Audit data quality
+        run: npm run data:audit
+
       - name: Build
         run: npm run build
