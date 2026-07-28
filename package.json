@@ -14,6 +14,8 @@
     "data:import": "tsx scripts/import/index.ts"
   },
   "dependencies": {
+    "@fontsource/chakra-petch": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "xlsx-js-style": "^1.2.0"

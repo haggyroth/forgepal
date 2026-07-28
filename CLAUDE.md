@@ -42,6 +42,14 @@ src/types/game.ts        The schema. Everything downstream depends on this, not 
 src/lib/
   id.ts                  Name -> stable id slug. Shared by app and scripts.
   calculator.ts          Recipe expansion engine.
+  search.ts              Catalogue search, filtering, and ranking.
+src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
+src/components/
+  ui.tsx                 SectionHeading, SourceBadge, Stepper, Panel.
+  ItemBrowser.tsx        Search + category filters + results.
+  BuildList.tsx          Selected items with quantity steppers.
+  Totals.tsx             Requisition (raw), intermediates, drop sourcing.
+  RecipeTree.tsx         Per-item expandable breakdown.
 ```
 
 Data flows one way: `upstream -> adapter -> normalize -> overrides -> validate -> committed JSON -> app`. The app never sees an upstream shape.
@@ -101,6 +109,19 @@ Never guess a quantity. A known gap is better than a plausible wrong number.
 - **`buildTree(itemId, qty, index)`** — display tree for one item. Branch quantities are per-branch and will not always sum to `calculate`'s figures. That is expected: the tree explains structure, the totals are what you take shopping. Don't "fix" the discrepancy by making the UI sum the tree.
 
 Batch recipes round up per craft, and the surplus is reported (`MaterialTotal.surplus`) rather than silently discarded.
+
+## UI
+
+Dark-only, by design — see the comment at the top of `src/index.css`. The palette is iron (surfaces), ember (accent), blueprint (stations/structures), verdigris (gathered). **Ember is reserved for the Requisition panel and interactive accents**; spending it elsewhere is what would make this look like every other dark dashboard.
+
+Fonts are bundled via `@fontsource` and imported in `main.tsx`, not fetched from a CDN — the app makes no runtime network calls, and Google Fonts would be the sole exception.
+
+Tailwind 4 notes that have already bitten once:
+- Font weights are named utilities (`font-semibold`, `font-bold`). **`font-600` is not a class** and silently does nothing.
+- Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem.
+- Scrollable flex children need `min-h-0` on every ancestor in the chain; `min-height: auto` otherwise refuses to shrink and the list runs off the page instead of scrolling.
+
+The catalogue renders at most 60 results and reports the true total. Rendering all ~1,320 entries is slow and useless — search is the intended way through the list.
 
 ## Conventions
 
