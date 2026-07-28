@@ -38,12 +38,12 @@ These were considered for v1 and consciously deferred, not dropped.
 
 ## Data quality
 
-- [ ] **Resolve the upstream licensing question** (see [NOTICE.md](NOTICE.md)) — ask `palworld-kb` to add an explicit license, or remove the dependency
-- [ ] **`.pak` source adapter** — let users with the game generate data from their own install, removing the third-party dependency
+- [x] **Upstream licensing position settled** — asking `palworld-kb` for an explicit license was drafted and deliberately shelved; a refusal would be worse than the current ambiguity. Reasoning and the conditions that should trigger a revisit are recorded in [NOTICE.md](NOTICE.md)
+- [ ] **`.pak` source adapter** — let users who own the game generate data from their own install. Also the preferred long-term answer to the licensing question, since it removes the third-party dependency rather than negotiating it
 - [x] **Audit the entries classified `unobtainable`** — cut 319 → 111 by parsing drop lines with unknown rates and by treating treasure chests, wild egg spawns, and merchant sales as real sources. Coverage is now 91.6%. Repeatable via `npm run data:audit`, which also runs in CI
 - [x] **Verify the curated `GATHERED_MATERIALS` list** — found two names matching nothing (`Quartz`, `Sulfuric Acid Bottle`), which had let Pure Quartz regress to `drop`. The audit now fails on any stale entry
 - [ ] The remaining 111 entries have no source text upstream at all (Ancient Bark, Ancient Bone, Animal Skin, …). `palworld-kb` documents these as its own gaps — filling them needs a second data source
-- [ ] Automated upstream-refresh check (scheduled workflow that runs the importer and opens a PR on a diff)
+- [x] **Automated upstream-refresh check** — `.github/workflows/data-refresh.yml` re-imports weekly and opens a PR only when the output actually changes. Required making the importer idempotent
 
 ## Technical debt
 
