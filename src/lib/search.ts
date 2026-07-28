@@ -6,7 +6,7 @@
  * how many results to draw.
  */
 
-import type { Item, ItemCategory, Structure } from '@/types/game'
+import type { Item, ItemCategory, ItemId, Structure } from '@/types/game'
 
 export type Entry = Item | Structure
 
@@ -16,12 +16,21 @@ export interface SearchFilters {
   categories: ReadonlySet<ItemCategory>
   /** Hide entries with no recipe — usually what you want when planning a build. */
   craftableOnly: boolean
+  /** Station id to restrict to, or null for any station. */
+  stationId: ItemId | null
+  /**
+   * Hide entries gated above this level. Null disables the filter entirely.
+   * Entries with no `techLevel` are never hidden — they aren't gated at all.
+   */
+  maxTechLevel: number | null
 }
 
 export const emptyFilters: SearchFilters = {
   query: '',
   categories: new Set(),
   craftableOnly: true,
+  stationId: null,
+  maxTechLevel: null,
 }
 
 /**
@@ -75,6 +84,16 @@ export function searchEntries(
   for (const entry of entries) {
     if (filters.craftableOnly && !entry.recipe) continue
     if (filters.categories.size > 0 && !filters.categories.has(entry.category)) continue
+    if (filters.stationId && entry.recipe?.stationId !== filters.stationId) continue
+    // An ungated entry (null techLevel) is always available, so it survives the
+    // level filter rather than being treated as level 0 or excluded.
+    if (
+      filters.maxTechLevel !== null &&
+      entry.techLevel !== null &&
+      entry.techLevel > filters.maxTechLevel
+    ) {
+      continue
+    }
 
     const score = scoreMatch(entry.name, query)
     if (score > 0) scored.push({ entry, score })

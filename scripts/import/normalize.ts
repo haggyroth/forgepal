@@ -224,7 +224,7 @@ function normalizeItem(raw: RawItem): Item {
     name: raw.name,
     category: toCategory(raw.category),
     sourceKind: classify(raw.name, recipe, obtainedFrom, drops),
-    techLevel: raw.tech_level,
+    techLevel: raw.tech_level ?? null,
     recipe,
     alternativeRecipes: ALTERNATIVE_RECIPES[raw.name] ?? [],
     drops,
@@ -257,7 +257,7 @@ function normalizeStructure(raw: RawStructure): Structure {
     name: raw.name,
     category: 'structure',
     sourceKind: recipe ? 'craftable' : 'unobtainable',
-    techLevel: raw.tech_level,
+    techLevel: raw.tech_level ?? null,
     recipe,
     alternativeRecipes: [],
     drops: [],
@@ -282,7 +282,7 @@ export function normalize(dataset: RawDataset): GameData {
     id: toId(raw.name),
     name: raw.name,
     crafts: raw.crafts,
-    techLevel: raw.tech_level,
+    techLevel: raw.tech_level ?? null,
     workSuitability: structuresByName.get(raw.name)?.workSuitability ?? null,
   }))
 

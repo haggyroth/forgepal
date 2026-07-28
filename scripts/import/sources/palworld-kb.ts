@@ -26,7 +26,8 @@ export interface RawRecipe {
 export interface RawItem {
   name: string
   category: string
-  tech_level: number | null
+  /** Optional: a few entries omit the key entirely rather than sending null. */
+  tech_level?: number | null
   recipe: RawRecipe | null
   obtained_from?: string[]
   /** Free-text, e.g. "Crafts x10 per batch; Also craftable at: Improved Furnace". */
@@ -41,7 +42,8 @@ export interface RawStation {
 
 export interface RawStructure {
   name: string
-  tech_level: number | null
+  /** Optional: a few entries omit the key entirely rather than sending null. */
+  tech_level?: number | null
   ancient_tech: boolean
   materials: Record<string, number>
   /** Work suitability required to operate it, e.g. "Kindling". */

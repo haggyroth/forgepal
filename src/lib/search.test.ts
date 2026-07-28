@@ -156,3 +156,44 @@ describe('searching the real dataset', () => {
     }
   })
 })
+
+describe('tech level and station filters', () => {
+  const entries: Entry[] = [...gameData.items, ...gameData.structures]
+
+  it('hides entries gated above the level', () => {
+    const result = searchEntries(entries, { ...emptyFilters, maxTechLevel: 5 })
+    expect(result.results.every((e) => e.techLevel === null || e.techLevel <= 5)).toBe(true)
+  })
+
+  it('keeps ungated entries regardless of the level filter', () => {
+    // Ingot has no techLevel, so a level-1 filter must not hide it.
+    const result = searchEntries(entries, {
+      ...emptyFilters,
+      query: 'ingot',
+      maxTechLevel: 1,
+    })
+    expect(result.results.map((e) => e.name)).toContain('Ingot')
+  })
+
+  it('restricts to a single crafting station', () => {
+    const stationId = toId('Primitive Furnace')
+    const result = searchEntries(entries, { ...emptyFilters, stationId }, 500)
+    expect(result.total).toBeGreaterThan(0)
+    expect(result.results.every((e) => e.recipe?.stationId === stationId)).toBe(true)
+  })
+
+  it('combines the station and level filters', () => {
+    const result = searchEntries(
+      entries,
+      { ...emptyFilters, stationId: toId('Primitive Workbench'), maxTechLevel: 5 },
+      500,
+    )
+    expect(
+      result.results.every(
+        (e) =>
+          e.recipe?.stationId === toId('Primitive Workbench') &&
+          (e.techLevel === null || e.techLevel <= 5),
+      ),
+    ).toBe(true)
+  })
+})

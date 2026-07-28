@@ -2,7 +2,7 @@
   "meta": {
     "gameVersion": "1.0",
     "updated": "2026-07-14",
-    "importedAt": "2026-07-28T07:18:27.014Z",
+    "importedAt": "2026-07-28T07:53:42.473Z",
     "sources": [
       "https://paldb.cc/en/Items and per-category pages (Material, Ingredient, Consumable, Weapon, Armor, Accessory, Ammo, Sphere, Sphere_Module, Key_Items, Glider) — item inventory: names, slugs, categories (fetched 2026-07-14)",
       "https://paldb.cc/en/<item_slug> (1260 per-item pages) — recipes (station + materials), tech level, drop tables, merchant/treasure sources, item stats (fetched 2026-07-14)",
@@ -66530,6 +66530,7 @@
       "name": "WoodCreator",
       "category": "structure",
       "sourceKind": "craftable",
+      "techLevel": null,
       "recipe": {
         "stationId": null,
         "stationName": null,
@@ -67496,6 +67497,7 @@
       "name": "Ancient Turret",
       "category": "structure",
       "sourceKind": "craftable",
+      "techLevel": null,
       "recipe": {
         "stationId": null,
         "stationName": null,
@@ -67532,6 +67534,7 @@
       "name": "Ancient Air Conditioner",
       "category": "structure",
       "sourceKind": "craftable",
+      "techLevel": null,
       "recipe": {
         "stationId": null,
         "stationName": null,

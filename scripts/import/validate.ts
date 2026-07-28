@@ -15,6 +15,14 @@ export interface ValidationReport {
   unresolved: { itemId: ItemId; name: string; requiredBy: string[] }[]
   /** Entries with neither a recipe nor a known source. */
   unobtainable: string[]
+  /**
+   * Entries whose nullable fields are `undefined` rather than `null`.
+   *
+   * JSON.stringify drops undefined keys entirely, so these silently vanish from
+   * the generated file and break any strict `=== null` check downstream, even
+   * though the type says `number | null`.
+   */
+  missingNullables: string[]
 }
 
 export function validate(data: GameData): ValidationReport {
@@ -76,6 +84,9 @@ export function validate(data: GameData): ValidationReport {
     cycles,
     unresolved: [...unresolvedMap].map(([itemId, v]) => ({ itemId, ...v })),
     unobtainable: all.filter((e) => e.sourceKind === 'unobtainable').map((e) => e.name),
+    missingNullables: all
+      .filter((entry) => entry.techLevel === undefined || entry.recipe === undefined)
+      .map((entry) => entry.name),
   }
 }
 
@@ -99,6 +110,15 @@ export function reportValidation(report: ValidationReport): boolean {
     for (const u of report.unresolved.slice(0, 8)) {
       console.warn(`      ${u.name} (required by ${u.requiredBy.length} recipe(s))`)
     }
+  }
+
+  if (report.missingNullables.length > 0) {
+    fatal = true
+    console.error(
+      `\n  ✗ ${report.missingNullables.length} entries have undefined where null is required:`,
+    )
+    console.error(`      ${report.missingNullables.slice(0, 8).join(', ')}`)
+    console.error('    JSON.stringify drops these keys, breaking strict null checks.')
   }
 
   if (report.unobtainable.length > 0) {
