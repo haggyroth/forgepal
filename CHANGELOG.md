@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-07-28
+
+### Added
+
+- feat(ui): catalogue with ranked search, category filters, and a craftable-only toggle
+- feat(ui): build list supporting any number of items and structures at arbitrary quantities
+- feat(ui): requisition panel listing raw materials, with Pal/mob drop sources expandable per material and sorted by drop chance
+- feat(ui): intermediates panel showing each sub-component and the station that crafts it
+- feat(ui): per-item recipe breakdown tree
+- feat(ui): batch-yield maths shown per build-list row, e.g. `2 × 10 = 20, 5 spare` for 15 Arrows
+- chore: bundle Chakra Petch and IBM Plex Mono via `@fontsource`, preserving the app's no-runtime-network-calls property
+
+## [0.1.0] — 2026-07-28
+
 ### Added
 
 - chore: initialize repository with MIT license, `.gitignore`, README, and data attribution notice

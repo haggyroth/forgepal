@@ -21,7 +21,9 @@ The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](htt
 
 ## Status
 
-🚧 **Early development.** Project scaffolding and the data pipeline are in place; the calculator UI is being built. See [ROADMAP.md](ROADMAP.md).
+**Live at [haggyroth.github.io/forgepal](https://haggyroth.github.io/forgepal/).**
+
+The calculator works end to end: search the catalogue, queue items and structures, and get a full material list with drop sources. Markdown and `.xlsx` export are next — see [ROADMAP.md](ROADMAP.md).
 
 ## Development
 

@@ -5,12 +5,14 @@
 - [x] Project scaffold, CI, GitHub Pages deploy
 - [x] Data importer with validation and curated overrides
 - [x] Recursive expansion engine with batch-yield handling
-- [ ] Item browser — searchable, filterable by category, tech level, and station
-- [ ] Build list — add items and structures at arbitrary quantities
-- [ ] Totals panel — targets, intermediates, and the raw shopping list
-- [ ] Expandable recipe tree per item
-- [ ] Drop sourcing UI — "where do I farm this?" for `drop` leaves
-- [ ] Crafting station + Pal work suitability display
+- [x] Item browser — searchable, filterable by category
+- [x] Build list — add items and structures at arbitrary quantities
+- [x] Totals panel — targets, intermediates, and the raw shopping list
+- [x] Expandable recipe tree per item
+- [x] Drop sourcing UI — "where do I farm this?" for `drop` leaves
+- [x] Crafting station display, with batch-yield maths shown per build-list row
+- [ ] Pal work suitability on the station shown in the UI (data is imported, not yet surfaced)
+- [ ] Filter the catalogue by tech level and by crafting station
 
 ## Next — exports
 
