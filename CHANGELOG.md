@@ -6,6 +6,22 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-07-28
+
+### Added
+
+- feat(tech): tech level input in the header; entries above it are flagged with a lock in the catalogue, and an "unlocked only" filter hides them
+- feat(tech): Requirements panel listing every crafting station a build needs — most advanced first, with tech level and Pal work suitability — plus a warning naming queued items that aren't unlocked yet, and a flag for Ancient Technology
+- feat(ui): filter the catalogue by crafting station
+
+### Fixed
+
+- fix(data): three entries (`WoodCreator`, `Ancient Turret`, `Ancient Air Conditioner`) shipped with no `techLevel` key at all, because `JSON.stringify` drops `undefined` — despite the type declaring `number | null`. The importer now coerces to null, and validation fails the import if any nullable field is `undefined`
+
+### Notes
+
+- Technology *levels* are shown but not point costs; upstream records no point data
+
 ## [0.4.0] — 2026-07-28
 
 ### Added

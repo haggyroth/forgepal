@@ -12,7 +12,8 @@
 - [x] Drop sourcing UI — "where do I farm this?" for `drop` leaves
 - [x] Crafting station display, with batch-yield maths shown per build-list row
 - [x] Pal work suitability shown for stations and structures, plus a power flag
-- [ ] Filter the catalogue by tech level and by crafting station
+- [x] Filter the catalogue by tech level and by crafting station
+- [x] Technology gating — lock indicators, an "unlocked only" filter, and a Requirements panel listing the stations a build needs
 
 ## Next — exports
 
@@ -30,7 +31,7 @@ These were considered for v1 and consciously deferred, not dropped.
 
 - [ ] **Shareable URL state** — encode the build list in the URL
 - [ ] **Inventory offset** — enter what you already have, see only the net remainder
-- [ ] **Tech tree info** — required technology level and points; flag items not yet unlockable
+- [ ] **Tech point costs** — the dataset carries technology *levels* but no point costs, because upstream doesn't record them. Would need another source
 - [ ] **Alternative recipe selection** — `alternativeRecipes` is populated but unused. Let the user choose the Crusher path for Paldium, a higher-tier station, or a soul downgrade
 - [ ] Save named build lists to localStorage
 
