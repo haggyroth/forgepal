@@ -32,10 +32,10 @@ next, both grounded in data already published by the same source.
 
 - [ ] **Breeding path solver** — `breeding.json` carries the full CombiRank
       formula plus all 299 ranks and 164 special combos, so results are
-      *computable*, not just searchable:
+      _computable_, not just searchable:
       `target = floor((rankA + rankB + 1) / 2)`, nearest rank wins, ties break
       to the higher rank. Every existing calculator answers "A + B = ?"; the gap
-      is the inverse over *your* roster — "I own these six Pals, I want a
+      is the inverse over _your_ roster — "I own these six Pals, I want a
       Jetragon, what's the shortest chain?" That's graph search over a
       deterministic relation, structurally the same problem as recipe expansion.
       Note the data's own `gaps` field flags conflicting documentation on the
@@ -60,9 +60,9 @@ These were considered for v1 and consciously deferred, not dropped.
 - [x] **Shareable URL state** — the build list and tech level encode into the URL, with a copy-link action
 - [x] **Persistence** — the build list survives a reload via localStorage
 - [ ] **Inventory offset** — enter what you already have, see only the net remainder
-- [ ] **Tech point costs** — the dataset carries technology *levels* but no point costs, because upstream doesn't record them. Would need another source
+- [ ] **Tech point costs** — the dataset carries technology _levels_ but no point costs, because upstream doesn't record them. Would need another source
 - [ ] **Alternative recipe selection** — `alternativeRecipes` is populated but unused. Let the user choose the Crusher path for Paldium, a higher-tier station, or a soul downgrade
-- [ ] Save *named* build lists, so several can be kept side by side (single-build persistence is done)
+- [ ] Save _named_ build lists, so several can be kept side by side (single-build persistence is done)
 
 ## Data quality
 

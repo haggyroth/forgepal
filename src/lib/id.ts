@@ -10,11 +10,13 @@ import type { ItemId } from '../types/game.ts'
  * both sides of a lookup. Keep it boring: lowercase, strip punctuation, hyphens.
  */
 export function toId(name: string): ItemId {
-  return name
-    .normalize('NFKD')
-    // Strip combining marks so "Pal Sphère" and "Pal Sphere" collapse together.
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+  return (
+    name
+      .normalize('NFKD')
+      // Strip combining marks so "Pal Sphère" and "Pal Sphere" collapse together.
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+  )
 }

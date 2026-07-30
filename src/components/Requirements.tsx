@@ -18,7 +18,6 @@ export function Requirements({ tech }: { tech: TechRequirements }) {
       title="Requirements"
       aside={tech.highestLevel !== null ? `needs Tech ${tech.highestLevel}` : undefined}
     >
-
       {tech.lockedItems.length > 0 ? (
         <p
           role="status"

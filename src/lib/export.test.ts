@@ -32,10 +32,7 @@ describe('describeSources', () => {
   })
 
   it('names the best sources first', () => {
-    const result = describeSources('drop', [
-      drop('Rushoar', 1, 2, 0.3),
-      drop('Melpaca', 1, 1, 1),
-    ])
+    const result = describeSources('drop', [drop('Rushoar', 1, 2, 0.3), drop('Melpaca', 1, 1, 1)])
     expect(result.startsWith('Melpaca')).toBe(true)
   })
 

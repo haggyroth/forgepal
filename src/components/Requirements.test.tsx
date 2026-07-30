@@ -78,7 +78,13 @@ describe('Requirements', () => {
           highestLevel: null,
           drivenBy: null,
           stations: [
-            { id: 'mystery', name: 'Mystery Bench', techLevel: null, workSuitability: null, locked: false },
+            {
+              id: 'mystery',
+              name: 'Mystery Bench',
+              techLevel: null,
+              workSuitability: null,
+              locked: false,
+            },
           ],
           lockedItems: [],
           needsAncientTech: false,

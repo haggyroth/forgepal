@@ -30,7 +30,6 @@ export function FarmingRoute({ route }: { route: Route }) {
           : undefined
       }
     >
-
       {route.stops.length > 0 ? (
         <ul className="space-y-3">
           {visible.map((stop) => (
@@ -85,8 +84,8 @@ function Stop({ stop }: { stop: RouteStop }) {
           </span>
         ) : null}
         <span className="shrink-0 font-mono text-[0.68rem] text-iron-600">
-          {stop.materials.length} item{stop.materials.length === 1 ? '' : 's'} ·{' '}
-          {stop.palCount} pal{stop.palCount === 1 ? '' : 's'}
+          {stop.materials.length} item{stop.materials.length === 1 ? '' : 's'} · {stop.palCount} pal
+          {stop.palCount === 1 ? '' : 's'}
         </span>
       </div>
 
@@ -96,9 +95,7 @@ function Stop({ stop }: { stop: RouteStop }) {
             <span className="shrink-0 font-mono text-[0.78rem] tabular-nums text-ember-400">
               ×{material.required.toLocaleString()}
             </span>
-            <span className="shrink-0 font-mono text-[0.78rem] text-iron-100">
-              {material.name}
-            </span>
+            <span className="shrink-0 font-mono text-[0.78rem] text-iron-100">{material.name}</span>
             <span className="min-w-0 flex-1 truncate font-mono text-[0.68rem] text-iron-400">
               {material.pals
                 .map((p) => `${p.name}${p.dayNight === 'night' ? ' (night)' : ''}`)

@@ -12,7 +12,7 @@ Pick any number of craftable items and structures, set quantities, and ForgePal 
 
 ## Why another calculator?
 
-The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](https://palworld.gg/items)) are good at costing a *single* item. ForgePal is built around a **build list** — many items, many quantities, one consolidated shopping list you can export.
+The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](https://palworld.gg/items)) are good at costing a _single_ item. ForgePal is built around a **build list** — many items, many quantities, one consolidated shopping list you can export.
 
 ## Features
 
@@ -39,15 +39,15 @@ npm run dev
 
 Other commands:
 
-| Command | Does |
-|---------|------|
-| `npm run dev` | Dev server with HMR |
-| `npm run build` | Type-check + production build to `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm test` | Run the Vitest suite |
-| `npm run lint` | Oxlint |
+| Command               | Does                                       |
+| --------------------- | ------------------------------------------ |
+| `npm run dev`         | Dev server with HMR                        |
+| `npm run build`       | Type-check + production build to `dist/`   |
+| `npm run preview`     | Serve the production build locally         |
+| `npm test`            | Run the Vitest suite                       |
+| `npm run lint`        | Oxlint                                     |
 | `npm run data:import` | Regenerate `src/data/*.json` from upstream |
-| `npm run data:audit` | Report on data quality and coverage |
+| `npm run data:audit`  | Report on data quality and coverage        |
 
 ## Data
 

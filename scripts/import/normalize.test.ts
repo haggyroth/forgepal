@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  classify,
-  parseAlternativeStations,
-  parseBatchYield,
-  parseDropLine,
-} from './normalize.ts'
+import { classify, parseAlternativeStations, parseBatchYield, parseDropLine } from './normalize.ts'
 import type { DropSource, Recipe } from '../../src/types/game.ts'
 
 const noRecipe = null
@@ -99,9 +94,9 @@ describe('parseBatchYield', () => {
 
 describe('parseAlternativeStations', () => {
   it('splits a comma-separated station list', () => {
-    expect(parseAlternativeStations('Also craftable at: Improved Furnace, Electric Furnace')).toEqual(
-      ['Improved Furnace', 'Electric Furnace'],
-    )
+    expect(
+      parseAlternativeStations('Also craftable at: Improved Furnace, Electric Furnace'),
+    ).toEqual(['Improved Furnace', 'Electric Furnace'])
   })
 
   it('stops at a semicolon so other notes do not leak in', () => {

@@ -78,10 +78,7 @@ function TreeBranch({ node }: { node: RecipeNode }) {
   return (
     <li className="relative py-0.5">
       {/* Elbow connector joining this row to the parent's vertical rule. */}
-      <span
-        aria-hidden
-        className="absolute -left-3 top-[0.85rem] h-px w-2 bg-iron-800"
-      />
+      <span aria-hidden className="absolute -left-3 top-[0.85rem] h-px w-2 bg-iron-800" />
       <div className="flex items-baseline gap-2">
         <span
           className={`min-w-0 truncate font-mono text-[0.8rem] ${

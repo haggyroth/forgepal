@@ -183,4 +183,3 @@ describe('alternative sourcing', () => {
     expect(screen.queryByText(/\b0 Gold Coin\b/)).not.toBeInTheDocument()
   })
 })
-

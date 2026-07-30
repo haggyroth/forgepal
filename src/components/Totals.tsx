@@ -46,12 +46,7 @@ export function Totals({
         out and get — so it gets the ember glow and the top slot. Intermediates
         are reference material and sit below in a quieter panel.
       */}
-      <Section
-        id="requisition"
-        title="Requisition"
-        aside={`${result.raw.length} to gather`}
-        glow
-      >
+      <Section id="requisition" title="Requisition" aside={`${result.raw.length} to gather`} glow>
         {exportBar ? <div className="mb-4 -mt-1">{exportBar}</div> : null}
         <ul className="space-y-px">
           {result.raw.map((entry) => (
@@ -186,13 +181,7 @@ function RawRow({
   )
 }
 
-function DropTable({
-  drops,
-  habitats,
-}: {
-  drops: readonly DropSource[]
-  habitats: HabitatIndex
-}) {
+function DropTable({ drops, habitats }: { drops: readonly DropSource[]; habitats: HabitatIndex }) {
   // Best odds first — the point of this table is "who should I hunt". Sources
   // with an unknown rate sort last rather than being treated as zero.
   const sorted = [...drops].sort(
