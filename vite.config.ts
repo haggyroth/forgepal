@@ -11,6 +11,24 @@ const base = process.env.GITHUB_ACTIONS ? '/forgepal/' : '/'
 export default defineConfig({
   base,
   plugins: [react(), tailwindcss()],
+  json: {
+    // Emit the dataset as JSON.parse('…') rather than an object literal. The
+    // engine parses a JSON string far faster than it evaluates a megabyte of
+    // nested literals, and the output is smaller.
+    stringify: true,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the dataset into its own chunk. Application code changes often
+        // and the dataset changes weekly at most, but they previously shared
+        // one content hash — so any code tweak forced every visitor to
+        // re-download ~160 kB of unchanged game data. Separate chunks mean
+        // separate cache lifetimes.
+        manualChunks: (id: string) => (id.includes('game-data.json') ? 'game-data' : undefined),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
