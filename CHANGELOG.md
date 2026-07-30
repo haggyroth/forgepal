@@ -11,7 +11,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - docs: added the ForgePal logo to the top of the README, linked to the live site. Losslessly recompressed 558 kB → 483 kB; not part of the app bundle
 - chore(deps): bump `actions/checkout` v4→v7, `actions/setup-node` v4→v7, `github/codeql-action` v3→v4. Also clears the Node 20 deprecation warning every workflow run was emitting
 - chore(deps): bump `actions/configure-pages` v5→v6, `actions/upload-pages-artifact` v3→v5, `actions/deploy-pages` v4→v5. Split from the above because these run only on `main`, so pull-request CI cannot exercise them
-- chore(ci): `main` is now protected — CI, CodeQL, and code-scanning checks required; force pushes and branch deletion blocked
+- chore(ci): `main` is fully protected — a pull request with green CI, CodeQL, and code-scanning checks is required for every change, with `enforce_admins` on so it cannot be bypassed. Force pushes and branch deletion blocked
+- docs: the version bump and doc updates now go *in* the branch rather than as a follow-up commit on `main`, which admin enforcement makes impossible. One PR per change, with the version and its changelog entry landing atomically alongside the code
 
 ## [1.0.1] — 2026-07-28
 
