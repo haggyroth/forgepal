@@ -50,7 +50,9 @@ src/lib/
   search.ts              Catalogue search, filtering, and ranking.
 src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
 src/components/
-  ui.tsx                 SectionHeading, SourceBadge, Stepper, Panel.
+  ui.tsx                 SourceBadge, Stepper, Panel.
+  Section.tsx            Collapsible panel: heading, toggle, ARIA. Use this,
+                         not Panel + a hand-rolled heading.
   ItemBrowser.tsx        Search + category filters + results.
   BuildList.tsx          Selected items with quantity steppers.
   Totals.tsx             Requisition (raw), intermediates, drop sourcing.
@@ -129,6 +131,11 @@ Tailwind 4 notes that have already bitten once:
 - Font weights are named utilities (`font-semibold`, `font-bold`). **`font-600` is not a class** and silently does nothing.
 - Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem.
 - Scrollable flex children need `min-h-0` on every ancestor in the chain; `min-height: auto` otherwise refuses to shrink and the list runs off the page instead of scrolling.
+
+Every panel is a `Section` — collapsible, with its state persisted per section in localStorage under `forgepal:sections:v1`. Two rules worth keeping:
+
+- **Collapse state stays out of the shareable URL.** It's a view preference; encoding it would impose the sender's layout on whoever opens the link.
+- **Collapsed content is unmounted, not hidden.** The Breakdown tree and the full catalogue are the expensive renders here, and `display: none` would keep paying for them.
 
 The catalogue renders at most 60 results and reports the true total. Rendering all ~1,320 entries is slow and useless — search is the intended way through the list.
 

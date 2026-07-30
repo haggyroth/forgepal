@@ -4,7 +4,8 @@ import type { DropSource, ExpeditionReward, GameData, MerchantListing } from '@/
 import { formatHours } from '@/lib/format'
 import { toId } from '@/lib/id'
 import type { HabitatIndex } from '@/lib/route'
-import { Panel, SectionHeading, SourceBadge } from './ui'
+import { Section } from './Section'
+import { SourceBadge } from './ui'
 
 /** The three sourcing lookups the requisition needs, bundled to keep props flat. */
 export interface Sourcing {
@@ -32,12 +33,9 @@ export function Totals({
 
   if (!hasAnything) {
     return (
-      <Panel>
-        <SectionHeading>Requisition</SectionHeading>
-        <p className="py-6 text-center font-mono text-sm text-iron-600">
-          Nothing queued yet.
-        </p>
-      </Panel>
+      <Section id="requisition" title="Requisition">
+        <p className="py-6 text-center font-mono text-sm text-iron-600">Nothing queued yet.</p>
+      </Section>
     )
   }
 
@@ -48,19 +46,26 @@ export function Totals({
         out and get — so it gets the ember glow and the top slot. Intermediates
         are reference material and sit below in a quieter panel.
       */}
-      <Panel glow>
-        <SectionHeading aside={`${result.raw.length} to gather`}>Requisition</SectionHeading>
+      <Section
+        id="requisition"
+        title="Requisition"
+        aside={`${result.raw.length} to gather`}
+        glow
+      >
         {exportBar ? <div className="mb-4 -mt-1">{exportBar}</div> : null}
         <ul className="space-y-px">
           {result.raw.map((entry) => (
             <RawRow key={entry.itemId} entry={entry} index={index} sourcing={sourcing} />
           ))}
         </ul>
-      </Panel>
+      </Section>
 
       {result.intermediates.length > 0 ? (
-        <Panel>
-          <SectionHeading aside={`${result.intermediates.length}`}>Craft along the way</SectionHeading>
+        <Section
+          id="intermediates"
+          title="Craft along the way"
+          aside={`${result.intermediates.length}`}
+        >
           <ul className="space-y-px">
             {result.intermediates.map((entry) => (
               <li
@@ -87,12 +92,11 @@ export function Totals({
               </li>
             ))}
           </ul>
-        </Panel>
+        </Section>
       ) : null}
 
       {result.unresolved.length > 0 ? (
-        <Panel>
-          <SectionHeading>Unknown materials</SectionHeading>
+        <Section id="unresolved" title="Unknown materials">
           <p className="mb-2 font-mono text-[0.7rem] text-iron-600">
             Referenced by a recipe but missing from the dataset.
           </p>
@@ -106,7 +110,7 @@ export function Totals({
               </li>
             ))}
           </ul>
-        </Panel>
+        </Section>
       ) : null}
     </div>
   )
