@@ -1,4 +1,8 @@
-# ForgePal
+<p align="center">
+  <a href="https://haggyroth.github.io/forgepal/">
+    <img src="logo.png" alt="ForgePal" width="520">
+  </a>
+</p>
 
 A Palworld crafting calculator that answers one question well: **"What do I actually need to gather to build all of this?"**
 
