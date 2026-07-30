@@ -320,3 +320,110 @@ describe('the committed dataset', () => {
     expect(campfire?.workSuitability).toBe('Kindling')
   })
 })
+
+describe('inventory offset', () => {
+  const index = fixture()
+  const inv = (entries: [string, number][]) =>
+    new Map(entries.map(([name, qty]) => [toId(name), qty]))
+
+  it('subtracts what you already have from a raw material', () => {
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 20 }],
+      index,
+      inv([['Ore', 15]]),
+    )
+    const ore = find(result.raw, 'Ore')
+
+    expect(ore?.gross).toBe(40)
+    expect(ore?.fromInventory).toBe(15)
+    expect(ore?.required).toBe(25)
+  })
+
+  it('cascades stock through the recipe tree', () => {
+    // The whole reason inventory is applied during propagation rather than
+    // subtracted from the finished totals: 10 Ingots in the chest is 20 Ore
+    // you no longer have to mine.
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 20 }],
+      index,
+      inv([['Ingot', 10]]),
+    )
+
+    expect(find(result.intermediates, 'Ingot')?.required).toBe(10)
+    expect(find(result.raw, 'Ore')?.required).toBe(20)
+  })
+
+  it('never goes negative when you have more than you need', () => {
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 1 }],
+      index,
+      inv([['Wood', 999]]),
+    )
+    const wood = find(result.raw, 'Wood')
+
+    expect(wood?.required).toBe(0)
+    expect(wood?.fromInventory).toBe(3)
+  })
+
+  it('stops expanding a sub-recipe that inventory fully covers', () => {
+    // Owning every Ingot means no Ore at all, not merely less.
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 5 }],
+      index,
+      inv([['Ingot', 5]]),
+    )
+
+    expect(find(result.intermediates, 'Ingot')?.crafts).toBe(0)
+    expect(find(result.raw, 'Ore')).toBeUndefined()
+  })
+
+  it('applies to build-list targets too', () => {
+    const result = calculate([{ itemId: toId('Ingot'), quantity: 10 }], index, inv([['Ingot', 4]]))
+    const ingot = find(result.targets, 'Ingot')
+
+    expect(ingot?.gross).toBe(10)
+    expect(ingot?.required).toBe(6)
+    expect(find(result.raw, 'Ore')?.required).toBe(12)
+  })
+
+  it('reduces the number of batches a batch recipe needs', () => {
+    // 15 Arrows is 2 batches; owning 6 drops it to 1.
+    const result = calculate([{ itemId: toId('Arrow'), quantity: 15 }], index, inv([['Arrow', 6]]))
+
+    expect(find(result.targets, 'Arrow')?.crafts).toBe(1)
+    expect(find(result.raw, 'Wood')?.required).toBe(2)
+  })
+
+  it('keeps a fully covered material visible rather than dropping it', () => {
+    // Seeing "Wood 0, you have it" is the reassurance; silently vanishing
+    // would read as a bug.
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 1 }],
+      index,
+      inv([['Wood', 3]]),
+    )
+    expect(find(result.raw, 'Wood')).toBeDefined()
+  })
+
+  it('ignores negative and non-finite stock', () => {
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 1 }],
+      index,
+      inv([
+        ['Wood', -5],
+        ['Stone', Number.NaN],
+      ]),
+    )
+
+    expect(find(result.raw, 'Wood')?.required).toBe(3)
+    expect(find(result.raw, 'Stone')?.required).toBe(3)
+  })
+
+  it('is a no-op with no inventory, and gross equals required', () => {
+    const result = calculate([{ itemId: toId('Mega Sphere'), quantity: 20 }], index)
+    for (const total of [...result.targets, ...result.intermediates, ...result.raw]) {
+      expect(total.gross).toBe(total.required)
+      expect(total.fromInventory).toBe(0)
+    }
+  })
+})
