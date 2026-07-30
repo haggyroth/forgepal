@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Changed
 
+- docs: added the ForgePal logo to the top of the README, linked to the live site. Losslessly recompressed 558 kB → 483 kB; not part of the app bundle
 - chore(deps): bump `actions/checkout` v4→v7, `actions/setup-node` v4→v7, `github/codeql-action` v3→v4. Also clears the Node 20 deprecation warning every workflow run was emitting
 - chore(deps): bump `actions/configure-pages` v5→v6, `actions/upload-pages-artifact` v3→v5, `actions/deploy-pages` v4→v5. Split from the above because these run only on `main`, so pull-request CI cannot exercise them
 - chore(ci): `main` is now protected — CI, CodeQL, and code-scanning checks required; force pushes and branch deletion blocked
