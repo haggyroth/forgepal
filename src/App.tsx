@@ -159,7 +159,12 @@ function resolveInitialState(index: GameIndex): { state: SharedState; unknownIds
   const isKnownId = (id: string) => index.byId.has(id)
   const fromUrl = decodeState(window.location.search, isKnownId)
   if (!isEmptyState(fromUrl.state)) return fromUrl
-  return { state: loadPersisted(isKnownId), unknownIds: [] }
+
+  // A link whose ids have *all* been dropped decodes to an empty state, so it
+  // falls through to saved state here. Carry unknownIds across the fallback
+  // anyway — otherwise the one case that most needs an explanation, a link
+  // where nothing survived, is the one case that silently gives none.
+  return { state: loadPersisted(isKnownId), unknownIds: fromUrl.unknownIds }
 }
 
 function Header({

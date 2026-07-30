@@ -12,14 +12,24 @@ import type { ItemId } from '@/types/game'
 const KEY = 'forgepal:build:v1'
 
 /**
+ * Reached through `window` rather than the bare global on purpose: Node ships
+ * its own experimental `localStorage` global, which shadows the DOM one under
+ * test and is unusable without a CLI flag. In a browser these are the same
+ * object.
+ */
+function storage(): Storage {
+  return window.localStorage
+}
+
+/**
  * Stored in the same format as the shareable URL, so there is one encoding to
  * reason about and a saved build can be turned into a link without conversion.
  */
 export function savePersisted(state: SharedState): void {
   try {
     const encoded = encodeState(state)
-    if (encoded) localStorage.setItem(KEY, encoded)
-    else localStorage.removeItem(KEY)
+    if (encoded) storage().setItem(KEY, encoded)
+    else storage().removeItem(KEY)
   } catch {
     // Storage unavailable or full — the app works fine without it.
   }
@@ -27,7 +37,7 @@ export function savePersisted(state: SharedState): void {
 
 export function loadPersisted(isKnownId: (id: ItemId) => boolean): SharedState {
   try {
-    const raw = localStorage.getItem(KEY)
+    const raw = storage().getItem(KEY)
     if (!raw) return emptyState
     return decodeState(raw, isKnownId).state
   } catch {
@@ -37,7 +47,7 @@ export function loadPersisted(isKnownId: (id: ItemId) => boolean): SharedState {
 
 export function clearPersisted(): void {
   try {
-    localStorage.removeItem(KEY)
+    storage().removeItem(KEY)
   } catch {
     // Nothing to do; see savePersisted.
   }
