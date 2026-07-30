@@ -1,16 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { gameData } from '@/data'
 import { buildIndex, calculate, type GameIndex } from '@/lib/calculator'
-import {
-  buildShareUrl,
-  decodeState,
-  encodeState,
-  isEmptyState,
-  type SharedState,
-} from '@/lib/shareState'
-import { loadPersisted, savePersisted } from '@/lib/storage'
-import { useBuildList } from '@/hooks/useBuildList'
+import { buildShareUrl, decodeState, encodeState, type SharedState } from '@/lib/shareState'
+import { useBuilds } from '@/hooks/useBuilds'
 import { useInventory } from '@/hooks/useInventory'
+import { BuildSwitcher } from '@/components/BuildSwitcher'
 import type { Entry } from '@/lib/search'
 import { hasAnythingToExport } from '@/lib/export'
 import { analyseTech, MAX_TECH_LEVEL, parsePlayerLevel } from '@/lib/tech'
@@ -35,22 +29,29 @@ export default function App() {
   // already on screen rather than appearing a frame later.
   const [restored] = useState(() => resolveInitialState(index))
 
-  const [playerLevel, setPlayerLevel] = useState<number | null>(restored.state.playerLevel)
+  const isKnownId = useMemo(() => (id: string) => index.byId.has(id), [index])
+
   const {
+    builds,
+    activeId,
+    name: buildName,
     quantities,
+    playerLevel,
     entries: buildEntries,
     add,
     setQuantity,
     remove,
     clear,
-  } = useBuildList(restored.state.build)
+    setPlayerLevel,
+    select,
+    create,
+    duplicate,
+    rename,
+    removeBuild,
+  } = useBuilds(isKnownId, restored.state)
   const [shared, setShared] = useState(false)
 
-  const {
-    stock,
-    setAmount: setStock,
-    clear: clearStock,
-  } = useInventory(useMemo(() => (id: string) => index.byId.has(id), [index]))
+  const { stock, setAmount: setStock, clear: clearStock } = useInventory(isKnownId)
 
   const result = useMemo(() => calculate(buildEntries, index, stock), [buildEntries, index, stock])
   const tech = useMemo(() => analyseTech(result, index, playerLevel), [result, index, playerLevel])
@@ -66,12 +67,12 @@ export default function App() {
   )
   const route = useMemo(() => buildRoute(result, index, habitats), [result, index, habitats])
 
-  // Keep localStorage and the address bar in step with the current build.
+  // Keep the address bar in step with the active build. Persistence is owned by
+  // useBuilds now; this effect only mirrors state into the URL.
   // replaceState rather than pushState: every quantity tweak would otherwise
   // add a history entry and make the back button useless.
   useEffect(() => {
     const state: SharedState = { build: buildEntries, playerLevel }
-    savePersisted(state)
     const query = encodeState(state)
     window.history.replaceState(
       null,
@@ -141,6 +142,18 @@ export default function App() {
               onClear={clear}
               onShare={copyShareLink}
               shared={shared}
+              switcher={
+                <BuildSwitcher
+                  builds={builds}
+                  activeId={activeId}
+                  name={buildName}
+                  onSelect={select}
+                  onCreate={create}
+                  onDuplicate={duplicate}
+                  onRename={rename}
+                  onDelete={removeBuild}
+                />
+              }
             />
 
             <Totals
@@ -178,15 +191,10 @@ export default function App() {
  * build, not silently resurrect your own over the top of it.
  */
 function resolveInitialState(index: GameIndex): { state: SharedState; unknownIds: string[] } {
-  const isKnownId = (id: string) => index.byId.has(id)
-  const fromUrl = decodeState(window.location.search, isKnownId)
-  if (!isEmptyState(fromUrl.state)) return fromUrl
-
-  // A link whose ids have *all* been dropped decodes to an empty state, so it
-  // falls through to saved state here. Carry unknownIds across the fallback
-  // anyway — otherwise the one case that most needs an explanation, a link
-  // where nothing survived, is the one case that silently gives none.
-  return { state: loadPersisted(isKnownId), unknownIds: fromUrl.unknownIds }
+  // Only the URL is read here. Saved builds are loaded by useBuilds, which owns
+  // that store; a shared link becomes a *new* build there rather than
+  // overwriting whatever was active.
+  return decodeState(window.location.search, (id) => index.byId.has(id))
 }
 
 function Header({

@@ -4,6 +4,23 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] — 2026-07-29
+
+### Added
+
+- feat(builds): named build lists — keep several side by side and switch between them, with rename, duplicate, and a two-step delete
+- feat(builds): a build saved under the previous single-build key migrates in automatically as "My build"
+
+### Changed
+
+- refactor(builds): quantity rules moved out of `useBuildList` into pure functions in `src/lib/builds.ts`, with the collection as the single state owner. Two sources of truth for "what is in the list right now" would have drifted the first time a switch raced an edit
+
+### Notes
+
+- Edits auto-save. The single build already persisted without an explicit save step, so requiring one now would be a regression — people would start losing work they currently never lose
+- A shared link opens as its own build rather than overwriting whatever was active, and is not persisted until edited. Writing it on load would add another copy every time the same link was opened
+- Tech level lives on the collection, not on each build: it describes your save, not a particular shopping list, so switching builds must not silently change what reads as locked
+
 ## [1.3.0] — 2026-07-29
 
 ### Added

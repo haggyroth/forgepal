@@ -62,7 +62,7 @@ These were considered for v1 and consciously deferred, not dropped.
 - [x] **Inventory offset** — a `have` field on every material. Applied during demand propagation rather than subtracted from the finished totals, so stock cascades: ten Ingots on hand is twenty Ore you no longer mine. Persisted locally and deliberately kept out of the shareable URL
 - [ ] **Tech point costs** — the dataset carries technology _levels_ but no point costs, because upstream doesn't record them. Would need another source
 - [ ] **Alternative recipe selection** — `alternativeRecipes` is populated but unused. Let the user choose the Crusher path for Paldium, a higher-tier station, or a soul downgrade
-- [ ] Save _named_ build lists, so several can be kept side by side (single-build persistence is done)
+- [x] **Named build lists** — several builds side by side, with rename, duplicate, and a two-step delete. Edits auto-save, matching the behaviour the single build already had; a pre-existing build migrates in as "My build", and a shared link opens as its own build rather than overwriting a saved one
 
 ## Data quality
 
