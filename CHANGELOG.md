@@ -6,12 +6,21 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.0.0] — 2026-07-28
+
+First stable release. ForgePal does what it was built to do: queue any mix of Palworld items and structures, and get one consolidated list of everything you actually need to gather, with the Pals that drop it.
+
 ### Added
 
+- test: component, hook, and `App` coverage — 145 → 237 tests
+- test: static guard on Tailwind utility usage. Catches undefined theme tokens (`bg-forge-900`) and numeric font weights (`font-600`), neither of which is reachable by a render test because jsdom applies no CSS and Tailwind emits nothing for an unknown utility
+- chore(ci): Dependabot for npm and GitHub Actions, grouped by concern, majors ignored
+- chore(ci): CodeQL analysis on push, pull request, and weekly
 - chore(ci): scheduled weekly upstream data refresh (`.github/workflows/data-refresh.yml`). Re-imports and opens a PR only when the output actually changes; never commits to `main`
 
 ### Fixed
 
+- fix(state): a shared link whose item ids had *all* been dropped from the dataset decoded to an empty state, so the fallback to saved state discarded the report of what was skipped — the case most needing an explanation was the one giving none
 - fix(data): the importer is now idempotent. `meta.importedAt` was stamped on every run, so the output file always differed even when upstream had not changed — the refresh workflow would have opened a noise PR every week
 
 ### Changed

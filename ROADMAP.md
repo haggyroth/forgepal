@@ -48,5 +48,5 @@ These were considered for v1 and consciously deferred, not dropped.
 ## Technical debt
 
 - [ ] **Bundle size** — the 1.5 MB dataset inlines into the JS bundle (~1 MB minified, 144 kB gzipped). Split it out and fetch it as a static asset, or trim unused fields at import time
-- [ ] Component tests once there are components to test
+- [x] **Component tests** — every component, the build-list hook, and `App`, plus a static guard on Tailwind utility usage that catches the class of bug render tests structurally cannot
 - [ ] Consider indexing items by category/station at import time rather than filtering at runtime
