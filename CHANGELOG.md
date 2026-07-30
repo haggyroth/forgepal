@@ -10,10 +10,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - chore(data): import breeding data to a separate `src/data/breeding-data.json` — 299 Pals with CombiRanks, 164 special combos, and a derived 183-Pal generic pool. Kept out of `game-data.json` so the calculator's chunk does not carry it
 - chore(data): `breeding-overrides.ts` for curated pool corrections and the tie-break policy, and audit coverage checking that no special-combo child leaks into the pool and that every pooled rank is unique
+- chore(breeding): `src/lib/breeding.ts` — the solver engine. `breed(a, b)` resolves a pair (fixed combo first, then the rank formula), `parentsFor(child)` inverts it, and `solve(owned, target)` searches breadth-first for the fewest-generation chain from a roster
+- chore(breeding): every result carries a `tieBroken` flag and every plan a `tieBrokenSteps` count, so the UI can mark the steps that depend on the contested rule instead of presenting them as settled
+
+### Changed
+
+- refactor(breeding): `comboKey` and `nearestInPool` moved from the importer into `src/lib/breeding.ts`, which the importer now imports. One implementation means the 31.4% figure the dataset records and the answers the solver gives cannot drift apart — a test asserts they still agree, pair for pair
 
 ### Notes
 
-- No user-visible change: this is the data pipeline for the breeding solver, so there is no version bump
+- No user-visible change: this is the data pipeline and engine for the breeding solver, so there is no version bump. The bump lands with the UI
+- `solve` minimises breeding _generations_, and because a species is recorded at the earliest generation it can be reached, the returned steps are always runnable top to bottom — a step's parents are produced before it
+- The load-bearing test is that no generic pair ever yields a special-combo-only child, across all 44,850 real pairs. That is the invariant a pool error breaks, and it breaks it silently: a wrongly-pooled Pal displaces the correct answer for every target near its rank
 - The tie-break rule decides **31.4%** of generic parent pairs (14,010 of 44,687). Upstream verified `higher` in game but its own `gaps` field records that the wiki documents the opposite, so the share is carried in the dataset for the UI to surface rather than left as a claim
 - The eleven crossover Pals sharing CombiRank 3100 turn out to be excluded by the default rule already, which is what makes every pooled rank unique
 
