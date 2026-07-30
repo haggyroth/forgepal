@@ -4,6 +4,23 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-07-29
+
+### Added
+
+- feat(inventory): a `have` field on every raw material and intermediate. What you already own is subtracted from what you need, and fully covered materials show a ✓ rather than disappearing
+- feat(inventory): stock persists locally and can be cleared from the Requisition header
+
+### Changed
+
+- fix(calculator): the Requisition/intermediates split now keys off whether an entry _has_ a recipe rather than whether it is currently being crafted. Inventory can drive `crafts` to zero, and an Ingot you already own is still a crafted component — the old filter would have silently moved it into the gather list
+
+### Notes
+
+- Inventory is applied **during** demand propagation, not subtracted from the finished totals. That is what makes stock cascade: owning ten Ingots removes the twenty Ore that would have been mined to make them. Subtracting afterwards would have reduced the Ingot line while still sending you out for all the Ore
+- Every downstream consumer — the farming route, the Markdown export — reads `MaterialTotal.required`, so all of them became inventory-aware without changes
+- Inventory is deliberately **not** in the shareable URL. A link hands someone a build; baking your chest contents into it would show them a requisition reduced by materials they do not own
+
 ## [1.2.2] — 2026-07-29
 
 ### Changed

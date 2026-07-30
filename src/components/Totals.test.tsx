@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Totals } from './Totals'
@@ -25,14 +25,28 @@ const resultFor = (entries: [string, number][]) =>
 
 const row = (name: string) => screen.getByText(name).closest('li')
 
+// Inventory defaults to empty; the dedicated suite below supplies its own.
+const noStock = {
+  stock: new Map<string, number>(),
+  onSetStock: () => {},
+  onClearStock: () => {},
+}
+
 describe('Totals', () => {
   it('says nothing is queued when the build list is empty', () => {
-    render(<Totals result={resultFor([])} index={index} sourcing={sourcing} />)
+    render(<Totals result={resultFor([])} index={index} sourcing={sourcing} {...noStock} />)
     expect(screen.getByText(/Nothing queued yet/)).toBeInTheDocument()
   })
 
   it('lists raw materials with their quantities', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 20]])}
+        index={index}
+        sourcing={sourcing}
+        {...noStock}
+      />,
+    )
 
     // 20 spheres -> 20 Ingots -> 40 Ore.
     expect(row('Ore')).toHaveTextContent('40')
@@ -41,7 +55,14 @@ describe('Totals', () => {
   })
 
   it('separates intermediates from the shopping list', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 20]])}
+        index={index}
+        sourcing={sourcing}
+        {...noStock}
+      />,
+    )
 
     expect(screen.getByRole('heading', { name: /Craft along the way/ })).toBeInTheDocument()
     expect(row('Ingot')).toHaveTextContent('20')
@@ -49,17 +70,28 @@ describe('Totals', () => {
   })
 
   it('names the Pal work a station needs', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 1]])}
+        index={index}
+        sourcing={sourcing}
+        {...noStock}
+      />,
+    )
     expect(row('Ingot')).toHaveTextContent('Kindling')
   })
 
   it('omits the intermediates panel when there are none', () => {
-    render(<Totals result={resultFor([['Ingot', 5]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals result={resultFor([['Ingot', 5]])} index={index} sourcing={sourcing} {...noStock} />,
+    )
     expect(screen.queryByRole('heading', { name: /Craft along the way/ })).not.toBeInTheDocument()
   })
 
   it('reveals Pal drop sources on demand, best odds first', async () => {
-    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} {...noStock} />,
+    )
 
     const toggle = screen.getByRole('button', { name: /Wool/ })
     expect(screen.queryByText('Dropped by')).not.toBeInTheDocument()
@@ -80,7 +112,14 @@ describe('Totals', () => {
   })
 
   it('does not offer an expander for a material with no recorded sources', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 1]])}
+        index={index}
+        sourcing={sourcing}
+        {...noStock}
+      />,
+    )
     // Paldium Fragment is curated as gathered and carries source notes; a
     // material with neither drops nor notes must not render a dead toggle.
     const bare = index.byId.get(toId('Ore'))
@@ -100,6 +139,8 @@ describe('Totals', () => {
           name: 'Mystery Material',
           sourceKind: 'drop',
           required: 3,
+          gross: 3,
+          fromInventory: 0,
           crafts: 0,
           produced: 0,
           surplus: 0,
@@ -123,7 +164,7 @@ describe('Totals', () => {
       }),
     }
 
-    render(<Totals result={spoofed} index={spoofedIndex} sourcing={sourcing} />)
+    render(<Totals result={spoofed} index={spoofedIndex} sourcing={sourcing} {...noStock} />)
     await userEvent.click(screen.getByRole('button', { name: /Mystery Material/ }))
 
     expect(screen.getByTitle('Drop rate not recorded upstream')).toHaveTextContent('?')
@@ -137,6 +178,7 @@ describe('Totals', () => {
         result={{ ...base, unresolved: [{ itemId: 'ghost', name: 'Ghost Material', required: 7 }] }}
         index={index}
         sourcing={sourcing}
+        {...noStock}
       />,
     )
     expect(screen.getByRole('heading', { name: /Unknown materials/ })).toBeInTheDocument()
@@ -149,6 +191,7 @@ describe('Totals', () => {
         result={resultFor([['Ingot', 1]])}
         index={index}
         sourcing={sourcing}
+        {...noStock}
         exportBar={<button type="button">copy markdown</button>}
       />,
     )
@@ -158,13 +201,17 @@ describe('Totals', () => {
 
 describe('alternative sourcing', () => {
   it('offers vendors as an alternative to farming', async () => {
-    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} {...noStock} />,
+    )
     await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
     expect(screen.getByText(/Or buy from/)).toBeInTheDocument()
   })
 
   it('shows where a Pal lives next to its drop entry', async () => {
-    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} {...noStock} />,
+    )
     await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
 
     // Melpaca is the headline Wool source and does have wild regions.
@@ -175,11 +222,117 @@ describe('alternative sourcing', () => {
 
   it('says "price ?" rather than implying an item is free', async () => {
     // 476 of 587 upstream listings carry no price.
-    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    render(
+      <Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} {...noStock} />,
+    )
     await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
 
     const unpriced = screen.queryAllByTitle('Price not recorded upstream')
     for (const el of unpriced) expect(el).toHaveTextContent('price ?')
     expect(screen.queryByText(/\b0 Gold Coin\b/)).not.toBeInTheDocument()
+  })
+})
+
+describe('inventory offset', () => {
+  const withStock = (entries: [string, number][], onSetStock = () => {}) => ({
+    stock: new Map(entries.map(([name, qty]) => [toId(name), qty])),
+    onSetStock,
+    onClearStock: () => {},
+  })
+
+  it('offers a stock field on every material', () => {
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 20]])}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([])}
+      />,
+    )
+    expect(screen.getByLabelText('Ore in stock')).toBeInTheDocument()
+    // Intermediates too — owning Ingots is what saves the Ore.
+    expect(screen.getByLabelText('Ingot in stock')).toBeInTheDocument()
+  })
+
+  it('reports the reduced amount you still need', () => {
+    render(
+      <Totals
+        result={calculate(
+          [{ itemId: toId('Mega Sphere'), quantity: 20 }],
+          index,
+          new Map([[toId('Ore'), 15]]),
+        )}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([['Ore', 15]])}
+      />,
+    )
+    expect(row('Ore')).toHaveTextContent('25')
+  })
+
+  it('marks a fully covered material rather than hiding it', () => {
+    render(
+      <Totals
+        result={calculate(
+          [{ itemId: toId('Mega Sphere'), quantity: 1 }],
+          index,
+          new Map([[toId('Wood'), 99]]),
+        )}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([['Wood', 99]])}
+      />,
+    )
+    expect(row('Wood')).toHaveTextContent('✓')
+  })
+
+  it('counts only what is still outstanding in the header', () => {
+    const result = calculate(
+      [{ itemId: toId('Mega Sphere'), quantity: 1 }],
+      index,
+      new Map([[toId('Wood'), 99]]),
+    )
+    render(
+      <Totals result={result} index={index} sourcing={sourcing} {...withStock([['Wood', 99]])} />,
+    )
+    // Four raw materials, one of them covered.
+    expect(screen.getByText('3 to gather')).toBeInTheDocument()
+  })
+
+  it('reports typed stock as a number', async () => {
+    const onSetStock = vi.fn()
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 1]])}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([], onSetStock)}
+      />,
+    )
+    await userEvent.type(screen.getByLabelText('Ore in stock'), '7')
+    expect(onSetStock).toHaveBeenLastCalledWith(toId('Ore'), 7)
+  })
+
+  it('offers to clear stock only when some is recorded', () => {
+    const { unmount } = render(
+      <Totals
+        result={resultFor([['Mega Sphere', 1]])}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([])}
+      />,
+    )
+    expect(screen.queryByRole('button', { name: 'clear stock' })).not.toBeInTheDocument()
+    unmount()
+
+    render(
+      <Totals
+        result={resultFor([['Mega Sphere', 1]])}
+        index={index}
+        sourcing={sourcing}
+        {...withStock([['Ore', 5]])}
+      />,
+    )
+    expect(screen.getByRole('button', { name: 'clear stock' })).toBeInTheDocument()
   })
 })

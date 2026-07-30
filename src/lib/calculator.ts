@@ -37,8 +37,16 @@ export interface MaterialTotal {
   itemId: ItemId
   name: string
   sourceKind: SourceKind
-  /** Units actually needed. */
+  /**
+   * Units you still have to obtain, after inventory. This is the number you go
+   * shopping with, which is why every downstream consumer — the route, the
+   * export — reads this field and becomes inventory-aware for free.
+   */
   required: number
+  /** Units needed before inventory was applied. Equals `required` with no inventory. */
+  gross: number
+  /** How much of `gross` your existing stock covered. */
+  fromInventory: number
   /** Craft operations to run. 0 for anything not crafted. */
   crafts: number
   /** Units produced by those crafts; exceeds `required` when a batch overshoots. */
@@ -132,7 +140,11 @@ function topologicalOrder(
  * Quantities are floored at 0 and non-finite values are ignored, so malformed
  * UI state can't produce NaN totals.
  */
-export function calculate(buildList: BuildListEntry[], index: GameIndex): CalculationResult {
+export function calculate(
+  buildList: BuildListEntry[],
+  index: GameIndex,
+  inventory: ReadonlyMap<ItemId, number> = new Map(),
+): CalculationResult {
   const demand = new Map<ItemId, number>()
   const targetIds = new Set<ItemId>()
   const unresolved = new Map<ItemId, { name: string; required: number }>()
@@ -148,8 +160,16 @@ export function calculate(buildList: BuildListEntry[], index: GameIndex): Calcul
 
   for (const id of order) {
     const entry = index.byId.get(id)
-    const required = demand.get(id) ?? 0
-    if (!entry || required <= 0) continue
+    const gross = demand.get(id) ?? 0
+    if (!entry || gross <= 0) continue
+
+    // Inventory is consumed here, before costing, so that stock cascades: ten
+    // Ingots already in the chest is twenty Ore you no longer have to mine.
+    // Subtracting it from the finished totals instead would reduce the Ingot
+    // line while still sending you out for all the Ore.
+    const onHand = inventory.get(id) ?? 0
+    const fromInventory = Math.min(gross, Number.isFinite(onHand) ? Math.max(0, onHand) : 0)
+    const required = gross - fromInventory
 
     const recipe = entry.recipe
     const batchSize = recipe && recipe.yield > 0 ? recipe.yield : 1
@@ -161,6 +181,8 @@ export function calculate(buildList: BuildListEntry[], index: GameIndex): Calcul
       name: entry.name,
       sourceKind: entry.sourceKind,
       required,
+      gross,
+      fromInventory,
       crafts,
       produced,
       surplus: recipe ? produced - required : 0,
@@ -189,8 +211,12 @@ export function calculate(buildList: BuildListEntry[], index: GameIndex): Calcul
 
   return {
     targets: all.filter((t) => t.isTarget).sort(byName),
-    intermediates: all.filter((t) => !t.isTarget && t.crafts > 0).sort(byName),
-    raw: all.filter((t) => !t.isTarget && t.crafts === 0).sort(byName),
+    // Split on whether a thing *has* a recipe, not on whether we happen to be
+    // crafting it right now. Inventory can drive `crafts` to zero, and an Ingot
+    // you already own is still a crafted component — filtering on crafts would
+    // silently move it into the gather list.
+    intermediates: all.filter((t) => !t.isTarget && t.sourceKind === 'craftable').sort(byName),
+    raw: all.filter((t) => !t.isTarget && t.sourceKind !== 'craftable').sort(byName),
     unresolved: [...unresolved].map(([itemId, v]) => ({ itemId, ...v })).sort(byName),
     cycles,
   }

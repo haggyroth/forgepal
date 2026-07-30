@@ -10,6 +10,7 @@ import {
 } from '@/lib/shareState'
 import { loadPersisted, savePersisted } from '@/lib/storage'
 import { useBuildList } from '@/hooks/useBuildList'
+import { useInventory } from '@/hooks/useInventory'
 import type { Entry } from '@/lib/search'
 import { hasAnythingToExport } from '@/lib/export'
 import { analyseTech, MAX_TECH_LEVEL, parsePlayerLevel } from '@/lib/tech'
@@ -45,7 +46,13 @@ export default function App() {
   } = useBuildList(restored.state.build)
   const [shared, setShared] = useState(false)
 
-  const result = useMemo(() => calculate(buildEntries, index), [buildEntries, index])
+  const {
+    stock,
+    setAmount: setStock,
+    clear: clearStock,
+  } = useInventory(useMemo(() => (id: string) => index.byId.has(id), [index]))
+
+  const result = useMemo(() => calculate(buildEntries, index, stock), [buildEntries, index, stock])
   const tech = useMemo(() => analyseTech(result, index, playerLevel), [result, index, playerLevel])
 
   const habitats = useMemo(() => buildHabitatIndex(gameData), [])
@@ -140,6 +147,9 @@ export default function App() {
               result={result}
               index={index}
               sourcing={sourcing}
+              stock={stock}
+              onSetStock={setStock}
+              onClearStock={clearStock}
               exportBar={
                 <ExportBar
                   result={result}

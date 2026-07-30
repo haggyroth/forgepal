@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import type { CalculationResult, GameIndex, MaterialTotal } from '@/lib/calculator'
-import type { DropSource, ExpeditionReward, GameData, MerchantListing } from '@/types/game'
+import type { DropSource, ExpeditionReward, GameData, ItemId, MerchantListing } from '@/types/game'
 import { formatHours } from '@/lib/format'
 import { toId } from '@/lib/id'
 import type { HabitatIndex } from '@/lib/route'
@@ -21,11 +21,18 @@ export function Totals({
   result,
   index,
   sourcing,
+  stock,
+  onSetStock,
+  onClearStock,
   exportBar,
 }: {
   result: CalculationResult
   index: GameIndex
   sourcing: Sourcing
+  /** What the player already has, keyed by item id. */
+  stock: ReadonlyMap<ItemId, number>
+  onSetStock: (itemId: ItemId, amount: number) => void
+  onClearStock: () => void
   /** Export controls, rendered in the Requisition header where the list lives. */
   exportBar?: ReactNode
 }) {
@@ -46,11 +53,36 @@ export function Totals({
         out and get — so it gets the ember glow and the top slot. Intermediates
         are reference material and sit below in a quieter panel.
       */}
-      <Section id="requisition" title="Requisition" aside={`${result.raw.length} to gather`} glow>
+      <Section
+        id="requisition"
+        title="Requisition"
+        aside={
+          <span className="flex items-center gap-3">
+            {stock.size > 0 ? (
+              <button
+                type="button"
+                onClick={onClearStock}
+                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+              >
+                clear stock
+              </button>
+            ) : null}
+            <span>{`${result.raw.filter((r) => r.required > 0).length} to gather`}</span>
+          </span>
+        }
+        glow
+      >
         {exportBar ? <div className="mb-4 -mt-1">{exportBar}</div> : null}
         <ul className="space-y-px">
           {result.raw.map((entry) => (
-            <RawRow key={entry.itemId} entry={entry} index={index} sourcing={sourcing} />
+            <RawRow
+              key={entry.itemId}
+              entry={entry}
+              index={index}
+              sourcing={sourcing}
+              stock={stock.get(entry.itemId) ?? 0}
+              onSetStock={onSetStock}
+            />
           ))}
         </ul>
       </Section>
@@ -83,6 +115,11 @@ export function Totals({
                     ) : null}
                   </span>
                 ) : null}
+                <StockInput
+                  name={entry.name}
+                  value={stock.get(entry.itemId) ?? 0}
+                  onChange={(amount) => onSetStock(entry.itemId, amount)}
+                />
                 <Quantity total={entry} />
               </li>
             ))}
@@ -119,10 +156,14 @@ function RawRow({
   entry,
   index,
   sourcing,
+  stock,
+  onSetStock,
 }: {
   entry: MaterialTotal
   index: GameIndex
   sourcing: Sourcing
+  stock: number
+  onSetStock: (itemId: ItemId, amount: number) => void
 }) {
   const [open, setOpen] = useState(false)
   const source = index.byId.get(entry.itemId)
@@ -156,8 +197,24 @@ function RawRow({
         )}
 
         <SourceBadge kind={entry.sourceKind} />
-        <span className="w-16 shrink-0 text-right font-mono text-base font-semibold tnum text-ember-400">
-          {entry.required.toLocaleString()}
+        <StockInput
+          name={entry.name}
+          value={stock}
+          onChange={(amount) => onSetStock(entry.itemId, amount)}
+        />
+        {/* Covered rows stay listed rather than vanishing — seeing "0, you have
+            it" is the reassurance; disappearing would read as a bug. */}
+        <span
+          className={`w-16 shrink-0 text-right font-mono text-base font-semibold tnum ${
+            entry.required === 0 ? 'text-verdigris-400' : 'text-ember-400'
+          }`}
+          title={
+            entry.fromInventory > 0
+              ? `${entry.gross.toLocaleString()} needed, ${entry.fromInventory.toLocaleString()} in stock`
+              : undefined
+          }
+        >
+          {entry.required === 0 ? '✓' : entry.required.toLocaleString()}
         </span>
       </div>
 
@@ -178,6 +235,39 @@ function RawRow({
         </div>
       ) : null}
     </li>
+  )
+}
+
+/**
+ * How much of this the player already has.
+ *
+ * Sits inline on the row rather than in a separate inventory screen: you record
+ * stock while looking at what you need, not by hunting for the item again in
+ * another list.
+ */
+function StockInput({
+  name,
+  value,
+  onChange,
+}: {
+  name: string
+  value: number
+  onChange: (amount: number) => void
+}) {
+  return (
+    <input
+      type="number"
+      min={0}
+      value={value === 0 ? '' : value}
+      placeholder="have"
+      aria-label={`${name} in stock`}
+      onChange={(event) => onChange(Number(event.target.value))}
+      className={`w-16 shrink-0 rounded-sm border bg-iron-950/60 px-1.5 py-0.5 text-right font-mono text-[0.72rem] tnum [appearance:textfield] focus:border-ember-700 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
+        value > 0
+          ? 'border-verdigris-400/40 text-verdigris-400'
+          : 'border-iron-800 text-iron-400 placeholder:text-iron-700'
+      }`}
+    />
   )
 }
 
