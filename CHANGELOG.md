@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.0.1] — 2026-07-28
+
+### Fixed
+
+- fix(export): escape backslashes before pipes in Markdown table cells. Escaping only pipes turned `Odd\|Name` into `Odd\\|Name`, which Markdown reads as an escaped backslash followed by a *live* pipe, silently splitting the column. Latent — no current item name contains a backslash — but the dataset is regenerated from a scraped upstream. Found by CodeQL's first run on `main`
+
 ## [1.0.0] — 2026-07-28
 
 First stable release. ForgePal does what it was built to do: queue any mix of Palworld items and structures, and get one consolidated list of everything you actually need to gather, with the Pals that drop it.
