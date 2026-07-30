@@ -145,18 +145,38 @@ GitHub Pages via `.github/workflows/deploy.yml`, on push to `main`. `vite.config
 
 ## Git workflow
 
-Follow the user's git-workflow skill, which is the authority. In short: never commit to `main`; branch `<type>/<short-description>`; Conventional Commits; every PR gets a description body; **CI must be green before merging**; merge commits titled `merge: <branch> (#<PR>)`; bump the version after `feat/*` and `fix/*` merges; update README/ROADMAP/CHANGELOG after every merge.
+Follow the user's git-workflow skill, which is the authority. In short: never commit to `main`; branch `<type>/<short-description>`; Conventional Commits; every PR gets a description body; **CI must be green before merging**; merge commits titled `merge: <branch> (#<PR>)`; bump the version for `feat/*` and `fix/*`; update README/ROADMAP/CHANGELOG.
+
+One documented deviation from the skill: the version bump and doc updates go **in the branch**, not as a follow-up commit on `main` — see below.
 
 ### Branch protection on `main`
 
-Required status checks: `Lint, test, build`, `Analyze`, `CodeQL`. Force pushes and branch deletion are blocked. Conversation resolution is required.
+**Nothing reaches `main` except through a pull request with green checks — including you.**
+
+- Required status checks: `Lint, test, build`, `Analyze`, `CodeQL`
+- A pull request is required (0 approving reviews, since you cannot approve your own)
+- `enforce_admins` is **on**, so none of the above can be bypassed
+- Force pushes and branch deletion are blocked
+- Conversation resolution is required
 
 Two settings are deliberately *off*:
 
-- **`enforce_admins`** — the workflow above does the version bump and doc update as a direct commit on `main`, which admin enforcement would block. Turning it on means moving that step into a PR too.
 - **`required_linear_history`** — the workflow uses merge commits on purpose, to preserve branch history.
+- **`strict`** (require branch up to date before merging) — on a single-contributor repo that trades constant rebasing for almost no benefit.
 
-`strict` is also off, so a branch doesn't have to be rebased onto the latest `main` before merging — on a single-contributor repo that trades constant rebasing for almost no benefit.
+### The version bump and doc updates go *in* the branch
+
+This is a deliberate deviation from the git-workflow skill, which says to bump the version and update docs as a follow-up commit **directly on `main`**. With `enforce_admins` on, that is no longer possible.
+
+Rather than opening a second follow-up PR per change, **put the version bump and the README/ROADMAP/CHANGELOG updates in the same branch as the work itself.** So a `feat/*` branch contains the feature, its minor version bump, and its changelog entry, and lands as one PR.
+
+This is better than a follow-up PR, not merely a workaround:
+
+- the version and the change it describes land atomically, so `main` is never at a version that misrepresents its contents
+- the changelog entry sits in the same diff as the code it describes, where a reviewer can check it
+- one PR per change instead of two
+
+The bump rules themselves are unchanged: `feat/*` → minor, `fix/*` → patch, and no bump for `chore`, `docs`, `refactor`, `test`, or `style`.
 
 ### Reviewing Dependabot action bumps
 
