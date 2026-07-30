@@ -4,6 +4,23 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-07-29
+
+### Added
+
+- feat(ui): every panel is collapsible — Catalogue, Build list, Requisition, Craft along the way, Farming route, Requirements, and Breakdown. Collapsed panels keep their summary visible (`8 to gather`, `4 across 23 regions`), so a fully collapsed page is still skimmable
+- feat(ui): collapse state persists across reloads, per section
+
+### Changed
+
+- feat(ui): Breakdown now starts collapsed. It is the most verbose panel and its per-branch figures deliberately duplicate the Requisition, so it is the one section worth hiding by default. Every other panel is unchanged and still opens
+- refactor(ui): replaced the ad-hoc `Panel` + `SectionHeading` pairing, which each component assembled slightly differently, with a single `Section` component owning the heading, toggle, persistence, and ARIA wiring
+
+### Notes
+
+- Collapse state is deliberately **not** encoded in the shareable URL. It is a personal view preference; putting it in the link would impose the sender's layout on the recipient and pollute every shared build
+- Collapsed content is unmounted rather than hidden with CSS — the Breakdown tree and the 1,300-entry catalogue are the expensive things on the page
+
 ## [1.1.0] — 2026-07-29
 
 ### Added

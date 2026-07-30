@@ -1,7 +1,8 @@
 import type { GameIndex, MaterialTotal } from '@/lib/calculator'
 import { describeBatch, describeProduction } from '@/lib/describe'
 import type { ItemId } from '@/types/game'
-import { SectionHeading, Stepper } from './ui'
+import { Section } from './Section'
+import { Stepper } from './ui'
 
 export function BuildList({
   quantities,
@@ -27,31 +28,30 @@ export function BuildList({
   const rows = [...quantities]
 
   return (
-    <div>
-      <SectionHeading
-        aside={
-          rows.length > 0 ? (
-            <span className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={onShare}
-                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
-              >
-                {shared ? 'link copied ✓' : 'copy link'}
-              </button>
-              <button
-                type="button"
-                onClick={onClear}
-                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
-              >
-                clear all
-              </button>
-            </span>
-          ) : undefined
-        }
-      >
-        Build list
-      </SectionHeading>
+    <Section
+      id="build-list"
+      title="Build list"
+      aside={
+        rows.length > 0 ? (
+          <span className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={onShare}
+              className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+            >
+              {shared ? 'link copied ✓' : 'copy link'}
+            </button>
+            <button
+              type="button"
+              onClick={onClear}
+              className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+            >
+              clear all
+            </button>
+          </span>
+        ) : undefined
+      }
+    >
 
       {rows.length === 0 ? (
         <p className="rounded-sm border border-dashed border-iron-800 px-4 py-8 text-center font-mono text-sm text-iron-600">
@@ -109,6 +109,6 @@ export function BuildList({
           })}
         </ul>
       )}
-    </div>
+    </Section>
   )
 }

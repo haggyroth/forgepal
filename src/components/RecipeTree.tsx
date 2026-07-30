@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { buildTree, type GameIndex, type RecipeNode } from '@/lib/calculator'
 import type { ItemId } from '@/types/game'
-import { Panel, SectionHeading } from './ui'
+import { Section } from './Section'
 
 /**
  * Per-item recipe breakdown.
@@ -22,8 +22,7 @@ export function RecipeTree({
   if (rows.length === 0) return null
 
   return (
-    <Panel>
-      <SectionHeading aside="per branch">Breakdown</SectionHeading>
+    <Section id="breakdown" title="Breakdown" aside="per branch" defaultOpen={false}>
       <div className="space-y-4">
         {rows.map(([itemId, quantity]) => {
           const tree = buildTree(itemId, quantity, index)
@@ -31,7 +30,7 @@ export function RecipeTree({
           return <TreeRoot key={itemId} node={tree} />
         })}
       </div>
-    </Panel>
+    </Section>
   )
 }
 

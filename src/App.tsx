@@ -21,7 +21,6 @@ import { ItemBrowser } from '@/components/ItemBrowser'
 import { Requirements } from '@/components/Requirements'
 import { RecipeTree } from '@/components/RecipeTree'
 import { Totals } from '@/components/Totals'
-import { Panel } from '@/components/ui'
 
 export default function App() {
   const index = useMemo(() => buildIndex(gameData), [])
@@ -110,34 +109,27 @@ export default function App() {
         ) : null}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[22rem_1fr] lg:items-start">
-          {/*
-            Fixed height plus min-h-0 down the chain is what actually lets the
-            results list scroll instead of running off the page — a flex child
-            defaults to min-height:auto and refuses to shrink below its content.
-          */}
-          <Panel className="flex max-h-[32rem] flex-col lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)] lg:max-h-none">
-            <ItemBrowser
-              entries={entries}
-              stations={stations}
-              playerLevel={playerLevel}
-              onAdd={add}
-              inList={new Set(quantities.keys())}
-            />
-          </Panel>
+          {/* ItemBrowser owns its own panel and height, because those depend on
+              whether the catalogue is collapsed. */}
+          <ItemBrowser
+            entries={entries}
+            stations={stations}
+            playerLevel={playerLevel}
+            onAdd={add}
+            inList={new Set(quantities.keys())}
+          />
 
           <div className="min-w-0 space-y-6">
-            <Panel>
-              <BuildList
-                quantities={quantities}
-                index={index}
-                totals={targetTotals}
-                onSetQuantity={setQuantity}
-                onRemove={remove}
-                onClear={clear}
-                onShare={copyShareLink}
-                shared={shared}
-              />
-            </Panel>
+            <BuildList
+              quantities={quantities}
+              index={index}
+              totals={targetTotals}
+              onSetQuantity={setQuantity}
+              onRemove={remove}
+              onClear={clear}
+              onShare={copyShareLink}
+              shared={shared}
+            />
 
             <Totals
               result={result}

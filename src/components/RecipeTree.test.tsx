@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RecipeTree } from './RecipeTree'
@@ -12,6 +12,20 @@ const index = buildIndex(gameData as unknown as GameData)
 
 const quantities = (entries: [string, number][]) =>
   new Map(entries.map(([name, quantity]) => [toId(name), quantity]))
+
+/**
+ * Breakdown ships collapsed — it is the most verbose panel and duplicates the
+ * Requisition — so these tests open it first.
+ */
+async function expand() {
+  await userEvent.click(screen.getByRole('button', { name: /Breakdown/ }))
+}
+
+beforeEach(() => {
+  // The collapse preference persists, so a leaked toggle would make the next
+  // test start from the wrong state.
+  window.localStorage.clear()
+})
 
 describe('RecipeTree', () => {
   it('renders nothing when the build list is empty', () => {
@@ -26,8 +40,9 @@ describe('RecipeTree', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('nests sub-recipes beneath their parent', () => {
+  it('nests sub-recipes beneath their parent', async () => {
     render(<RecipeTree quantities={quantities([['Mega Sphere', 2]])} index={index} />)
+    await expand()
 
     expect(screen.getByText('Mega Sphere')).toBeInTheDocument()
     expect(screen.getByText('Ingot')).toBeInTheDocument()
@@ -42,15 +57,17 @@ describe('RecipeTree', () => {
     expect(screen.getByText('per branch')).toBeInTheDocument()
   })
 
-  it('names the station on the root node', () => {
+  it('names the station on the root node', async () => {
     render(<RecipeTree quantities={quantities([['Mega Sphere', 1]])} index={index} />)
+    await expand()
     expect(screen.getByText('Sphere Workbench')).toBeInTheDocument()
   })
 
   it('collapses and re-expands a root', async () => {
     render(<RecipeTree quantities={quantities([['Mega Sphere', 1]])} index={index} />)
+    await expand()
 
-    const toggle = screen.getByRole('button', { expanded: true })
+    const toggle = screen.getAllByRole('button', { expanded: true }).at(-1)!
     await userEvent.click(toggle)
     expect(screen.queryByText('Ingot')).not.toBeInTheDocument()
 
@@ -58,15 +75,16 @@ describe('RecipeTree', () => {
     expect(screen.getByText('Ingot')).toBeInTheDocument()
   })
 
-  it('disables the toggle for an item with no sub-recipes', () => {
+  it('disables the toggle for an item with no sub-recipes', async () => {
     render(<RecipeTree quantities={quantities([['Ingot', 1]])} index={index} />)
+    await expand()
     // Ingot's only input is Ore, a gathered leaf, so there is still one level.
     // Wood has no recipe at all and yields a childless root.
     render(<RecipeTree quantities={quantities([['Wood', 1]])} index={index} />)
     expect(screen.getAllByRole('button').some((b) => b.hasAttribute('disabled'))).toBe(true)
   })
 
-  it('renders a row for each queued item', () => {
+  it('renders a row for each queued item', async () => {
     render(
       <RecipeTree
         quantities={quantities([
@@ -76,6 +94,7 @@ describe('RecipeTree', () => {
         index={index}
       />,
     )
+    await expand()
     expect(screen.getByText('Ingot')).toBeInTheDocument()
     expect(screen.getByText('Arrow')).toBeInTheDocument()
   })

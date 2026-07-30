@@ -1,5 +1,5 @@
 import type { TechRequirements } from '@/lib/tech'
-import { Panel, SectionHeading } from './ui'
+import { Section } from './Section'
 
 /**
  * What the build needs before it can be built: the stations involved, the
@@ -13,12 +13,11 @@ export function Requirements({ tech }: { tech: TechRequirements }) {
   if (tech.stations.length === 0 && tech.highestLevel === null) return null
 
   return (
-    <Panel>
-      <SectionHeading
-        aside={tech.highestLevel !== null ? `needs Tech ${tech.highestLevel}` : undefined}
-      >
-        Requirements
-      </SectionHeading>
+    <Section
+      id="requirements"
+      title="Requirements"
+      aside={tech.highestLevel !== null ? `needs Tech ${tech.highestLevel}` : undefined}
+    >
 
       {tech.lockedItems.length > 0 ? (
         <p
@@ -74,6 +73,6 @@ export function Requirements({ tech }: { tech: TechRequirements }) {
           Gated by {tech.drivenBy} at Technology {tech.highestLevel}.
         </p>
       ) : null}
-    </Panel>
+    </Section>
   )
 }

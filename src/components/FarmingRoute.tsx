@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FarmingRoute as Route, RouteStop } from '@/lib/route'
 import { hasRoute, routedMaterialCount } from '@/lib/route'
-import { Panel, SectionHeading } from './ui'
+import { Section } from './Section'
 
 /** Regions shown before collapsing the tail — the top few are the trip worth making. */
 const STOPS_SHOWN = 4
@@ -21,16 +21,15 @@ export function FarmingRoute({ route }: { route: Route }) {
   const hidden = route.stops.length - visible.length
 
   return (
-    <Panel>
-      <SectionHeading
-        aside={
-          route.stops.length > 0
-            ? `${routedMaterialCount(route)} across ${route.stops.length} regions`
-            : undefined
-        }
-      >
-        Farming route
-      </SectionHeading>
+    <Section
+      id="farming-route"
+      title="Farming route"
+      aside={
+        route.stops.length > 0
+          ? `${routedMaterialCount(route)} across ${route.stops.length} regions`
+          : undefined
+      }
+    >
 
       {route.stops.length > 0 ? (
         <ul className="space-y-3">
@@ -69,7 +68,7 @@ export function FarmingRoute({ route }: { route: Route }) {
           </p>
         </div>
       ) : null}
-    </Panel>
+    </Section>
   )
 }
 
