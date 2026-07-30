@@ -1,182 +1,60 @@
-import { useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { gameData } from '@/data'
-import { buildIndex, calculate, type GameIndex } from '@/lib/calculator'
-import { buildShareUrl, decodeState, encodeState, type SharedState } from '@/lib/shareState'
-import { useBuilds } from '@/hooks/useBuilds'
-import { useInventory } from '@/hooks/useInventory'
-import { BuildSwitcher } from '@/components/BuildSwitcher'
-import type { Entry } from '@/lib/search'
-import { hasAnythingToExport } from '@/lib/export'
-import { analyseTech, MAX_TECH_LEVEL, parsePlayerLevel } from '@/lib/tech'
-import { buildHabitatIndex, buildRoute } from '@/lib/route'
-import { FarmingRoute } from '@/components/FarmingRoute'
-import { BuildList } from '@/components/BuildList'
-import { ExportBar } from '@/components/ExportBar'
-import { ItemBrowser } from '@/components/ItemBrowser'
-import { Requirements } from '@/components/Requirements'
-import { RecipeTree } from '@/components/RecipeTree'
-import { Totals } from '@/components/Totals'
+import { CalculatorTab } from '@/components/CalculatorTab'
+import { Tabs } from '@/components/Tabs'
+import { applyTab, decodeTab, type TabId } from '@/lib/tabs'
+
+// Lazy on purpose: the breeding dataset is a separate chunk, and someone who
+// only ever costs recipes should never download 299 Pals.
+const BreedingTab = lazy(() => import('@/components/BreedingTab'))
 
 export default function App() {
-  const index = useMemo(() => buildIndex(gameData), [])
-  const entries = useMemo<Entry[]>(() => [...gameData.items, ...gameData.structures], [])
-  const stations = useMemo(
-    () => [...gameData.stations].sort((a, b) => a.name.localeCompare(b.name)),
-    [],
-  )
+  const [tab, setTab] = useState<TabId>(() => decodeTab(window.location.search))
 
-  // Resolved once, during the first render, so a saved or shared build is
-  // already on screen rather than appearing a frame later.
-  const [restored] = useState(() => resolveInitialState(index))
+  // A tab that has been opened stays mounted, so switching back is instant and
+  // nothing in it is lost. Only the first visit pays for the chunk.
+  const [visited, setVisited] = useState<Set<TabId>>(() => new Set([tab]))
+  const open = (next: TabId) => {
+    setTab(next)
+    setVisited((current) => (current.has(next) ? current : new Set(current).add(next)))
+  }
 
-  const isKnownId = useMemo(() => (id: string) => index.byId.has(id), [index])
-
-  const {
-    builds,
-    activeId,
-    name: buildName,
-    quantities,
-    playerLevel,
-    entries: buildEntries,
-    add,
-    setQuantity,
-    remove,
-    clear,
-    setPlayerLevel,
-    select,
-    create,
-    duplicate,
-    rename,
-    removeBuild,
-  } = useBuilds(isKnownId, restored.state)
-  const [shared, setShared] = useState(false)
-
-  const { stock, setAmount: setStock, clear: clearStock } = useInventory(isKnownId)
-
-  const result = useMemo(() => calculate(buildEntries, index, stock), [buildEntries, index, stock])
-  const tech = useMemo(() => analyseTech(result, index, playerLevel), [result, index, playerLevel])
-
-  const habitats = useMemo(() => buildHabitatIndex(gameData), [])
-  const sourcing = useMemo(
-    () => ({
-      habitats,
-      merchantListings: gameData.merchantListings,
-      expeditionRewards: gameData.expeditionRewards,
-    }),
-    [habitats],
-  )
-  const route = useMemo(() => buildRoute(result, index, habitats), [result, index, habitats])
-
-  // Keep the address bar in step with the active build. Persistence is owned by
-  // useBuilds now; this effect only mirrors state into the URL.
-  // replaceState rather than pushState: every quantity tweak would otherwise
-  // add a history entry and make the back button useless.
+  // Mirror the tab into the URL, preserving the build params CalculatorTab
+  // owns. replaceState, like the build sync: flipping tabs should not fill the
+  // history stack.
   useEffect(() => {
-    const state: SharedState = { build: buildEntries, playerLevel }
-    const query = encodeState(state)
+    const query = applyTab(window.location.search, tab)
     window.history.replaceState(
       null,
       '',
       query ? `${window.location.pathname}?${query}` : window.location.pathname,
     )
-  }, [buildEntries, playerLevel])
-
-  const copyShareLink = async () => {
-    const url = buildShareUrl(
-      { build: buildEntries, playerLevel },
-      window.location.origin,
-      window.location.pathname,
-    )
-    try {
-      await navigator.clipboard.writeText(url)
-      setShared(true)
-      setTimeout(() => setShared(false), 1800)
-    } catch {
-      // Clipboard permission can be refused; the address bar already holds the
-      // same URL, so there is nothing lost — just don't claim success.
-      setShared(false)
-    }
-  }
-  const targetTotals = useMemo(
-    () => new Map(result.targets.map((total) => [total.itemId, total])),
-    [result],
-  )
+  }, [tab])
 
   return (
     <div className="relative z-10 min-h-screen">
       <div className="mx-auto max-w-[86rem] px-5 py-8 lg:px-8">
-        <Header playerLevel={playerLevel} onPlayerLevelChange={setPlayerLevel} />
+        <Header />
+        <Tabs active={tab} onSelect={open} />
 
-        {/* A link shared before a data update can name items that no longer
-            exist. Say so rather than quietly handing over a short list. */}
-        {restored.unknownIds.length > 0 ? (
-          <p
-            role="status"
-            className="mt-4 rounded-sm border border-ember-700/40 bg-ember-700/10 px-3 py-2 font-mono text-[0.7rem] text-ember-400"
-          >
-            {restored.unknownIds.length === 1
-              ? '1 item from that link is no longer in the dataset and was skipped: '
-              : `${restored.unknownIds.length} items from that link are no longer in the dataset and were skipped: `}
-            {restored.unknownIds.join(', ')}
-          </p>
-        ) : null}
+        {/*
+          Inactive tabs are hidden, not unmounted — the opposite of the rule
+          Section follows, and deliberately so. A collapsed panel is something
+          you put away; a tab is something you flip back to. Unmounting would
+          rebuild the 1,300-entry item index on every switch and drop a shared
+          build that hadn't been edited into persistence yet.
+        */}
+        <TabPanel id="calculator" active={tab === 'calculator'}>
+          <CalculatorTab />
+        </TabPanel>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-[22rem_1fr] lg:items-start">
-          {/* ItemBrowser owns its own panel and height, because those depend on
-              whether the catalogue is collapsed. */}
-          <ItemBrowser
-            entries={entries}
-            stations={stations}
-            playerLevel={playerLevel}
-            onAdd={add}
-            inList={new Set(quantities.keys())}
-          />
-
-          <div className="min-w-0 space-y-6">
-            <BuildList
-              quantities={quantities}
-              index={index}
-              totals={targetTotals}
-              onSetQuantity={setQuantity}
-              onRemove={remove}
-              onClear={clear}
-              onShare={copyShareLink}
-              shared={shared}
-              switcher={
-                <BuildSwitcher
-                  builds={builds}
-                  activeId={activeId}
-                  name={buildName}
-                  onSelect={select}
-                  onCreate={create}
-                  onDuplicate={duplicate}
-                  onRename={rename}
-                  onDelete={removeBuild}
-                />
-              }
-            />
-
-            <Totals
-              result={result}
-              index={index}
-              sourcing={sourcing}
-              stock={stock}
-              onSetStock={setStock}
-              onClearStock={clearStock}
-              exportBar={
-                <ExportBar
-                  result={result}
-                  index={index}
-                  meta={gameData.meta}
-                  disabled={!hasAnythingToExport(quantities)}
-                />
-              }
-            />
-            <FarmingRoute route={route} />
-            <Requirements tech={tech} />
-            <RecipeTree quantities={quantities} index={index} />
-          </div>
-        </div>
+        <TabPanel id="breeding" active={tab === 'breeding'}>
+          {visited.has('breeding') ? (
+            <Suspense fallback={<Loading />}>
+              <BreedingTab />
+            </Suspense>
+          ) : null}
+        </TabPanel>
 
         <Footer />
       </div>
@@ -184,50 +62,41 @@ export default function App() {
   )
 }
 
-/**
- * Where the initial build comes from.
- *
- * A URL wins over saved state: following someone's link should show their
- * build, not silently resurrect your own over the top of it.
- */
-function resolveInitialState(index: GameIndex): { state: SharedState; unknownIds: string[] } {
-  // Only the URL is read here. Saved builds are loaded by useBuilds, which owns
-  // that store; a shared link becomes a *new* build there rather than
-  // overwriting whatever was active.
-  return decodeState(window.location.search, (id) => index.byId.has(id))
+function TabPanel({ id, active, children }: { id: TabId; active: boolean; children: ReactNode }) {
+  return (
+    <div
+      role="tabpanel"
+      id={`panel-${id}`}
+      aria-labelledby={`tab-${id}`}
+      hidden={!active}
+      className={active ? '' : 'hidden'}
+    >
+      {children}
+    </div>
+  )
 }
 
-function Header({
-  playerLevel,
-  onPlayerLevelChange,
-}: {
-  playerLevel: number | null
-  onPlayerLevelChange: (level: number | null) => void
-}) {
+function Loading() {
   return (
-    <header className="flex flex-wrap items-end justify-between gap-4 border-b border-iron-800 pb-5">
-      <div>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-iron-100">
-          Forge<span className="text-ember-500">Pal</span>
-        </h1>
-        <p className="mt-1 font-mono text-[0.78rem] text-iron-400">
-          Queue a build. Get everything you actually need to gather.
-        </p>
-      </div>
+    <p role="status" className="mt-8 font-mono text-[0.72rem] text-iron-600">
+      Loading breeding data…
+    </p>
+  )
+}
 
-      <div className="flex items-center gap-3">
-        <label className="flex items-center gap-2 font-mono text-[0.7rem] text-iron-400">
-          tech level
-          <input
-            type="number"
-            min={1}
-            max={MAX_TECH_LEVEL}
-            value={playerLevel ?? ''}
-            placeholder="any"
-            onChange={(event) => onPlayerLevelChange(parsePlayerLevel(event.target.value))}
-            className="w-16 rounded-sm border border-iron-700 bg-iron-950/60 px-2 py-1 text-center font-mono text-sm tnum text-iron-100 placeholder:text-iron-700 focus:border-ember-700 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-          />
-        </label>
+function Header() {
+  return (
+    <header className="border-b border-iron-800 pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-bold tracking-tight text-iron-100">
+            Forge<span className="text-ember-500">Pal</span>
+          </h1>
+          <p className="mt-1 font-mono text-[0.78rem] text-iron-400">
+            Queue a build. Get everything you actually need to gather.
+          </p>
+        </div>
+
         <a
           href="https://github.com/haggyroth/forgepal"
           target="_blank"

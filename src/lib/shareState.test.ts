@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  applyState,
   buildShareUrl,
   decodeState,
   encodeState,
@@ -141,6 +142,29 @@ describe('decodeState', () => {
   it('returns an empty state for empty or junk input', () => {
     expect(decodeState('', all).state.build).toEqual([])
     expect(decodeState('?foo=bar&baz', all).state.build).toEqual([])
+  })
+})
+
+describe('applyState', () => {
+  it('leaves params it does not own alone', () => {
+    // The regression this exists to prevent: the address-bar sync used to
+    // rebuild the whole query, which would erase ?tab= on the next edit.
+    expect(applyState('?tab=breeding', state([['ingot', 5]]))).toBe('tab=breeding&build=ingot.5')
+  })
+
+  it('replaces rather than appends its own params', () => {
+    expect(applyState('?build=ingot.5&level=10', state([['ore', 2]], 30))).toBe(
+      'build=ore.2&level=30',
+    )
+  })
+
+  it('removes its params when there is nothing to say, keeping the others', () => {
+    expect(applyState('?tab=breeding&build=ingot.5&level=10', state([]))).toBe('tab=breeding')
+  })
+
+  it('matches encodeState when there is nothing else in the query', () => {
+    const value = state([['ingot', 5]], 20)
+    expect(applyState('', value)).toBe(encodeState(value))
   })
 })
 

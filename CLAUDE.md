@@ -57,11 +57,16 @@ src/lib/
   breeding.ts            Breeding engine: pair resolution and the path solver.
                          Also shared by scripts — see below.
   search.ts              Catalogue search, filtering, and ranking.
+  query.ts               Query-string parse/format. Every URL writer uses it.
+  tabs.ts                Which tool is showing, and its `?tab=` encoding.
 src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
 src/components/
   ui.tsx                 SourceBadge, Stepper, Panel.
   Section.tsx            Collapsible panel: heading, toggle, ARIA. Use this,
                          not Panel + a hand-rolled heading.
+  Tabs.tsx               Top-level tool switcher (full ARIA tablist).
+  CalculatorTab.tsx      The crafting calculator. App is only a shell.
+  BreedingTab.tsx        The breeding tools. Default export — lazily loaded.
   ItemBrowser.tsx        Search + category filters + results.
   BuildList.tsx          Selected items with quantity steppers.
   Totals.tsx             Requisition (raw), intermediates, drop sourcing.
@@ -169,6 +174,16 @@ Every panel is a `Section` — collapsible, with its state persisted per section
 
 - **Collapse state stays out of the shareable URL.** It's a view preference; encoding it would impose the sender's layout on whoever opens the link.
 - **Collapsed content is unmounted, not hidden.** The Breakdown tree and the full catalogue are the expensive renders here, and `display: none` would keep paying for them.
+
+### Tabs
+
+`App.tsx` is a shell: header, `Tabs`, one panel per tool, footer. Each tool owns its own state and its own URL params. Three rules, and note that the first two point opposite ways to the `Section` rules above — on purpose:
+
+- **The tab _is_ in the URL** (`?tab=breeding`). It says which tool you are pointing someone at, not how you like the page arranged. `?tab=calculator` is never written, so every link shared before tabs existed still means what it meant then.
+- **Inactive tabs are hidden, not unmounted.** A collapsed panel is something you put away; a tab is something you flip back to. Unmounting would rebuild the 1,300-entry item index on every switch and drop a shared build that hadn't been edited into persistence yet.
+- **Every URL writer touches only its own params**, via `applyState` / `applyTab` on top of `query.ts`. Two effects write the query now and more will; anything that rebuilds it wholesale silently erases the others.
+
+A new tab should be a default export loaded through `lazy()`, so its code and data stay out of the initial download.
 
 The catalogue renders at most 60 results and reports the true total. Rendering all ~1,320 entries is slow and useless — search is the intended way through the list.
 

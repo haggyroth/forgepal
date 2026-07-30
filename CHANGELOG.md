@@ -6,8 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.5.0] — 2026-07-30
+
 ### Added
 
+- feat(tabs): the calculator and breeding are now separate tabs, so a second tool doesn't crowd the first. The active tab is in the URL (`?tab=breeding`), because a tab is which tool you're pointing someone at
+- feat(breeding): a Breeding tab covering the dataset the solver runs on — 299 Pals, 183 in the generic pool, 164 fixed combinations — and, on equal footing with it, where the data is uncertain
 - chore(data): import breeding data to a separate `src/data/breeding-data.json` — 299 Pals with CombiRanks, 164 special combos, and a derived 183-Pal generic pool. Kept out of `game-data.json` so the calculator's chunk does not carry it
 - chore(data): `breeding-overrides.ts` for curated pool corrections and the tie-break policy, and audit coverage checking that no special-combo child leaks into the pool and that every pooled rank is unique
 - chore(breeding): `src/lib/breeding.ts` — the solver engine. `breed(a, b)` resolves a pair (fixed combo first, then the rank formula), `parentsFor(child)` inverts it, and `solve(owned, target)` searches breadth-first for the fewest-generation chain from a roster
@@ -15,11 +19,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Changed
 
+- refactor(app): the calculator moved out of `App.tsx` into `CalculatorTab.tsx`, leaving App as a shell that owns the header, the tabs, and the footer
+- refactor(app): the tech-level control moved from the global header into the calculator, where it belongs — it gates which recipes are unlocked and means nothing to the other tabs
+- refactor(url): every feature that writes to the address bar now updates only its own params. The build sync used to rebuild the whole query, which was harmless while it was the only writer and would have erased `?tab=` the moment it wasn't
 - refactor(breeding): `comboKey` and `nearestInPool` moved from the importer into `src/lib/breeding.ts`, which the importer now imports. One implementation means the 31.4% figure the dataset records and the answers the solver gives cannot drift apart — a test asserts they still agree, pair for pair
 
 ### Notes
 
-- No user-visible change: this is the data pipeline and engine for the breeding solver, so there is no version bump. The bump lands with the UI
+- The breeding tab and its dataset are a lazily-loaded chunk. Someone who only ever costs recipes never downloads 299 Pals — which is why the breeding data was a separate JSON file from the start
+- Inactive tabs are hidden, not unmounted — deliberately the opposite of the rule collapsed sections follow. A collapsed panel is something you put away; a tab is something you flip back to. Unmounting would rebuild the 1,300-entry item index on every switch and drop a shared build that hadn't been edited into persistence yet
+- The tab is in the URL but collapse state still isn't. A tab says which tool you're pointing someone at; collapse state is a view preference, and encoding it would impose the sender's layout on whoever opens the link
+- `?tab=calculator` is never written, so every link shared before tabs existed still means exactly what it meant then
 - `solve` minimises breeding _generations_, and because a species is recorded at the earliest generation it can be reached, the returned steps are always runnable top to bottom — a step's parents are produced before it
 - The load-bearing test is that no generic pair ever yields a special-combo-only child, across all 44,850 real pairs. That is the invariant a pool error breaks, and it breaks it silently: a wrongly-pooled Pal displaces the correct answer for every target near its rank
 - The tie-break rule decides **31.4%** of generic parent pairs (14,010 of 44,687). Upstream verified `higher` in game but its own `gaps` field records that the wiki documents the opposite, so the share is carried in the dataset for the UI to surface rather than left as a claim
