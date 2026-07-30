@@ -40,11 +40,16 @@ scripts/import/          Data pipeline (Node, run manually, not at build time)
   sources/palworld-kb.ts   Upstream adapter — the ONLY file that knows upstream's shape
   normalize.ts             Upstream shape -> our schema
   overrides.ts             Curated corrections to upstream data
+  normalize-breeding.ts    Breeding data -> src/data/breeding-data.json
+  breeding-overrides.ts    Curated breeding-pool corrections and tie-break policy
   validate.ts              Cycle + dangling-reference checks; fails the import
   index.ts                 Orchestrator
         |
         v
-src/data/game-data.json  Generated + COMMITTED. Never hand-edit.
+src/data/game-data.json      Generated + COMMITTED. Never hand-edit.
+src/data/breeding-data.json  Generated + COMMITTED. Separate file on purpose —
+                             Pals are not items, and the calculator's chunk must
+                             not carry breeding data it never reads.
 src/types/game.ts        The schema. Everything downstream depends on this, not upstream.
 src/lib/
   id.ts                  Name -> stable id slug. Shared by app and scripts.
@@ -109,6 +114,14 @@ Useful details upstream hides in a free-text `notes` string, already parsed in `
 
 - `"Crafts x10 per batch"` -> `Recipe.yield` (45 recipes; Arrow is x10, so costing it per-unit overstates materials tenfold)
 - `"Also craftable at: Improved Furnace, ..."` -> `Recipe.alternativeStationNames` (upstream's `station` is only ever the lowest tier)
+
+### Breeding data is derived, and the derivation is load-bearing
+
+Upstream never states which Pals the rank formula can produce. It says only that variants and "special-combo-only children" are excluded, so the pool is derived: everything except Pals appearing as a special-combo child (183 of 299).
+
+**A wrong exclusion does not just make one Pal unreachable.** The formula picks the nearest rank _in the pool_, so removing an entry changes which Pal is nearest for every target near its rank — one mistake silently corrupts unrelated parent pairs. Corrections go in `breeding-overrides.ts` with a rationale, and `data:audit` checks that no special-combo child leaks into the pool and that every pooled rank is unique.
+
+**The tie-break rule decides ~31% of generic pairs.** When a target lands exactly between two pooled ranks, upstream's `formula` says the higher rank wins (verified in game: Turtacle 2410 + Aegidron 30 → 1220 → Nitemary over Quivern) while its own `gaps` field says palworld.wiki.gg documents the opposite. We follow the verified observation, record the affected share in the dataset, and the solver must flag results that depended on it. This is not a footnote — it is a third of the table.
 
 ### Editing `overrides.ts`
 

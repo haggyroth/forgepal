@@ -25,7 +25,11 @@ export default defineConfig({
         // one content hash — so any code tweak forced every visitor to
         // re-download ~160 kB of unchanged game data. Separate chunks mean
         // separate cache lifetimes.
-        manualChunks: (id: string) => (id.includes('game-data.json') ? 'game-data' : undefined),
+        manualChunks: (id: string) => {
+          if (id.includes('game-data.json')) return 'game-data'
+          if (id.includes('breeding-data.json')) return 'breeding-data'
+          return undefined
+        },
       },
     },
   },

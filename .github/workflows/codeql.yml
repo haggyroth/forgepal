@@ -33,8 +33,9 @@ jobs:
           languages: javascript-typescript
           # security-and-quality is broader than the default security-extended
           # and includes maintainability queries, which suits a project this
-          # size where the noise is manageable.
-          queries: security-and-quality
+          # size where the noise is manageable. The config file records the one
+          # query we exclude, and why.
+          config-file: ./.github/codeql/codeql-config.yml
 
       # No build step: CodeQL's JS/TS extractor reads source directly, and
       # building would only add the bundled dataset to what it has to scan.

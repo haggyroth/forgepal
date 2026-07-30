@@ -14,12 +14,17 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { GameData } from '../../src/types/game.ts'
+import type { BreedingData } from '../../src/types/breeding.ts'
+import { normalizeBreeding } from './normalize-breeding.ts'
 import { loadRawDataset } from './sources/palworld-kb.ts'
 import { normalize } from './normalize.ts'
 import { reportValidation, validate } from './validate.ts'
 
 const OUT_DIR = join(import.meta.dirname, '..', '..', 'src', 'data')
 const OUT_FILE = join(OUT_DIR, 'game-data.json')
+// A separate file, not another key in game-data.json: the calculator chunk
+// should not carry breeding data it never reads.
+const BREEDING_FILE = join(OUT_DIR, 'breeding-data.json')
 
 async function main() {
   console.log('ForgePal data import\n')
@@ -59,7 +64,46 @@ async function main() {
   await writeFile(OUT_FILE, `${JSON.stringify(data, null, 2)}\n`)
 
   console.log(`\n✓ ${unchanged ? 'no change' : 'wrote'} ${OUT_FILE}`)
+
+  await writeBreeding(raw)
+
   console.log(`  game version ${data.meta.gameVersion}, upstream updated ${data.meta.updated}\n`)
+}
+
+async function writeBreeding(raw: Parameters<typeof normalizeBreeding>[0]) {
+  const breeding = normalizeBreeding(raw)
+  const pooled = breeding.pals.filter((p) => p.inPool).length
+  const { affectedPairs, totalPairs } = breeding.tieBreak
+  const share = ((affectedPairs / totalPairs) * 100).toFixed(1)
+
+  console.log(
+    `  breeding: ${breeding.pals.length} pals, ${pooled} in the generic pool, ` +
+      `${breeding.specialCombos.length} special combos`,
+  )
+  console.log(`  tie-break '${breeding.tieBreak.rule}' decides ${share}% of generic pairs`)
+
+  // Same idempotency rule as the main dataset: preserve importedAt when nothing
+  // else changed, or the weekly refresh opens a PR for a non-change.
+  const previous = await readExistingBreeding()
+  const unchanged = previous !== null && sameIgnoringTimestamp(previous, breeding)
+  if (unchanged && previous) breeding.meta.importedAt = previous.meta.importedAt
+
+  await writeFile(BREEDING_FILE, `${JSON.stringify(breeding, null, 2)}\n`)
+  console.log(`✓ ${unchanged ? 'no change' : 'wrote'} ${BREEDING_FILE}`)
+}
+
+async function readExistingBreeding(): Promise<BreedingData | null> {
+  try {
+    return JSON.parse(await readFile(BREEDING_FILE, 'utf8')) as BreedingData
+  } catch {
+    return null
+  }
+}
+
+function sameIgnoringTimestamp(a: BreedingData, b: BreedingData): boolean {
+  const strip = (data: BreedingData) =>
+    JSON.stringify({ ...data, meta: { ...data.meta, importedAt: '' } })
+  return strip(a) === strip(b)
 }
 
 async function readExisting(): Promise<GameData | null> {

@@ -1,0 +1,26 @@
+name: ForgePal CodeQL config
+
+# js/http-to-file-access is excluded repo-wide, deliberately.
+#
+# The rule flags "write to file system depends on untrusted data". That is a
+# precise description of what scripts/import/ is *for*: it fetches upstream
+# Palworld data and writes it to src/data/. It has now fired three times — once
+# per write site — and each was dismissed with the same reasoning, which is a
+# sign the finding is structural rather than a series of separate judgements.
+#
+# What makes it safe here is that the file *paths* are internal constants
+# (OUT_FILE, BREEDING_FILE, and the fixed cache filenames), never derived from
+# remote input, so there is no path-traversal exposure. Fetched content is
+# validated by scripts/import/validate.ts before anything downstream reads it,
+# and the importer is run manually by a developer — never at build or request
+# time.
+#
+# The app itself has no backend and writes no files at runtime, so this rule can
+# essentially only fire on the importer. Excluding it costs no real coverage;
+# every other security and quality query still runs.
+queries:
+  - uses: security-and-quality
+
+query-filters:
+  - exclude:
+      id: js/http-to-file-access
