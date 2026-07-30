@@ -14,13 +14,11 @@ import type {
   TieBreakPolicy,
 } from '../../src/types/breeding.ts'
 import { toId } from '../../src/lib/id.ts'
+// The engine owns pair-keying and rank resolution; the importer reuses them so
+// the measured tie-break share and the solver's answers cannot drift apart.
+import { comboKey, nearestInPool } from '../../src/lib/breeding.ts'
 import type { RawDataset } from './sources/palworld-kb.ts'
 import { FORCE_IN_POOL, FORCE_OUT_OF_POOL, TIE_BREAK } from './breeding-overrides.ts'
-
-/** Order-insensitive key for a parent pair — A+B and B+A are the same cross. */
-export function comboKey(a: PalId, b: PalId): string {
-  return a < b ? `${a}|${b}` : `${b}|${a}`
-}
 
 /**
  * Which Pals the rank formula can produce.
@@ -45,55 +43,6 @@ export function derivePool(
     if (forcedIn.has(id) || !children.has(id)) pool.add(id)
   }
   return pool
-}
-
-/**
- * Resolve a target rank to the nearest pooled Pal.
- *
- * Exported because the importer measures how often the tie-break decides the
- * outcome, and the solver must resolve identically — one implementation, not
- * two that can drift.
- *
- * `pooled` must be sorted ascending by rank.
- */
-export function nearestInPool(
-  pooled: readonly { id: PalId; rank: number }[],
-  target: number,
-  tieBreak: 'higher' | 'lower',
-): { id: PalId; tied: boolean } {
-  // Binary search for the insertion point, then inspect the neighbours. Scanning
-  // all 183 entries per lookup would be 16M comparisons across the full pair
-  // table; this keeps precomputing it cheap.
-  let low = 0
-  let high = pooled.length - 1
-  while (low < high) {
-    const mid = (low + high) >> 1
-    if (pooled[mid].rank < target) low = mid + 1
-    else high = mid
-  }
-
-  let best = pooled[low]
-  let bestDistance = Math.abs(best.rank - target)
-  let tied = false
-
-  for (const index of [low - 1, low + 1]) {
-    const candidate = pooled[index]
-    if (!candidate) continue
-    const distance = Math.abs(candidate.rank - target)
-
-    if (distance < bestDistance) {
-      best = candidate
-      bestDistance = distance
-      tied = false
-    } else if (distance === bestDistance && candidate.id !== best.id) {
-      tied = true
-      const preferCandidate =
-        tieBreak === 'higher' ? candidate.rank > best.rank : candidate.rank < best.rank
-      if (preferCandidate) best = candidate
-    }
-  }
-
-  return { id: best.id, tied }
 }
 
 /**

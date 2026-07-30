@@ -54,6 +54,8 @@ src/types/game.ts        The schema. Everything downstream depends on this, not 
 src/lib/
   id.ts                  Name -> stable id slug. Shared by app and scripts.
   calculator.ts          Recipe expansion engine.
+  breeding.ts            Breeding engine: pair resolution and the path solver.
+                         Also shared by scripts — see below.
   search.ts              Catalogue search, filtering, and ranking.
 src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
 src/components/
@@ -137,6 +139,19 @@ Never guess a quantity. A known gap is better than a plausible wrong number.
 - **`buildTree(itemId, qty, index)`** — display tree for one item. Branch quantities are per-branch and will not always sum to `calculate`'s figures. That is expected: the tree explains structure, the totals are what you take shopping. Don't "fix" the discrepancy by making the UI sum the tree.
 
 Batch recipes round up per craft, and the surplus is reported (`MaterialTotal.surplus`) rather than silently discarded.
+
+## The breeding engine
+
+`src/lib/breeding.ts`. Pure, no UI, no React. `buildBreedIndex(data)` once, then:
+
+- **`breed(index, a, b)`** — one pair. Fixed combo first, formula second; order-insensitive.
+- **`parentsFor(index, child)`** — the inverse, sorted exact-combo first and tie-broken last.
+- **`solve(index, owned, target)`** — breadth-first over reachable species, returning the fewest-**generation** chain. Because each species is recorded at the earliest generation it can be reached, the returned steps are runnable top to bottom: a step's parents are always produced before it. Null means genuinely unreachable, and the failure case still reports `reachableCount` so the UI can say why.
+
+Two rules for anyone editing this:
+
+- **`comboKey` and `nearestInPool` live here, and `scripts/import/normalize-breeding.ts` imports them** — the same relative-import exception as `id.ts`. Do not reimplement either in the importer. The importer measures the tie-break share with them; a second copy would let the figure the UI cites drift from the answers the solver gives. A test asserts the two still agree pair for pair.
+- **Every result carries `tieBroken`, and every plan `tieBrokenSteps`.** Dropping the flag would be silently presenting a coin-flip as a fact on a third of pairs. See the tie-break note above.
 
 ## UI
 

@@ -41,6 +41,13 @@ next, both grounded in data already published by the same source.
       Note the data's own `gaps` field flags conflicting documentation on the
       tie-break rule, so surface uncertainty on exact ties rather than
       pretending it's settled.
+      _Phase 1 done_ — `breeding-data.json`, pool derivation, tie-break measured
+      at 31.4% of generic pairs.
+      _Phase 2 done_ — `src/lib/breeding.ts`: `breed`, `parentsFor`, and a BFS
+      `solve` returning the fewest-generation chain, every step flagged when it
+      hinged on the contested tie-break.
+      _Remaining_ — a tab shell so this doesn't crowd the calculator, then the
+      breeding UI.
 - [ ] **Base production planner** — `base_building.json` already carries
       `worker_slots`, `workers` (suitability), `power`, and `energy_per_sec`, and
       we import the file while using almost none of it. Upgrades Requirements
