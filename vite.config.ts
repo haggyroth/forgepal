@@ -17,7 +17,16 @@ export default defineConfig({
     },
   },
   test: {
+    // Node by default — the lib and importer suites are the bulk of the tests
+    // and don't need a DOM. Component tests opt in per file with
+    // `// @vitest-environment jsdom`, which keeps the fast path fast.
     environment: 'node',
+    setupFiles: ['./src/test/setup.ts'],
+    environmentOptions: {
+      // jsdom defaults to about:blank, which is an opaque origin — localStorage
+      // is then undefined and anything touching persistence throws.
+      jsdom: { url: 'http://localhost/' },
+    },
     // scripts/ is included so the importer's parsing and classification logic
     // is covered directly, not just via assertions on the generated data.
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'scripts/**/*.test.ts'],
