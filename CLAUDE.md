@@ -147,6 +147,21 @@ GitHub Pages via `.github/workflows/deploy.yml`, on push to `main`. `vite.config
 
 Follow the user's git-workflow skill, which is the authority. In short: never commit to `main`; branch `<type>/<short-description>`; Conventional Commits; every PR gets a description body; **CI must be green before merging**; merge commits titled `merge: <branch> (#<PR>)`; bump the version after `feat/*` and `fix/*` merges; update README/ROADMAP/CHANGELOG after every merge.
 
+### Branch protection on `main`
+
+Required status checks: `Lint, test, build`, `Analyze`, `CodeQL`. Force pushes and branch deletion are blocked. Conversation resolution is required.
+
+Two settings are deliberately *off*:
+
+- **`enforce_admins`** — the workflow above does the version bump and doc update as a direct commit on `main`, which admin enforcement would block. Turning it on means moving that step into a PR too.
+- **`required_linear_history`** — the workflow uses merge commits on purpose, to preserve branch history.
+
+`strict` is also off, so a branch doesn't have to be rebased onto the latest `main` before merging — on a single-contributor repo that trades constant rebasing for almost no benefit.
+
+### Reviewing Dependabot action bumps
+
+Actions used by `ci.yml` and `codeql.yml` are exercised on the pull request itself. The Pages actions in `deploy.yml` only run on `main`, so **split those into their own PR** — otherwise a broken deploy arrives buried among unrelated bumps.
+
 ## Legal posture
 
 Unofficial fan project, not affiliated with Pocketpair. Upstream `palworld-kb` publishes no license — we rely on it only for factual game data (see `NOTICE.md`). Don't copy upstream prose, code, or its cached HTML. Keep the attribution and trademark disclaimer in `LICENSE`, `NOTICE.md`, and the app footer intact.
