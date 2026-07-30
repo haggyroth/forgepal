@@ -1,0 +1,43 @@
+name: CodeQL
+
+# Static analysis for JavaScript/TypeScript. Runs on pushes to main, on every
+# PR, and weekly — the schedule matters because CodeQL's query packs are updated
+# independently of this repo, so a scan can find something in code that has not
+# changed since the last run.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Mondays, 08:00 UTC — after the data refresh and Dependabot windows.
+    - cron: '0 8 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          # security-and-quality is broader than the default security-extended
+          # and includes maintainability queries, which suits a project this
+          # size where the noise is manageable.
+          queries: security-and-quality
+
+      # No build step: CodeQL's JS/TS extractor reads source directly, and
+      # building would only add the bundled dataset to what it has to scan.
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:javascript-typescript

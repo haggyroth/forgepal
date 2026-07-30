@@ -1,0 +1,54 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+    # Deliberately below the data-refresh window (06:00) so dependency PRs and
+    # data PRs don't land in the same minute.
+    open-pull-requests-limit: 5
+    commit-message:
+      # Matches the repo's Conventional Commits convention.
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      # One PR per concern rather than per package. A solo project does not
+      # benefit from reviewing eight separate patch bumps.
+      react:
+        patterns: ['react', 'react-dom', '@types/react', '@types/react-dom']
+      tooling:
+        patterns:
+          - vite
+          - '@vitejs/*'
+          - vitest
+          - '@vitest/*'
+          - typescript
+          - oxlint
+          - tsx
+      styling:
+        patterns: ['tailwindcss', '@tailwindcss/*', '@fontsource/*']
+      testing:
+        patterns: ['@testing-library/*', jsdom]
+    ignore:
+      # Majors change APIs and often need code changes, so they should be a
+      # deliberate act rather than an auto-opened PR.
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      actions:
+        patterns: ['*']
