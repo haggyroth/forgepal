@@ -89,12 +89,21 @@ export function buildExportModel(
 
 function mdTable(headers: string[], rows: (string | number)[][], numericColumn: number): string {
   const align = headers.map((_, i) => (i === numericColumn ? '---:' : '---'))
-  const body = rows.map((row) => `| ${row.map(escapePipes).join(' | ')} |`)
+  const body = rows.map((row) => `| ${row.map(escapeCell).join(' | ')} |`)
   return [`| ${headers.join(' | ')} |`, `| ${align.join(' | ')} |`, ...body].join('\n')
 }
 
-function escapePipes(value: string | number): string {
-  return String(value).replace(/\|/g, '\\|')
+/**
+ * Escape a value for a Markdown table cell.
+ *
+ * Backslashes must go first. Escaping only pipes leaves an input like
+ * `Odd\|Name` as `Odd\\|Name`, which Markdown reads as an escaped backslash
+ * followed by a *live* pipe — silently breaking the column. Flagged by CodeQL
+ * as incomplete sanitization; no current item name contains a backslash, so
+ * this was latent rather than live, but the helper is general-purpose.
+ */
+function escapeCell(value: string | number): string {
+  return String(value).replace(/\\/g, '\\\\').replace(/\|/g, '\\|')
 }
 
 /**
