@@ -13,6 +13,7 @@ export function BuildList({
   onClear,
   onShare,
   shared,
+  switcher,
 }: {
   quantities: ReadonlyMap<ItemId, number>
   index: GameIndex
@@ -24,6 +25,8 @@ export function BuildList({
   onShare: () => void
   /** True briefly after copying, to confirm the link is on the clipboard. */
   shared: boolean
+  /** Named-build controls, rendered above the rows. */
+  switcher?: React.ReactNode
 }) {
   const rows = [...quantities]
 
@@ -52,6 +55,8 @@ export function BuildList({
         ) : undefined
       }
     >
+      {switcher}
+
       {rows.length === 0 ? (
         <p className="rounded-sm border border-dashed border-iron-800 px-4 py-8 text-center font-mono text-sm text-iron-600">
           Pick items from the catalogue to start a build.
