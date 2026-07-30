@@ -4,11 +4,18 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Totals } from './Totals'
 import { buildIndex, calculate, type CalculationResult } from '@/lib/calculator'
+import { buildHabitatIndex } from '@/lib/route'
 import { toId } from '@/lib/id'
 import { gameData } from '@/data'
 import type { GameData } from '@/types/game'
 
-const index = buildIndex(gameData as unknown as GameData)
+const data = gameData as unknown as GameData
+const index = buildIndex(data)
+const sourcing = {
+  habitats: buildHabitatIndex(data),
+  merchantListings: data.merchantListings,
+  expeditionRewards: data.expeditionRewards,
+}
 
 const resultFor = (entries: [string, number][]) =>
   calculate(
@@ -20,12 +27,12 @@ const row = (name: string) => screen.getByText(name).closest('li')
 
 describe('Totals', () => {
   it('says nothing is queued when the build list is empty', () => {
-    render(<Totals result={resultFor([])} index={index} />)
+    render(<Totals result={resultFor([])} index={index} sourcing={sourcing} />)
     expect(screen.getByText(/Nothing queued yet/)).toBeInTheDocument()
   })
 
   it('lists raw materials with their quantities', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} />)
+    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} sourcing={sourcing} />)
 
     // 20 spheres -> 20 Ingots -> 40 Ore.
     expect(row('Ore')).toHaveTextContent('40')
@@ -34,7 +41,7 @@ describe('Totals', () => {
   })
 
   it('separates intermediates from the shopping list', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} />)
+    render(<Totals result={resultFor([['Mega Sphere', 20]])} index={index} sourcing={sourcing} />)
 
     expect(screen.getByRole('heading', { name: /Craft along the way/ })).toBeInTheDocument()
     expect(row('Ingot')).toHaveTextContent('20')
@@ -42,17 +49,17 @@ describe('Totals', () => {
   })
 
   it('names the Pal work a station needs', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} />)
+    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} sourcing={sourcing} />)
     expect(row('Ingot')).toHaveTextContent('Kindling')
   })
 
   it('omits the intermediates panel when there are none', () => {
-    render(<Totals result={resultFor([['Ingot', 5]])} index={index} />)
+    render(<Totals result={resultFor([['Ingot', 5]])} index={index} sourcing={sourcing} />)
     expect(screen.queryByRole('heading', { name: /Craft along the way/ })).not.toBeInTheDocument()
   })
 
   it('reveals Pal drop sources on demand, best odds first', async () => {
-    render(<Totals result={resultFor([['Cloth', 5]])} index={index} />)
+    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
 
     const toggle = screen.getByRole('button', { name: /Wool/ })
     expect(screen.queryByText('Dropped by')).not.toBeInTheDocument()
@@ -73,7 +80,7 @@ describe('Totals', () => {
   })
 
   it('does not offer an expander for a material with no recorded sources', () => {
-    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} />)
+    render(<Totals result={resultFor([['Mega Sphere', 1]])} index={index} sourcing={sourcing} />)
     // Paldium Fragment is curated as gathered and carries source notes; a
     // material with neither drops nor notes must not render a dead toggle.
     const bare = index.byId.get(toId('Ore'))
@@ -116,7 +123,7 @@ describe('Totals', () => {
       }),
     }
 
-    render(<Totals result={spoofed} index={spoofedIndex} />)
+    render(<Totals result={spoofed} index={spoofedIndex} sourcing={sourcing} />)
     await userEvent.click(screen.getByRole('button', { name: /Mystery Material/ }))
 
     expect(screen.getByTitle('Drop rate not recorded upstream')).toHaveTextContent('?')
@@ -129,6 +136,7 @@ describe('Totals', () => {
       <Totals
         result={{ ...base, unresolved: [{ itemId: 'ghost', name: 'Ghost Material', required: 7 }] }}
         index={index}
+        sourcing={sourcing}
       />,
     )
     expect(screen.getByRole('heading', { name: /Unknown materials/ })).toBeInTheDocument()
@@ -140,9 +148,39 @@ describe('Totals', () => {
       <Totals
         result={resultFor([['Ingot', 1]])}
         index={index}
+        sourcing={sourcing}
         exportBar={<button type="button">copy markdown</button>}
       />,
     )
     expect(screen.getByRole('button', { name: 'copy markdown' })).toBeInTheDocument()
   })
 })
+
+describe('alternative sourcing', () => {
+  it('offers vendors as an alternative to farming', async () => {
+    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
+    expect(screen.getByText(/Or buy from/)).toBeInTheDocument()
+  })
+
+  it('shows where a Pal lives next to its drop entry', async () => {
+    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
+
+    // Melpaca is the headline Wool source and does have wild regions.
+    const expanded = screen.getByRole('button', { name: /Wool/ }).closest('li')!
+    expect(expanded.textContent).toMatch(/Melpaca/)
+    expect(expanded.textContent).toMatch(/Island|Hills|Archipelago|Rocks/)
+  })
+
+  it('says "price ?" rather than implying an item is free', async () => {
+    // 476 of 587 upstream listings carry no price.
+    render(<Totals result={resultFor([['Cloth', 5]])} index={index} sourcing={sourcing} />)
+    await userEvent.click(screen.getByRole('button', { name: /Wool/ }))
+
+    const unpriced = screen.queryAllByTitle('Price not recorded upstream')
+    for (const el of unpriced) expect(el).toHaveTextContent('price ?')
+    expect(screen.queryByText(/\b0 Gold Coin\b/)).not.toBeInTheDocument()
+  })
+})
+

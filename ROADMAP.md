@@ -25,6 +25,34 @@
       CSV instead. `buildExportModel` is already format-agnostic, so only a
       renderer is needed.
 
+## Next — new feature areas
+
+The upstream dataset has 19 files; we now use 5. These are the two worth building
+next, both grounded in data already published by the same source.
+
+- [ ] **Breeding path solver** — `breeding.json` carries the full CombiRank
+      formula plus all 299 ranks and 164 special combos, so results are
+      *computable*, not just searchable:
+      `target = floor((rankA + rankB + 1) / 2)`, nearest rank wins, ties break
+      to the higher rank. Every existing calculator answers "A + B = ?"; the gap
+      is the inverse over *your* roster — "I own these six Pals, I want a
+      Jetragon, what's the shortest chain?" That's graph search over a
+      deterministic relation, structurally the same problem as recipe expansion.
+      Note the data's own `gaps` field flags conflicting documentation on the
+      tie-break rule, so surface uncertainty on exact ties rather than
+      pretending it's settled.
+- [ ] **Base production planner** — `base_building.json` already carries
+      `worker_slots`, `workers` (suitability), `power`, and `energy_per_sec`, and
+      we import the file while using almost none of it. Upgrades Requirements
+      from "which stations" to "how many stations, how many Pals, which
+      suitabilities, how much power."
+
+**Deliberately not building: a server/world-settings config creator.** Those
+settings live in `PalWorldSettings.ini`, which isn't in this dataset at all. It
+is a form builder rather than a calculator, so it shares no engine, no data
+pipeline, and no audit tooling with anything here — and several tools already do
+it well. It belongs in its own repo, not this one.
+
 ## Later — deferred from v1 scope
 
 These were considered for v1 and consciously deferred, not dropped.
@@ -47,6 +75,6 @@ These were considered for v1 and consciously deferred, not dropped.
 
 ## Technical debt
 
-- [ ] **Bundle size** — the 1.5 MB dataset inlines into the JS bundle (~1 MB minified, 144 kB gzipped). Split it out and fetch it as a static asset, or trim unused fields at import time
+- [ ] **Bundle size** — the 1.8 MB dataset inlines into the JS bundle (~1.22 MB minified, 163 kB gzipped), up from 1 MB after adding habitat, merchant, and expedition data. Split it out and fetch it as a static asset, or trim unused fields at import time. This is now the largest single piece of debt
 - [x] **Component tests** — every component, the build-list hook, and `App`, plus a static guard on Tailwind utility usage that catches the class of bug render tests structurally cannot
 - [ ] Consider indexing items by category/station at import time rather than filtering at runtime

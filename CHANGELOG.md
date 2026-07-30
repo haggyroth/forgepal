@@ -4,7 +4,13 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] — 2026-07-29
+
+### Added
+
+- feat(route): farming route panel — inverts the requisition to group dropped materials by the map region where the Pals that drop them live, ranked by how much of the list each region covers. Gathered materials are listed as needing no route, and materials whose sources have no wild spawn (bosses, humans, legendaries) are called out rather than omitted
+- feat(sourcing): each raw material now shows where its Pals live, which vendors stock it, and which expeditions return it — so the requisition offers alternatives to farming
+- chore(data): import `pal_locations.json`, `merchants.json`, and `expeditions.json`. Expedition rewards are sourcing information upstream's item pages omit entirely
 
 ### Changed
 

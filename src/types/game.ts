@@ -152,9 +152,60 @@ export interface DatasetMeta {
   gaps: string[]
 }
 
+/**
+ * Where a Pal lives, so a drop table can become a route.
+ *
+ * Keyed by the Pal's display name, which is what `DropSource.source` carries.
+ * Note that many drop sources are humans and NPCs (Syndicate Thug, Villager)
+ * rather than Pals, so a lookup miss is normal and not an error.
+ */
+export interface PalHabitat {
+  name: string
+  /** Named map regions where it spawns. Empty for Pals with no wild spawn. */
+  regions: string[]
+  /**
+   * `night` means night-only, `both` means any time, null means upstream
+   * doesn't say. There is deliberately no `day` — upstream never records one,
+   * so inventing the value would imply knowledge we don't have.
+   */
+  dayNight: 'night' | 'both' | null
+}
+
+/** A vendor that sells an item, and what they want for it. */
+export interface MerchantListing {
+  merchant: string
+  /** Gold Coin, Battle Ticket, Medal, and so on — not every vendor takes gold. */
+  currency: string
+  /**
+   * Null when upstream records no price — which is the majority case, 476 of
+   * 587 listings. "This vendor stocks it" is useful on its own, so the listing
+   * is kept rather than discarded for lacking a number.
+   */
+  price: number | null
+  /** Where to find them, e.g. "Arena (631, 16)". */
+  locations: string[]
+}
+
+/** An expedition that can return an item. */
+export interface ExpeditionReward {
+  mission: string
+  durationHours: number | null
+  requiredFirepower: number | null
+  /** Free text, e.g. "5-7" — upstream records ranges, not single values. */
+  quantity: string
+  /** Free text, e.g. "40%". Null when upstream doesn't record one. */
+  chance: string | null
+}
+
 export interface GameData {
   meta: DatasetMeta
   items: Item[]
   structures: Structure[]
   stations: Station[]
+  /** Pal habitats, for turning drop tables into a farming route. */
+  habitats: PalHabitat[]
+  /** Vendor listings, keyed by item id. */
+  merchantListings: Record<ItemId, MerchantListing[]>
+  /** Expedition rewards, keyed by item id. Upstream's item pages omit these. */
+  expeditionRewards: Record<ItemId, ExpeditionReward[]>
 }

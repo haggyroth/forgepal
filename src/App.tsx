@@ -13,6 +13,8 @@ import { useBuildList } from '@/hooks/useBuildList'
 import type { Entry } from '@/lib/search'
 import { hasAnythingToExport } from '@/lib/export'
 import { analyseTech, MAX_TECH_LEVEL, parsePlayerLevel } from '@/lib/tech'
+import { buildHabitatIndex, buildRoute } from '@/lib/route'
+import { FarmingRoute } from '@/components/FarmingRoute'
 import { BuildList } from '@/components/BuildList'
 import { ExportBar } from '@/components/ExportBar'
 import { ItemBrowser } from '@/components/ItemBrowser'
@@ -41,6 +43,17 @@ export default function App() {
 
   const result = useMemo(() => calculate(buildEntries, index), [buildEntries, index])
   const tech = useMemo(() => analyseTech(result, index, playerLevel), [result, index, playerLevel])
+
+  const habitats = useMemo(() => buildHabitatIndex(gameData), [])
+  const sourcing = useMemo(
+    () => ({
+      habitats,
+      merchantListings: gameData.merchantListings,
+      expeditionRewards: gameData.expeditionRewards,
+    }),
+    [habitats],
+  )
+  const route = useMemo(() => buildRoute(result, index, habitats), [result, index, habitats])
 
   // Keep localStorage and the address bar in step with the current build.
   // replaceState rather than pushState: every quantity tweak would otherwise
@@ -129,6 +142,7 @@ export default function App() {
             <Totals
               result={result}
               index={index}
+              sourcing={sourcing}
               exportBar={
                 <ExportBar
                   result={result}
@@ -138,6 +152,7 @@ export default function App() {
                 />
               }
             />
+            <FarmingRoute route={route} />
             <Requirements tech={tech} />
             <RecipeTree quantities={quantities} index={index} />
           </div>
