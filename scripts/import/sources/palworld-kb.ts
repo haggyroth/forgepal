@@ -133,12 +133,31 @@ export interface RawExpeditionsFile {
   sources?: RawSourceRef[]
 }
 
+export interface RawSpecialCombo {
+  parent_a: string
+  parent_b: string
+  child: string
+}
+
+export interface RawBreedingFile {
+  game_version: string
+  updated: string
+  /** Every Pal's hidden CombiRank, keyed by display name. */
+  combi_ranks: Record<string, number>
+  special_combos: RawSpecialCombo[]
+  formula?: string
+  notes?: string[]
+  gaps?: string[]
+  sources?: RawSourceRef[]
+}
+
 export interface RawDataset {
   items: RawItemsFile
   building: RawBuildingFile
   locations: RawLocationsFile
   merchants: RawMerchantsFile
   expeditions: RawExpeditionsFile
+  breeding: RawBreedingFile
 }
 
 async function fetchCached<T>(file: string): Promise<T> {
@@ -163,12 +182,13 @@ async function fetchCached<T>(file: string): Promise<T> {
 }
 
 export async function loadRawDataset(): Promise<RawDataset> {
-  const [items, building, locations, merchants, expeditions] = await Promise.all([
+  const [items, building, locations, merchants, expeditions, breeding] = await Promise.all([
     fetchCached<RawItemsFile>('items.json'),
     fetchCached<RawBuildingFile>('base_building.json'),
     fetchCached<RawLocationsFile>('pal_locations.json'),
     fetchCached<RawMerchantsFile>('merchants.json'),
     fetchCached<RawExpeditionsFile>('expeditions.json'),
+    fetchCached<RawBreedingFile>('breeding.json'),
   ])
-  return { items, building, locations, merchants, expeditions }
+  return { items, building, locations, merchants, expeditions, breeding }
 }

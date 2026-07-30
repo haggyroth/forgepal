@@ -19,10 +19,12 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { GameData, Item, SourceKind, Structure } from '../../src/types/game.ts'
+import type { BreedingData } from '../../src/types/breeding.ts'
 import { toId } from '../../src/lib/id.ts'
 import { GATHERED_MATERIALS } from '../import/overrides.ts'
 
 const DATA_FILE = join(import.meta.dirname, '..', '..', 'src', 'data', 'game-data.json')
+const BREEDING_FILE = join(import.meta.dirname, '..', '..', 'src', 'data', 'breeding-data.json')
 
 type Entry = Item | Structure
 
@@ -197,6 +199,10 @@ async function main() {
     for (const gap of data.meta.gaps) console.log(`    • ${gap.slice(0, 150)}`)
   }
 
+  /* ----------------------------------------------------------------- breeding */
+
+  problems += await auditBreeding()
+
   /* ------------------------------------------------------------------ verdict */
 
   heading('Verdict')
@@ -215,6 +221,97 @@ async function main() {
     process.exit(1)
   }
   console.log('\n✓ No issues within our control. Remaining gaps are upstream.\n')
+}
+
+/**
+ * Breeding data.
+ *
+ * The pool is derived, not stated upstream, and an error in it does not merely
+ * make one Pal unreachable — the formula picks the nearest *pooled* rank, so a
+ * wrong exclusion changes results for unrelated parent pairs. These checks
+ * exist because that failure is silent.
+ */
+async function auditBreeding(): Promise<number> {
+  heading('Breeding')
+
+  let problems = 0
+  let data: BreedingData
+  try {
+    data = JSON.parse(await readFile(BREEDING_FILE, 'utf8'))
+  } catch {
+    console.log('  ✗ breeding-data.json is missing — run npm run data:import')
+    return 1
+  }
+
+  const pooled = data.pals.filter((p) => p.inPool)
+  console.log(`  ${data.pals.length} pals, ${pooled.length} in the generic pool`)
+  console.log(`  ${data.specialCombos.length} special combos`)
+
+  const byId = new Map(data.pals.map((p) => [p.id, p]))
+
+  // Every id a combo names must exist, or the solver silently drops the combo.
+  const unknown = new Set<string>()
+  for (const combo of data.specialCombos) {
+    for (const id of [combo.parentA, combo.parentB, combo.child]) {
+      if (!byId.has(id)) unknown.add(id)
+    }
+  }
+  if (unknown.size === 0) {
+    console.log('  every special combo resolves to a known pal')
+  } else {
+    problems += 1
+    console.log(
+      `  ✗ ${unknown.size} unknown pal(s) in special combos: ${[...unknown].slice(0, 6).join(', ')}`,
+    )
+  }
+
+  // A special-combo child in the pool would be reachable two ways, and the
+  // formula would start producing Pals upstream says it never can.
+  const children = new Set(data.specialCombos.map((c) => c.child))
+  const leaked = pooled.filter((p) => children.has(p.id))
+  if (leaked.length === 0) {
+    console.log('  no special-combo child is in the generic pool')
+  } else {
+    problems += 1
+    console.log(
+      `  ✗ ${leaked.length} special-combo child(ren) leaked into the pool: ${leaked
+        .slice(0, 6)
+        .map((p) => p.name)
+        .join(', ')}`,
+    )
+  }
+
+  // Two pooled Pals sharing a rank would make "nearest" undecidable in a way
+  // the tie-break rule cannot resolve, since it compares ranks.
+  const seen = new Map<number, string>()
+  const collisions: string[] = []
+  for (const pal of pooled) {
+    const other = seen.get(pal.rank)
+    if (other) collisions.push(`${other} / ${pal.name} @ ${pal.rank}`)
+    else seen.set(pal.rank, pal.name)
+  }
+  if (collisions.length === 0) {
+    console.log('  every pooled rank is unique')
+  } else {
+    problems += 1
+    console.log(`  ✗ pooled rank collisions: ${collisions.slice(0, 4).join('; ')}`)
+  }
+
+  // Reported, never failed: the rule is contested upstream and the share is
+  // large enough that the UI has to say so rather than bury it.
+  const { rule, affectedPairs, totalPairs } = data.tieBreak
+  const share = ((affectedPairs / totalPairs) * 100).toFixed(1)
+  console.log(
+    `  ⚠ tie-break '${rule}' decides ${share}% of generic pairs (${affectedPairs} of ${totalPairs})`,
+  )
+  console.log("    Upstream verified 'higher' in game but its own gaps note the wiki disagrees.")
+
+  if (data.meta.gaps.length > 0) {
+    console.log('\n  Gaps upstream documents itself:')
+    for (const gap of data.meta.gaps) console.log(`    • ${gap.slice(0, 140)}`)
+  }
+
+  return problems
 }
 
 main().catch((error: unknown) => {

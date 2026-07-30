@@ -8,6 +8,7 @@ package-lock.json
 # produce a diff against the committed file and the weekly refresh workflow
 # would open a PR every week for a change that isn't one. Never format it.
 src/data/game-data.json
+src/data/breeding-data.json
 
 # Upstream snapshots, git-ignored but present locally after an import.
 scripts/import/sources/.cache

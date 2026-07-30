@@ -4,6 +4,19 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- chore(data): import breeding data to a separate `src/data/breeding-data.json` — 299 Pals with CombiRanks, 164 special combos, and a derived 183-Pal generic pool. Kept out of `game-data.json` so the calculator's chunk does not carry it
+- chore(data): `breeding-overrides.ts` for curated pool corrections and the tie-break policy, and audit coverage checking that no special-combo child leaks into the pool and that every pooled rank is unique
+
+### Notes
+
+- No user-visible change: this is the data pipeline for the breeding solver, so there is no version bump
+- The tie-break rule decides **31.4%** of generic parent pairs (14,010 of 44,687). Upstream verified `higher` in game but its own `gaps` field records that the wiki documents the opposite, so the share is carried in the dataset for the UI to surface rather than left as a claim
+- The eleven crossover Pals sharing CombiRank 3100 turn out to be excluded by the default rule already, which is what makes every pooled rank unique
+
 ## [1.4.0] — 2026-07-29
 
 ### Added

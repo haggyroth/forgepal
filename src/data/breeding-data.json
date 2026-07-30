@@ -1,0 +1,2641 @@
+{
+  "meta": {
+    "gameVersion": "1.0",
+    "updated": "2026-07-14",
+    "importedAt": "2026-07-30T17:45:29.821Z",
+    "sources": [
+      "https://paldb.cc/en/Breeding_Farm — full CombiRank table for all 299 pals ('Breed Combi' tab) and all 164 special/unique breeding combinations ('Breed Unique' tab); raw HTML kept at data/raw/paldb_breeding.html (fetched 2026-07-14)",
+      "https://palworld.wiki.gg/wiki/Breeding — exact formula wording child = floor((A + B + 1) / 2), tie-break 'lowest index number is selected', gender requirement, excluded/same-species-only pals (fetched 2026-07-14)",
+      "https://palworld.ludbase.com/en/tools/breeding/ — 1.0 confirmation of the floor((rankA + rankB + 1) / 2) formula and of ~135 special override combinations (fetched 2026-07-14)",
+      "https://advancecalchub.app/blog/palworld-breeding-guide-best-pals — gender requirement and parent order-insensitivity (pre-1.0 era page; used only for mechanics, not ranks) (fetched 2026-07-14)"
+    ],
+    "gaps": [
+      "Tie-break rule has conflicting documentation: palworld.wiki.gg says the lower internal index wins on exact CombiRank ties, while one 1.0-era aggregator claims ties resolve to the higher CombiRank; not independently verified in-game for 1.0.",
+      "Eleven crossover pals share CombiRank 3100, so formula results among them depend entirely on the tie-break rule / their exclusion from the generic pool.",
+      "paldb.cc does not print an explicit game-version stamp on the Breeding_Farm page; 1.0 provenance is inferred from its exact match with the 299-pal 1.0 paldex and 1.0-only species."
+    ]
+  },
+  "pals": [
+    {
+      "id": "aegidron",
+      "name": "Aegidron",
+      "rank": 30,
+      "inPool": true
+    },
+    {
+      "id": "amione",
+      "name": "Amione",
+      "rank": 2520,
+      "inPool": true
+    },
+    {
+      "id": "anubis",
+      "name": "Anubis",
+      "rank": 480,
+      "inPool": true
+    },
+    {
+      "id": "arsox",
+      "name": "Arsox",
+      "rank": 2320,
+      "inPool": true
+    },
+    {
+      "id": "astegon",
+      "name": "Astegon",
+      "rank": 490,
+      "inPool": true
+    },
+    {
+      "id": "astralym",
+      "name": "Astralym",
+      "rank": 10,
+      "inPool": false
+    },
+    {
+      "id": "azurmane",
+      "name": "Azurmane",
+      "rank": 420,
+      "inPool": true
+    },
+    {
+      "id": "azurobe",
+      "name": "Azurobe",
+      "rank": 1830,
+      "inPool": true
+    },
+    {
+      "id": "azurobe-cryst",
+      "name": "Azurobe Cryst",
+      "rank": 1220,
+      "inPool": false
+    },
+    {
+      "id": "bakemi",
+      "name": "Bakemi",
+      "rank": 1540,
+      "inPool": true
+    },
+    {
+      "id": "bastigor",
+      "name": "Bastigor",
+      "rank": 50,
+      "inPool": false
+    },
+    {
+      "id": "beakon",
+      "name": "Beakon",
+      "rank": 1690,
+      "inPool": true
+    },
+    {
+      "id": "beakon-cryst",
+      "name": "Beakon Cryst",
+      "rank": 580,
+      "inPool": false
+    },
+    {
+      "id": "beegarde",
+      "name": "Beegarde",
+      "rank": 2350,
+      "inPool": true
+    },
+    {
+      "id": "bellanoir",
+      "name": "Bellanoir",
+      "rank": 620,
+      "inPool": false
+    },
+    {
+      "id": "bellanoir-libero",
+      "name": "Bellanoir Libero",
+      "rank": 130,
+      "inPool": false
+    },
+    {
+      "id": "blazamut",
+      "name": "Blazamut",
+      "rank": 410,
+      "inPool": true
+    },
+    {
+      "id": "blazamut-ryu",
+      "name": "Blazamut Ryu",
+      "rank": 100,
+      "inPool": false
+    },
+    {
+      "id": "blazehowl",
+      "name": "Blazehowl",
+      "rank": 1360,
+      "inPool": true
+    },
+    {
+      "id": "blazehowl-noct",
+      "name": "Blazehowl Noct",
+      "rank": 1270,
+      "inPool": false
+    },
+    {
+      "id": "blue-slime",
+      "name": "Blue Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "braloha",
+      "name": "Braloha",
+      "rank": 1030,
+      "inPool": true
+    },
+    {
+      "id": "bristla",
+      "name": "Bristla",
+      "rank": 2690,
+      "inPool": true
+    },
+    {
+      "id": "broncherry",
+      "name": "Broncherry",
+      "rank": 1380,
+      "inPool": true
+    },
+    {
+      "id": "broncherry-aqua",
+      "name": "Broncherry Aqua",
+      "rank": 1080,
+      "inPool": false
+    },
+    {
+      "id": "bulldosu",
+      "name": "Bulldosu",
+      "rank": 1190,
+      "inPool": true
+    },
+    {
+      "id": "bushi",
+      "name": "Bushi",
+      "rank": 1560,
+      "inPool": true
+    },
+    {
+      "id": "bushi-noct",
+      "name": "Bushi Noct",
+      "rank": 840,
+      "inPool": false
+    },
+    {
+      "id": "caprity",
+      "name": "Caprity",
+      "rank": 2610,
+      "inPool": true
+    },
+    {
+      "id": "caprity-noct",
+      "name": "Caprity Noct",
+      "rank": 1940,
+      "inPool": false
+    },
+    {
+      "id": "carnibora",
+      "name": "Carnibora",
+      "rank": 1700,
+      "inPool": true
+    },
+    {
+      "id": "cattiva",
+      "name": "Cattiva",
+      "rank": 2760,
+      "inPool": true
+    },
+    {
+      "id": "cave-bat",
+      "name": "Cave Bat",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "cawgnito",
+      "name": "Cawgnito",
+      "rank": 2370,
+      "inPool": true
+    },
+    {
+      "id": "celaray",
+      "name": "Celaray",
+      "rank": 2740,
+      "inPool": true
+    },
+    {
+      "id": "celaray-lux",
+      "name": "Celaray Lux",
+      "rank": 2380,
+      "inPool": false
+    },
+    {
+      "id": "celesdir",
+      "name": "Celesdir",
+      "rank": 570,
+      "inPool": false
+    },
+    {
+      "id": "celesdir-noct",
+      "name": "Celesdir Noct",
+      "rank": 270,
+      "inPool": false
+    },
+    {
+      "id": "chikipi",
+      "name": "Chikipi",
+      "rank": 3080,
+      "inPool": true
+    },
+    {
+      "id": "chillet",
+      "name": "Chillet",
+      "rank": 2330,
+      "inPool": true
+    },
+    {
+      "id": "chillet-ignis",
+      "name": "Chillet Ignis",
+      "rank": 1950,
+      "inPool": false
+    },
+    {
+      "id": "cinnamoth",
+      "name": "Cinnamoth",
+      "rank": 2620,
+      "inPool": true
+    },
+    {
+      "id": "clovee",
+      "name": "Clovee",
+      "rank": 2970,
+      "inPool": true
+    },
+    {
+      "id": "cremis",
+      "name": "Cremis",
+      "rank": 2890,
+      "inPool": true
+    },
+    {
+      "id": "croajiro",
+      "name": "Croajiro",
+      "rank": 2600,
+      "inPool": true
+    },
+    {
+      "id": "croajiro-noct",
+      "name": "Croajiro Noct",
+      "rank": 1860,
+      "inPool": false
+    },
+    {
+      "id": "cryolinx",
+      "name": "Cryolinx",
+      "rank": 1040,
+      "inPool": true
+    },
+    {
+      "id": "cryolinx-terra",
+      "name": "Cryolinx Terra",
+      "rank": 470,
+      "inPool": false
+    },
+    {
+      "id": "daedream",
+      "name": "Daedream",
+      "rank": 2910,
+      "inPool": true
+    },
+    {
+      "id": "dandilord",
+      "name": "Dandilord",
+      "rank": 60,
+      "inPool": false
+    },
+    {
+      "id": "dazemu",
+      "name": "Dazemu",
+      "rank": 2210,
+      "inPool": true
+    },
+    {
+      "id": "dazzi",
+      "name": "Dazzi",
+      "rank": 2400,
+      "inPool": true
+    },
+    {
+      "id": "dazzi-noct",
+      "name": "Dazzi Noct",
+      "rank": 1910,
+      "inPool": false
+    },
+    {
+      "id": "demon-eye",
+      "name": "Demon Eye",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "depresso",
+      "name": "Depresso",
+      "rank": 3000,
+      "inPool": true
+    },
+    {
+      "id": "digtoise",
+      "name": "Digtoise",
+      "rank": 1550,
+      "inPool": true
+    },
+    {
+      "id": "dinossom",
+      "name": "Dinossom",
+      "rank": 2100,
+      "inPool": true
+    },
+    {
+      "id": "dinossom-lux",
+      "name": "Dinossom Lux",
+      "rank": 1890,
+      "inPool": false
+    },
+    {
+      "id": "direhowl",
+      "name": "Direhowl",
+      "rank": 2680,
+      "inPool": true
+    },
+    {
+      "id": "dogen",
+      "name": "Dogen",
+      "rank": 1460,
+      "inPool": true
+    },
+    {
+      "id": "dualith",
+      "name": "Dualith",
+      "rank": 510,
+      "inPool": true
+    },
+    {
+      "id": "dualith-noct",
+      "name": "Dualith Noct",
+      "rank": 250,
+      "inPool": false
+    },
+    {
+      "id": "dumud",
+      "name": "Dumud",
+      "rank": 2290,
+      "inPool": true
+    },
+    {
+      "id": "dumud-gild",
+      "name": "Dumud Gild",
+      "rank": 1620,
+      "inPool": false
+    },
+    {
+      "id": "dupin",
+      "name": "Dupin",
+      "rank": 520,
+      "inPool": true
+    },
+    {
+      "id": "dynamoff",
+      "name": "Dynamoff",
+      "rank": 1400,
+      "inPool": true
+    },
+    {
+      "id": "eidrolon",
+      "name": "Eidrolon",
+      "rank": 300,
+      "inPool": true
+    },
+    {
+      "id": "eidrolon-ignis",
+      "name": "Eidrolon Ignis",
+      "rank": 140,
+      "inPool": false
+    },
+    {
+      "id": "eikthyrdeer",
+      "name": "Eikthyrdeer",
+      "rank": 2710,
+      "inPool": true
+    },
+    {
+      "id": "eikthyrdeer-terra",
+      "name": "Eikthyrdeer Terra",
+      "rank": 2580,
+      "inPool": false
+    },
+    {
+      "id": "elgrove",
+      "name": "Elgrove",
+      "rank": 2020,
+      "inPool": true
+    },
+    {
+      "id": "elgrove-cryst",
+      "name": "Elgrove Cryst",
+      "rank": 440,
+      "inPool": false
+    },
+    {
+      "id": "elizabee",
+      "name": "Elizabee",
+      "rank": 1790,
+      "inPool": true
+    },
+    {
+      "id": "elphidran",
+      "name": "Elphidran",
+      "rank": 2280,
+      "inPool": true
+    },
+    {
+      "id": "elphidran-aqua",
+      "name": "Elphidran Aqua",
+      "rank": 1640,
+      "inPool": false
+    },
+    {
+      "id": "enchanted-sword",
+      "name": "Enchanted Sword",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "eye-of-cthulhu",
+      "name": "Eye of Cthulhu",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "faleris",
+      "name": "Faleris",
+      "rank": 500,
+      "inPool": false
+    },
+    {
+      "id": "faleris-aqua",
+      "name": "Faleris Aqua",
+      "rank": 450,
+      "inPool": false
+    },
+    {
+      "id": "felbat",
+      "name": "Felbat",
+      "rank": 1570,
+      "inPool": true
+    },
+    {
+      "id": "fenglope",
+      "name": "Fenglope",
+      "rank": 1960,
+      "inPool": true
+    },
+    {
+      "id": "fenglope-lux",
+      "name": "Fenglope Lux",
+      "rank": 900,
+      "inPool": false
+    },
+    {
+      "id": "finsider",
+      "name": "Finsider",
+      "rank": 2450,
+      "inPool": true
+    },
+    {
+      "id": "finsider-ignis",
+      "name": "Finsider Ignis",
+      "rank": 2240,
+      "inPool": false
+    },
+    {
+      "id": "flambelle",
+      "name": "Flambelle",
+      "rank": 2700,
+      "inPool": true
+    },
+    {
+      "id": "flaracle",
+      "name": "Flaracle",
+      "rank": 390,
+      "inPool": true
+    },
+    {
+      "id": "flopie",
+      "name": "Flopie",
+      "rank": 2660,
+      "inPool": true
+    },
+    {
+      "id": "foxcicle",
+      "name": "Foxcicle",
+      "rank": 1970,
+      "inPool": true
+    },
+    {
+      "id": "foxparks",
+      "name": "Foxparks",
+      "rank": 2990,
+      "inPool": true
+    },
+    {
+      "id": "foxparks-cryst",
+      "name": "Foxparks Cryst",
+      "rank": 2500,
+      "inPool": false
+    },
+    {
+      "id": "frostallion",
+      "name": "Frostallion",
+      "rank": 150,
+      "inPool": false
+    },
+    {
+      "id": "frostallion-noct",
+      "name": "Frostallion Noct",
+      "rank": 110,
+      "inPool": false
+    },
+    {
+      "id": "frostplume",
+      "name": "Frostplume",
+      "rank": 860,
+      "inPool": true
+    },
+    {
+      "id": "fuack",
+      "name": "Fuack",
+      "rank": 2980,
+      "inPool": true
+    },
+    {
+      "id": "fuack-ignis",
+      "name": "Fuack Ignis",
+      "rank": 2300,
+      "inPool": false
+    },
+    {
+      "id": "fuddler",
+      "name": "Fuddler",
+      "rank": 2790,
+      "inPool": true
+    },
+    {
+      "id": "galeclaw",
+      "name": "Galeclaw",
+      "rank": 2570,
+      "inPool": true
+    },
+    {
+      "id": "ghangler",
+      "name": "Ghangler",
+      "rank": 880,
+      "inPool": true
+    },
+    {
+      "id": "ghangler-ignis",
+      "name": "Ghangler Ignis",
+      "rank": 720,
+      "inPool": false
+    },
+    {
+      "id": "gildane",
+      "name": "Gildane",
+      "rank": 730,
+      "inPool": true
+    },
+    {
+      "id": "gildra",
+      "name": "Gildra",
+      "rank": 1170,
+      "inPool": true
+    },
+    {
+      "id": "gloopie",
+      "name": "Gloopie",
+      "rank": 2530,
+      "inPool": true
+    },
+    {
+      "id": "gloopie-primo",
+      "name": "Gloopie Primo",
+      "rank": 1630,
+      "inPool": false
+    },
+    {
+      "id": "gobfin",
+      "name": "Gobfin",
+      "rank": 2550,
+      "inPool": true
+    },
+    {
+      "id": "gobfin-ignis",
+      "name": "Gobfin Ignis",
+      "rank": 2430,
+      "inPool": false
+    },
+    {
+      "id": "gorirat",
+      "name": "Gorirat",
+      "rank": 2140,
+      "inPool": true
+    },
+    {
+      "id": "gorirat-terra",
+      "name": "Gorirat Terra",
+      "rank": 1880,
+      "inPool": false
+    },
+    {
+      "id": "green-slime",
+      "name": "Green Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "grintale",
+      "name": "Grintale",
+      "rank": 2120,
+      "inPool": true
+    },
+    {
+      "id": "grizzbolt",
+      "name": "Grizzbolt",
+      "rank": 1020,
+      "inPool": false
+    },
+    {
+      "id": "gumoss",
+      "name": "Gumoss",
+      "rank": 2950,
+      "inPool": true
+    },
+    {
+      "id": "hangyu",
+      "name": "Hangyu",
+      "rank": 2780,
+      "inPool": true
+    },
+    {
+      "id": "hangyu-cryst",
+      "name": "Hangyu Cryst",
+      "rank": 2510,
+      "inPool": false
+    },
+    {
+      "id": "hartalis",
+      "name": "Hartalis",
+      "rank": 90,
+      "inPool": false
+    },
+    {
+      "id": "helzephyr",
+      "name": "Helzephyr",
+      "rank": 1130,
+      "inPool": true
+    },
+    {
+      "id": "helzephyr-lux",
+      "name": "Helzephyr Lux",
+      "rank": 960,
+      "inPool": false
+    },
+    {
+      "id": "herbil",
+      "name": "Herbil",
+      "rank": 2630,
+      "inPool": true
+    },
+    {
+      "id": "hoocrates",
+      "name": "Hoocrates",
+      "rank": 2940,
+      "inPool": true
+    },
+    {
+      "id": "hoodle",
+      "name": "Hoodle",
+      "rank": 1770,
+      "inPool": true
+    },
+    {
+      "id": "icelyn",
+      "name": "Icelyn",
+      "rank": 1260,
+      "inPool": true
+    },
+    {
+      "id": "illuminant-bat",
+      "name": "Illuminant Bat",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "illuminant-slime",
+      "name": "Illuminant Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "incineram",
+      "name": "Incineram",
+      "rank": 1470,
+      "inPool": true
+    },
+    {
+      "id": "incineram-noct",
+      "name": "Incineram Noct",
+      "rank": 1310,
+      "inPool": false
+    },
+    {
+      "id": "jelliette",
+      "name": "Jelliette",
+      "rank": 2650,
+      "inPool": true
+    },
+    {
+      "id": "jellroy",
+      "name": "Jellroy",
+      "rank": 2590,
+      "inPool": true
+    },
+    {
+      "id": "jetragon",
+      "name": "Jetragon",
+      "rank": 70,
+      "inPool": false
+    },
+    {
+      "id": "jolthog",
+      "name": "Jolthog",
+      "rank": 3030,
+      "inPool": true
+    },
+    {
+      "id": "jolthog-cryst",
+      "name": "Jolthog Cryst",
+      "rank": 2850,
+      "inPool": false
+    },
+    {
+      "id": "jormuntide",
+      "name": "Jormuntide",
+      "rank": 590,
+      "inPool": true
+    },
+    {
+      "id": "jormuntide-ignis",
+      "name": "Jormuntide Ignis",
+      "rank": 170,
+      "inPool": false
+    },
+    {
+      "id": "katress",
+      "name": "Katress",
+      "rank": 2040,
+      "inPool": true
+    },
+    {
+      "id": "katress-ignis",
+      "name": "Katress Ignis",
+      "rank": 1800,
+      "inPool": false
+    },
+    {
+      "id": "kelpsea",
+      "name": "Kelpsea",
+      "rank": 2810,
+      "inPool": true
+    },
+    {
+      "id": "kelpsea-ignis",
+      "name": "Kelpsea Ignis",
+      "rank": 2470,
+      "inPool": true
+    },
+    {
+      "id": "kikit",
+      "name": "Kikit",
+      "rank": 2310,
+      "inPool": true
+    },
+    {
+      "id": "killamari",
+      "name": "Killamari",
+      "rank": 2770,
+      "inPool": true
+    },
+    {
+      "id": "killamari-primo",
+      "name": "Killamari Primo",
+      "rank": 2540,
+      "inPool": false
+    },
+    {
+      "id": "kingpaca",
+      "name": "Kingpaca",
+      "rank": 2220,
+      "inPool": true
+    },
+    {
+      "id": "kingpaca-cryst",
+      "name": "Kingpaca Cryst",
+      "rank": 1530,
+      "inPool": false
+    },
+    {
+      "id": "kitsun",
+      "name": "Kitsun",
+      "rank": 1670,
+      "inPool": true
+    },
+    {
+      "id": "kitsun-noct",
+      "name": "Kitsun Noct",
+      "rank": 800,
+      "inPool": false
+    },
+    {
+      "id": "knocklem",
+      "name": "Knocklem",
+      "rank": 260,
+      "inPool": true
+    },
+    {
+      "id": "knocklem-ignis",
+      "name": "Knocklem Ignis",
+      "rank": 210,
+      "inPool": false
+    },
+    {
+      "id": "lamball",
+      "name": "Lamball",
+      "rank": 3050,
+      "inPool": true
+    },
+    {
+      "id": "lapiron",
+      "name": "Lapiron",
+      "rank": 1680,
+      "inPool": true
+    },
+    {
+      "id": "lapure",
+      "name": "Lapure",
+      "rank": 810,
+      "inPool": true
+    },
+    {
+      "id": "leafan",
+      "name": "Leafan",
+      "rank": 1410,
+      "inPool": true
+    },
+    {
+      "id": "leezpunk",
+      "name": "Leezpunk",
+      "rank": 2670,
+      "inPool": true
+    },
+    {
+      "id": "leezpunk-ignis",
+      "name": "Leezpunk Ignis",
+      "rank": 2640,
+      "inPool": false
+    },
+    {
+      "id": "lifmunk",
+      "name": "Lifmunk",
+      "rank": 3020,
+      "inPool": true
+    },
+    {
+      "id": "loomen",
+      "name": "Loomen",
+      "rank": 890,
+      "inPool": true
+    },
+    {
+      "id": "loupmoon",
+      "name": "Loupmoon",
+      "rank": 2110,
+      "inPool": true
+    },
+    {
+      "id": "loupmoon-cryst",
+      "name": "Loupmoon Cryst",
+      "rank": 1290,
+      "inPool": false
+    },
+    {
+      "id": "lovander",
+      "name": "Lovander",
+      "rank": 2090,
+      "inPool": true
+    },
+    {
+      "id": "lullu",
+      "name": "Lullu",
+      "rank": 1990,
+      "inPool": true
+    },
+    {
+      "id": "lunaris",
+      "name": "Lunaris",
+      "rank": 2010,
+      "inPool": true
+    },
+    {
+      "id": "lyleen",
+      "name": "Lyleen",
+      "rank": 240,
+      "inPool": false
+    },
+    {
+      "id": "lyleen-noct",
+      "name": "Lyleen Noct",
+      "rank": 220,
+      "inPool": false
+    },
+    {
+      "id": "majex",
+      "name": "Majex",
+      "rank": 1010,
+      "inPool": true
+    },
+    {
+      "id": "mammorest",
+      "name": "Mammorest",
+      "rank": 1340,
+      "inPool": true
+    },
+    {
+      "id": "mammorest-cryst",
+      "name": "Mammorest Cryst",
+      "rank": 1070,
+      "inPool": false
+    },
+    {
+      "id": "maraith",
+      "name": "Maraith",
+      "rank": 1710,
+      "inPool": true
+    },
+    {
+      "id": "mau",
+      "name": "Mau",
+      "rank": 3040,
+      "inPool": true
+    },
+    {
+      "id": "mau-cryst",
+      "name": "Mau Cryst",
+      "rank": 2750,
+      "inPool": false
+    },
+    {
+      "id": "melpaca",
+      "name": "Melpaca",
+      "rank": 2720,
+      "inPool": true
+    },
+    {
+      "id": "menasting",
+      "name": "Menasting",
+      "rank": 1120,
+      "inPool": true
+    },
+    {
+      "id": "menasting-terra",
+      "name": "Menasting Terra",
+      "rank": 640,
+      "inPool": false
+    },
+    {
+      "id": "mimog",
+      "name": "Mimog",
+      "rank": 1740,
+      "inPool": false
+    },
+    {
+      "id": "moldron",
+      "name": "Moldron",
+      "rank": 750,
+      "inPool": true
+    },
+    {
+      "id": "moldron-cryst",
+      "name": "Moldron Cryst",
+      "rank": 380,
+      "inPool": false
+    },
+    {
+      "id": "mossanda",
+      "name": "Mossanda",
+      "rank": 2060,
+      "inPool": true
+    },
+    {
+      "id": "mossanda-lux",
+      "name": "Mossanda Lux",
+      "rank": 1440,
+      "inPool": false
+    },
+    {
+      "id": "mozzarina",
+      "name": "Mozzarina",
+      "rank": 2800,
+      "inPool": true
+    },
+    {
+      "id": "muffly",
+      "name": "Muffly",
+      "rank": 2480,
+      "inPool": true
+    },
+    {
+      "id": "munchill",
+      "name": "Munchill",
+      "rank": 2130,
+      "inPool": true
+    },
+    {
+      "id": "mycora",
+      "name": "Mycora",
+      "rank": 760,
+      "inPool": true
+    },
+    {
+      "id": "necromus",
+      "name": "Necromus",
+      "rank": 190,
+      "inPool": false
+    },
+    {
+      "id": "needoll",
+      "name": "Needoll",
+      "rank": 2420,
+      "inPool": true
+    },
+    {
+      "id": "needoll-noct",
+      "name": "Needoll Noct",
+      "rank": 1580,
+      "inPool": false
+    },
+    {
+      "id": "neptilius",
+      "name": "Neptilius",
+      "rank": 160,
+      "inPool": false
+    },
+    {
+      "id": "nitemary",
+      "name": "Nitemary",
+      "rank": 1230,
+      "inPool": true
+    },
+    {
+      "id": "nitemary-botan",
+      "name": "Nitemary Botan",
+      "rank": 1320,
+      "inPool": false
+    },
+    {
+      "id": "nitewing",
+      "name": "Nitewing",
+      "rank": 2560,
+      "inPool": true
+    },
+    {
+      "id": "nox",
+      "name": "Nox",
+      "rank": 2920,
+      "inPool": true
+    },
+    {
+      "id": "nyafia",
+      "name": "Nyafia",
+      "rank": 1250,
+      "inPool": true
+    },
+    {
+      "id": "omascul",
+      "name": "Omascul",
+      "rank": 1140,
+      "inPool": true
+    },
+    {
+      "id": "ophydia",
+      "name": "Ophydia",
+      "rank": 230,
+      "inPool": true
+    },
+    {
+      "id": "orserk",
+      "name": "Orserk",
+      "rank": 120,
+      "inPool": false
+    },
+    {
+      "id": "paladius",
+      "name": "Paladius",
+      "rank": 180,
+      "inPool": false
+    },
+    {
+      "id": "palumba",
+      "name": "Palumba",
+      "rank": 1240,
+      "inPool": true
+    },
+    {
+      "id": "panthalus",
+      "name": "Panthalus",
+      "rank": 20,
+      "inPool": false
+    },
+    {
+      "id": "pengullet",
+      "name": "Pengullet",
+      "rank": 2960,
+      "inPool": true
+    },
+    {
+      "id": "pengullet-lux",
+      "name": "Pengullet Lux",
+      "rank": 2490,
+      "inPool": false
+    },
+    {
+      "id": "penking",
+      "name": "Penking",
+      "rank": 2070,
+      "inPool": true
+    },
+    {
+      "id": "penking-lux",
+      "name": "Penking Lux",
+      "rank": 1850,
+      "inPool": false
+    },
+    {
+      "id": "petallia",
+      "name": "Petallia",
+      "rank": 1720,
+      "inPool": true
+    },
+    {
+      "id": "petallia-ignis",
+      "name": "Petallia Ignis",
+      "rank": 820,
+      "inPool": false
+    },
+    {
+      "id": "pierdon",
+      "name": "Pierdon",
+      "rank": 1110,
+      "inPool": true
+    },
+    {
+      "id": "pierdon-cryst",
+      "name": "Pierdon Cryst",
+      "rank": 460,
+      "inPool": false
+    },
+    {
+      "id": "polapup",
+      "name": "Polapup",
+      "rank": 1660,
+      "inPool": true
+    },
+    {
+      "id": "polapup-terra",
+      "name": "Polapup Terra",
+      "rank": 1100,
+      "inPool": false
+    },
+    {
+      "id": "prixter",
+      "name": "Prixter",
+      "rank": 1510,
+      "inPool": true
+    },
+    {
+      "id": "prixter-lux",
+      "name": "Prixter Lux",
+      "rank": 850,
+      "inPool": false
+    },
+    {
+      "id": "prunelia",
+      "name": "Prunelia",
+      "rank": 1390,
+      "inPool": true
+    },
+    {
+      "id": "puffolt",
+      "name": "Puffolt",
+      "rank": 2360,
+      "inPool": true
+    },
+    {
+      "id": "pupperai",
+      "name": "Pupperai",
+      "rank": 2930,
+      "inPool": true
+    },
+    {
+      "id": "purple-slime",
+      "name": "Purple Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "pyrin",
+      "name": "Pyrin",
+      "rank": 1980,
+      "inPool": true
+    },
+    {
+      "id": "pyrin-noct",
+      "name": "Pyrin Noct",
+      "rank": 1870,
+      "inPool": false
+    },
+    {
+      "id": "quivern",
+      "name": "Quivern",
+      "rank": 1210,
+      "inPool": true
+    },
+    {
+      "id": "quivern-botan",
+      "name": "Quivern Botan",
+      "rank": 1300,
+      "inPool": false
+    },
+    {
+      "id": "ragnahawk",
+      "name": "Ragnahawk",
+      "rank": 1050,
+      "inPool": true
+    },
+    {
+      "id": "rainbow-slime",
+      "name": "Rainbow Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "rayhound",
+      "name": "Rayhound",
+      "rank": 1920,
+      "inPool": true
+    },
+    {
+      "id": "rayhound-cryst",
+      "name": "Rayhound Cryst",
+      "rank": 1600,
+      "inPool": false
+    },
+    {
+      "id": "red-slime",
+      "name": "Red Slime",
+      "rank": 3100,
+      "inPool": false
+    },
+    {
+      "id": "reindrix",
+      "name": "Reindrix",
+      "rank": 1930,
+      "inPool": true
+    },
+    {
+      "id": "relaxaurus",
+      "name": "Relaxaurus",
+      "rank": 1090,
+      "inPool": true
+    },
+    {
+      "id": "relaxaurus-lux",
+      "name": "Relaxaurus Lux",
+      "rank": 770,
+      "inPool": false
+    },
+    {
+      "id": "renjishi",
+      "name": "Renjishi",
+      "rank": 290,
+      "inPool": true
+    },
+    {
+      "id": "reptyro",
+      "name": "Reptyro",
+      "rank": 1060,
+      "inPool": true
+    },
+    {
+      "id": "reptyro-cryst",
+      "name": "Reptyro Cryst",
+      "rank": 600,
+      "inPool": false
+    },
+    {
+      "id": "ribbuny",
+      "name": "Ribbuny",
+      "rank": 2860,
+      "inPool": true
+    },
+    {
+      "id": "ribbuny-botan",
+      "name": "Ribbuny Botan",
+      "rank": 2460,
+      "inPool": false
+    },
+    {
+      "id": "robinquill",
+      "name": "Robinquill",
+      "rank": 2260,
+      "inPool": true
+    },
+    {
+      "id": "robinquill-terra",
+      "name": "Robinquill Terra",
+      "rank": 2050,
+      "inPool": false
+    },
+    {
+      "id": "rooby",
+      "name": "Rooby",
+      "rank": 2870,
+      "inPool": true
+    },
+    {
+      "id": "roujay",
+      "name": "Roujay",
+      "rank": 530,
+      "inPool": true
+    },
+    {
+      "id": "rushoar",
+      "name": "Rushoar",
+      "rank": 2880,
+      "inPool": true
+    },
+    {
+      "id": "sekhmet",
+      "name": "Sekhmet",
+      "rank": 870,
+      "inPool": true
+    },
+    {
+      "id": "selyne",
+      "name": "Selyne",
+      "rank": 360,
+      "inPool": false
+    },
+    {
+      "id": "shadowbeak",
+      "name": "Shadowbeak",
+      "rank": 550,
+      "inPool": false
+    },
+    {
+      "id": "shaolong",
+      "name": "Shaolong",
+      "rank": 40,
+      "inPool": false
+    },
+    {
+      "id": "shroomer",
+      "name": "Shroomer",
+      "rank": 1520,
+      "inPool": true
+    },
+    {
+      "id": "shroomer-noct",
+      "name": "Shroomer Noct",
+      "rank": 1450,
+      "inPool": true
+    },
+    {
+      "id": "sibelyx",
+      "name": "Sibelyx",
+      "rank": 1810,
+      "inPool": true
+    },
+    {
+      "id": "sibelyx-primo",
+      "name": "Sibelyx Primo",
+      "rank": 650,
+      "inPool": false
+    },
+    {
+      "id": "silvance",
+      "name": "Silvance",
+      "rank": 80,
+      "inPool": false
+    },
+    {
+      "id": "silvegis",
+      "name": "Silvegis",
+      "rank": 560,
+      "inPool": true
+    },
+    {
+      "id": "skutlass",
+      "name": "Skutlass",
+      "rank": 1420,
+      "inPool": true
+    },
+    {
+      "id": "skutlass-ignis",
+      "name": "Skutlass Ignis",
+      "rank": 1590,
+      "inPool": false
+    },
+    {
+      "id": "slowatt",
+      "name": "Slowatt",
+      "rank": 1750,
+      "inPool": true
+    },
+    {
+      "id": "smokie",
+      "name": "Smokie",
+      "rank": 1760,
+      "inPool": true
+    },
+    {
+      "id": "smokie-cryst",
+      "name": "Smokie Cryst",
+      "rank": 1610,
+      "inPool": false
+    },
+    {
+      "id": "snock",
+      "name": "Snock",
+      "rank": 1780,
+      "inPool": true
+    },
+    {
+      "id": "snock-lux",
+      "name": "Snock Lux",
+      "rank": 1500,
+      "inPool": false
+    },
+    {
+      "id": "snugloo",
+      "name": "Snugloo",
+      "rank": 2390,
+      "inPool": true
+    },
+    {
+      "id": "solenne",
+      "name": "Solenne",
+      "rank": 280,
+      "inPool": true
+    },
+    {
+      "id": "solmora",
+      "name": "Solmora",
+      "rank": 1370,
+      "inPool": true
+    },
+    {
+      "id": "solmora-lux",
+      "name": "Solmora Lux",
+      "rank": 1000,
+      "inPool": false
+    },
+    {
+      "id": "sootseer",
+      "name": "Sootseer",
+      "rank": 980,
+      "inPool": true
+    },
+    {
+      "id": "souffline",
+      "name": "Souffline",
+      "rank": 2000,
+      "inPool": true
+    },
+    {
+      "id": "sparkit",
+      "name": "Sparkit",
+      "rank": 3010,
+      "inPool": true
+    },
+    {
+      "id": "splatterina",
+      "name": "Splatterina",
+      "rank": 780,
+      "inPool": true
+    },
+    {
+      "id": "starryon",
+      "name": "Starryon",
+      "rank": 1150,
+      "inPool": true
+    },
+    {
+      "id": "starryon-primo",
+      "name": "Starryon Primo",
+      "rank": 430,
+      "inPool": false
+    },
+    {
+      "id": "surfent",
+      "name": "Surfent",
+      "rank": 2440,
+      "inPool": true
+    },
+    {
+      "id": "surfent-terra",
+      "name": "Surfent Terra",
+      "rank": 1840,
+      "inPool": false
+    },
+    {
+      "id": "suzaku",
+      "name": "Suzaku",
+      "rank": 1200,
+      "inPool": true
+    },
+    {
+      "id": "suzaku-aqua",
+      "name": "Suzaku Aqua",
+      "rank": 740,
+      "inPool": false
+    },
+    {
+      "id": "swee",
+      "name": "Swee",
+      "rank": 2840,
+      "inPool": true
+    },
+    {
+      "id": "sweepa",
+      "name": "Sweepa",
+      "rank": 2150,
+      "inPool": true
+    },
+    {
+      "id": "tanzee",
+      "name": "Tanzee",
+      "rank": 2900,
+      "inPool": true
+    },
+    {
+      "id": "tanzee-ignis",
+      "name": "Tanzee Ignis",
+      "rank": 2830,
+      "inPool": false
+    },
+    {
+      "id": "tarantriss",
+      "name": "Tarantriss",
+      "rank": 1730,
+      "inPool": true
+    },
+    {
+      "id": "teafant",
+      "name": "Teafant",
+      "rank": 3070,
+      "inPool": true
+    },
+    {
+      "id": "tetroise",
+      "name": "Tetroise",
+      "rank": 790,
+      "inPool": true
+    },
+    {
+      "id": "tetroise-primo",
+      "name": "Tetroise Primo",
+      "rank": 200,
+      "inPool": false
+    },
+    {
+      "id": "tocotoco",
+      "name": "Tocotoco",
+      "rank": 2730,
+      "inPool": true
+    },
+    {
+      "id": "tombat",
+      "name": "Tombat",
+      "rank": 2340,
+      "inPool": true
+    },
+    {
+      "id": "tropicaw",
+      "name": "Tropicaw",
+      "rank": 1350,
+      "inPool": true
+    },
+    {
+      "id": "turtacle",
+      "name": "Turtacle",
+      "rank": 2410,
+      "inPool": true
+    },
+    {
+      "id": "turtacle-terra",
+      "name": "Turtacle Terra",
+      "rank": 1330,
+      "inPool": false
+    },
+    {
+      "id": "univolt",
+      "name": "Univolt",
+      "rank": 2270,
+      "inPool": true
+    },
+    {
+      "id": "univolt-cryst",
+      "name": "Univolt Cryst",
+      "rank": 540,
+      "inPool": false
+    },
+    {
+      "id": "vaelet",
+      "name": "Vaelet",
+      "rank": 1480,
+      "inPool": true
+    },
+    {
+      "id": "valentail",
+      "name": "Valentail",
+      "rank": 1900,
+      "inPool": true
+    },
+    {
+      "id": "vanwyrm",
+      "name": "Vanwyrm",
+      "rank": 1650,
+      "inPool": true
+    },
+    {
+      "id": "vanwyrm-cryst",
+      "name": "Vanwyrm Cryst",
+      "rank": 1430,
+      "inPool": false
+    },
+    {
+      "id": "venusa",
+      "name": "Venusa",
+      "rank": 970,
+      "inPool": true
+    },
+    {
+      "id": "verdash",
+      "name": "Verdash",
+      "rank": 1160,
+      "inPool": true
+    },
+    {
+      "id": "vixy",
+      "name": "Vixy",
+      "rank": 3060,
+      "inPool": true
+    },
+    {
+      "id": "warsect",
+      "name": "Warsect",
+      "rank": 1280,
+      "inPool": true
+    },
+    {
+      "id": "warsect-terra",
+      "name": "Warsect Terra",
+      "rank": 630,
+      "inPool": false
+    },
+    {
+      "id": "whalaska",
+      "name": "Whalaska",
+      "rank": 710,
+      "inPool": true
+    },
+    {
+      "id": "whalaska-ignis",
+      "name": "Whalaska Ignis",
+      "rank": 370,
+      "inPool": false
+    },
+    {
+      "id": "wispaw",
+      "name": "Wispaw",
+      "rank": 2250,
+      "inPool": true
+    },
+    {
+      "id": "wistella",
+      "name": "Wistella",
+      "rank": 1180,
+      "inPool": true
+    },
+    {
+      "id": "wixen",
+      "name": "Wixen",
+      "rank": 2080,
+      "inPool": true
+    },
+    {
+      "id": "wixen-noct",
+      "name": "Wixen Noct",
+      "rank": 1490,
+      "inPool": false
+    },
+    {
+      "id": "woolipop",
+      "name": "Woolipop",
+      "rank": 2820,
+      "inPool": true
+    },
+    {
+      "id": "woolipop-terra",
+      "name": "Woolipop Terra",
+      "rank": 2030,
+      "inPool": false
+    },
+    {
+      "id": "wumpo",
+      "name": "Wumpo",
+      "rank": 830,
+      "inPool": true
+    },
+    {
+      "id": "wumpo-botan",
+      "name": "Wumpo Botan",
+      "rank": 610,
+      "inPool": true
+    },
+    {
+      "id": "xenogard",
+      "name": "Xenogard",
+      "rank": 990,
+      "inPool": false
+    },
+    {
+      "id": "xenolord",
+      "name": "Xenolord",
+      "rank": 400,
+      "inPool": false
+    },
+    {
+      "id": "xenovader",
+      "name": "Xenovader",
+      "rank": 1820,
+      "inPool": false
+    },
+    {
+      "id": "yakumo",
+      "name": "Yakumo",
+      "rank": 2230,
+      "inPool": true
+    }
+  ],
+  "specialCombos": [
+    {
+      "parentA": "chillet",
+      "parentB": "arsox",
+      "child": "chillet-ignis"
+    },
+    {
+      "parentA": "astralym",
+      "parentB": "astralym",
+      "child": "astralym"
+    },
+    {
+      "parentA": "fenglope",
+      "parentB": "azurmane",
+      "child": "fenglope-lux"
+    },
+    {
+      "parentA": "azurobe",
+      "parentB": "frostplume",
+      "child": "azurobe-cryst"
+    },
+    {
+      "parentA": "bastigor",
+      "parentB": "bastigor",
+      "child": "bastigor"
+    },
+    {
+      "parentA": "beakon",
+      "parentB": "frostplume",
+      "child": "beakon-cryst"
+    },
+    {
+      "parentA": "helzephyr",
+      "parentB": "beakon",
+      "child": "helzephyr-lux"
+    },
+    {
+      "parentA": "bellanoir-libero",
+      "parentB": "bellanoir-libero",
+      "child": "bellanoir-libero"
+    },
+    {
+      "parentA": "bellanoir",
+      "parentB": "bellanoir-libero",
+      "child": "bellanoir"
+    },
+    {
+      "parentA": "blazamut-ryu",
+      "parentB": "blazamut-ryu",
+      "child": "blazamut-ryu"
+    },
+    {
+      "parentA": "blazehowl",
+      "parentB": "felbat",
+      "child": "blazehowl-noct"
+    },
+    {
+      "parentA": "jormuntide",
+      "parentB": "blazehowl",
+      "child": "jormuntide-ignis"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "cave-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "enchanted-sword",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "blue-slime",
+      "child": "blue-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "illuminant-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "illuminant-slime",
+      "child": "illuminant-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "purple-slime",
+      "child": "purple-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "rainbow-slime",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "blue-slime",
+      "parentB": "red-slime",
+      "child": "purple-slime"
+    },
+    {
+      "parentA": "ribbuny",
+      "parentB": "bristla",
+      "child": "ribbuny-botan"
+    },
+    {
+      "parentA": "broncherry",
+      "parentB": "fuack",
+      "child": "broncherry-aqua"
+    },
+    {
+      "parentA": "croajiro",
+      "parentB": "bushi-noct",
+      "child": "croajiro-noct"
+    },
+    {
+      "parentA": "petallia",
+      "parentB": "bushi",
+      "child": "petallia-ignis"
+    },
+    {
+      "parentA": "bushi",
+      "parentB": "sootseer",
+      "child": "bushi-noct"
+    },
+    {
+      "parentA": "caprity",
+      "parentB": "tarantriss",
+      "child": "caprity-noct"
+    },
+    {
+      "parentA": "cave-bat",
+      "parentB": "cave-bat",
+      "child": "cave-bat"
+    },
+    {
+      "parentA": "cave-bat",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "enchanted-sword",
+      "parentB": "cave-bat",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "cave-bat",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "cave-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "cave-bat",
+      "parentB": "illuminant-bat",
+      "child": "illuminant-bat"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "cave-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "cave-bat",
+      "child": "illuminant-bat"
+    },
+    {
+      "parentA": "rainbow-slime",
+      "parentB": "cave-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "cave-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "celaray",
+      "parentB": "univolt",
+      "child": "celaray-lux"
+    },
+    {
+      "parentA": "celesdir",
+      "parentB": "kitsun-noct",
+      "child": "celesdir-noct"
+    },
+    {
+      "parentA": "starryon",
+      "parentB": "celesdir",
+      "child": "starryon-primo"
+    },
+    {
+      "parentA": "tetroise",
+      "parentB": "celesdir",
+      "child": "tetroise-primo"
+    },
+    {
+      "parentA": "whalaska",
+      "parentB": "chillet-ignis",
+      "child": "whalaska-ignis"
+    },
+    {
+      "parentA": "cryolinx",
+      "parentB": "dazemu",
+      "child": "cryolinx-terra"
+    },
+    {
+      "parentA": "dandilord",
+      "parentB": "dandilord",
+      "child": "dandilord"
+    },
+    {
+      "parentA": "dazzi",
+      "parentB": "omascul",
+      "child": "dazzi-noct"
+    },
+    {
+      "parentA": "enchanted-sword",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "eye-of-cthulhu",
+      "parentB": "demon-eye",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "illuminant-bat",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "rainbow-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "demon-eye",
+      "child": "demon-eye"
+    },
+    {
+      "parentA": "turtacle",
+      "parentB": "digtoise",
+      "child": "turtacle-terra"
+    },
+    {
+      "parentA": "warsect",
+      "parentB": "digtoise",
+      "child": "warsect-terra"
+    },
+    {
+      "parentA": "dinossom",
+      "parentB": "rayhound",
+      "child": "dinossom-lux"
+    },
+    {
+      "parentA": "dualith",
+      "parentB": "sootseer",
+      "child": "dualith-noct"
+    },
+    {
+      "parentA": "dumud",
+      "parentB": "eikthyrdeer-terra",
+      "child": "dumud-gild"
+    },
+    {
+      "parentA": "surfent",
+      "parentB": "dumud",
+      "child": "surfent-terra"
+    },
+    {
+      "parentA": "eidrolon",
+      "parentB": "suzaku",
+      "child": "eidrolon-ignis"
+    },
+    {
+      "parentA": "gildane",
+      "parentB": "eikthyrdeer-terra",
+      "child": "celesdir"
+    },
+    {
+      "parentA": "eikthyrdeer",
+      "parentB": "hangyu",
+      "child": "eikthyrdeer-terra"
+    },
+    {
+      "parentA": "elgrove",
+      "parentB": "pierdon-cryst",
+      "child": "elgrove-cryst"
+    },
+    {
+      "parentA": "elphidran",
+      "parentB": "surfent",
+      "child": "elphidran-aqua"
+    },
+    {
+      "parentA": "enchanted-sword",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "enchanted-sword",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "enchanted-sword",
+      "parentB": "illuminant-bat",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "enchanted-sword",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "enchanted-sword",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "rainbow-slime",
+      "parentB": "enchanted-sword",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "enchanted-sword",
+      "child": "enchanted-sword"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "illuminant-bat",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "rainbow-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "eye-of-cthulhu",
+      "child": "eye-of-cthulhu"
+    },
+    {
+      "parentA": "faleris",
+      "parentB": "faleris",
+      "child": "faleris"
+    },
+    {
+      "parentA": "faleris",
+      "parentB": "jormuntide",
+      "child": "faleris-aqua"
+    },
+    {
+      "parentA": "finsider",
+      "parentB": "gobfin-ignis",
+      "child": "finsider-ignis"
+    },
+    {
+      "parentA": "fuack",
+      "parentB": "flambelle",
+      "child": "fuack-ignis"
+    },
+    {
+      "parentA": "leezpunk",
+      "parentB": "flambelle",
+      "child": "leezpunk-ignis"
+    },
+    {
+      "parentA": "tanzee",
+      "parentB": "flambelle",
+      "child": "tanzee-ignis"
+    },
+    {
+      "parentA": "foxparks",
+      "parentB": "foxcicle",
+      "child": "foxparks-cryst"
+    },
+    {
+      "parentA": "rayhound",
+      "parentB": "foxcicle",
+      "child": "rayhound-cryst"
+    },
+    {
+      "parentA": "reptyro",
+      "parentB": "foxcicle",
+      "child": "reptyro-cryst"
+    },
+    {
+      "parentA": "vanwyrm",
+      "parentB": "foxcicle",
+      "child": "vanwyrm-cryst"
+    },
+    {
+      "parentA": "frostallion",
+      "parentB": "frostallion",
+      "child": "frostallion"
+    },
+    {
+      "parentA": "frostallion",
+      "parentB": "helzephyr",
+      "child": "frostallion-noct"
+    },
+    {
+      "parentA": "univolt",
+      "parentB": "frostplume",
+      "child": "univolt-cryst"
+    },
+    {
+      "parentA": "robinquill",
+      "parentB": "fuddler",
+      "child": "robinquill-terra"
+    },
+    {
+      "parentA": "ghangler",
+      "parentB": "sootseer",
+      "child": "ghangler-ignis"
+    },
+    {
+      "parentA": "gloopie",
+      "parentB": "valentail",
+      "child": "gloopie-primo"
+    },
+    {
+      "parentA": "skutlass",
+      "parentB": "gobfin-ignis",
+      "child": "skutlass-ignis"
+    },
+    {
+      "parentA": "gobfin",
+      "parentB": "rooby",
+      "child": "gobfin-ignis"
+    },
+    {
+      "parentA": "gorirat",
+      "parentB": "kikit",
+      "child": "gorirat-terra"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "green-slime",
+      "child": "green-slime"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "illuminant-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "illuminant-slime",
+      "child": "illuminant-slime"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "purple-slime",
+      "child": "purple-slime"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "rainbow-slime",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "green-slime",
+      "parentB": "red-slime",
+      "child": "red-slime"
+    },
+    {
+      "parentA": "grizzbolt",
+      "parentB": "grizzbolt",
+      "child": "grizzbolt"
+    },
+    {
+      "parentA": "mossanda",
+      "parentB": "grizzbolt",
+      "child": "mossanda-lux"
+    },
+    {
+      "parentA": "hangyu",
+      "parentB": "swee",
+      "child": "hangyu-cryst"
+    },
+    {
+      "parentA": "hartalis",
+      "parentB": "hartalis",
+      "child": "hartalis"
+    },
+    {
+      "parentA": "prixter",
+      "parentB": "helzephyr-lux",
+      "child": "prixter-lux"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "illuminant-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "illuminant-bat",
+      "child": "illuminant-bat"
+    },
+    {
+      "parentA": "rainbow-slime",
+      "parentB": "illuminant-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "illuminant-bat",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "illuminant-slime",
+      "child": "illuminant-slime"
+    },
+    {
+      "parentA": "illuminant-slime",
+      "parentB": "rainbow-slime",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "illuminant-slime",
+      "child": "illuminant-slime"
+    },
+    {
+      "parentA": "incineram",
+      "parentB": "maraith",
+      "child": "incineram-noct"
+    },
+    {
+      "parentA": "jetragon",
+      "parentB": "jetragon",
+      "child": "jetragon"
+    },
+    {
+      "parentA": "jolthog",
+      "parentB": "pengullet",
+      "child": "jolthog-cryst"
+    },
+    {
+      "parentA": "suzaku",
+      "parentB": "jormuntide",
+      "child": "suzaku-aqua"
+    },
+    {
+      "parentA": "pyrin",
+      "parentB": "katress",
+      "child": "pyrin-noct"
+    },
+    {
+      "parentA": "katress",
+      "parentB": "wixen",
+      "child": "wixen-noct"
+    },
+    {
+      "parentA": "katress",
+      "parentB": "wixen",
+      "child": "katress-ignis"
+    },
+    {
+      "parentA": "woolipop",
+      "parentB": "kikit",
+      "child": "woolipop-terra"
+    },
+    {
+      "parentA": "killamari",
+      "parentB": "ribbuny",
+      "child": "killamari-primo"
+    },
+    {
+      "parentA": "kingpaca",
+      "parentB": "reindrix",
+      "child": "kingpaca-cryst"
+    },
+    {
+      "parentA": "kitsun",
+      "parentB": "nyafia",
+      "child": "kitsun-noct"
+    },
+    {
+      "parentA": "menasting",
+      "parentB": "knocklem",
+      "child": "menasting-terra"
+    },
+    {
+      "parentA": "knocklem",
+      "parentB": "ragnahawk",
+      "child": "knocklem-ignis"
+    },
+    {
+      "parentA": "sibelyx",
+      "parentB": "lapure",
+      "child": "sibelyx-primo"
+    },
+    {
+      "parentA": "loupmoon",
+      "parentB": "sweepa",
+      "child": "loupmoon-cryst"
+    },
+    {
+      "parentA": "quivern",
+      "parentB": "lullu",
+      "child": "quivern-botan"
+    },
+    {
+      "parentA": "lyleen",
+      "parentB": "lyleen",
+      "child": "lyleen"
+    },
+    {
+      "parentA": "lyleen",
+      "parentB": "menasting",
+      "child": "lyleen-noct"
+    },
+    {
+      "parentA": "mammorest",
+      "parentB": "wumpo",
+      "child": "mammorest-cryst"
+    },
+    {
+      "parentA": "mau",
+      "parentB": "pengullet",
+      "child": "mau-cryst"
+    },
+    {
+      "parentA": "mimog",
+      "parentB": "mimog",
+      "child": "mimog"
+    },
+    {
+      "parentA": "moldron",
+      "parentB": "reptyro-cryst",
+      "child": "moldron-cryst"
+    },
+    {
+      "parentA": "mossanda-lux",
+      "parentB": "mossanda-lux",
+      "child": "mossanda-lux"
+    },
+    {
+      "parentA": "smokie",
+      "parentB": "munchill",
+      "child": "smokie-cryst"
+    },
+    {
+      "parentA": "necromus",
+      "parentB": "necromus",
+      "child": "necromus"
+    },
+    {
+      "parentA": "needoll",
+      "parentB": "prunelia",
+      "child": "needoll-noct"
+    },
+    {
+      "parentA": "neptilius",
+      "parentB": "neptilius",
+      "child": "neptilius"
+    },
+    {
+      "parentA": "nitemary",
+      "parentB": "petallia",
+      "child": "nitemary-botan"
+    },
+    {
+      "parentA": "orserk",
+      "parentB": "orserk",
+      "child": "orserk"
+    },
+    {
+      "parentA": "paladius",
+      "parentB": "paladius",
+      "child": "paladius"
+    },
+    {
+      "parentA": "panthalus",
+      "parentB": "panthalus",
+      "child": "panthalus"
+    },
+    {
+      "parentA": "pengullet",
+      "parentB": "sparkit",
+      "child": "pengullet-lux"
+    },
+    {
+      "parentA": "penking",
+      "parentB": "rayhound",
+      "child": "penking-lux"
+    },
+    {
+      "parentA": "pierdon",
+      "parentB": "wumpo",
+      "child": "pierdon-cryst"
+    },
+    {
+      "parentA": "polapup",
+      "parentB": "surfent-terra",
+      "child": "polapup-terra"
+    },
+    {
+      "parentA": "purple-slime",
+      "parentB": "rainbow-slime",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "purple-slime",
+      "child": "purple-slime"
+    },
+    {
+      "parentA": "red-slime",
+      "parentB": "rainbow-slime",
+      "child": "rainbow-slime"
+    },
+    {
+      "parentA": "relaxaurus-lux",
+      "parentB": "relaxaurus-lux",
+      "child": "relaxaurus-lux"
+    },
+    {
+      "parentA": "relaxaurus",
+      "parentB": "sparkit",
+      "child": "relaxaurus-lux"
+    },
+    {
+      "parentA": "selyne",
+      "parentB": "selyne",
+      "child": "selyne"
+    },
+    {
+      "parentA": "shadowbeak",
+      "parentB": "shadowbeak",
+      "child": "shadowbeak"
+    },
+    {
+      "parentA": "shaolong",
+      "parentB": "shaolong",
+      "child": "shaolong"
+    },
+    {
+      "parentA": "silvance",
+      "parentB": "silvance",
+      "child": "silvance"
+    },
+    {
+      "parentA": "solmora",
+      "parentB": "slowatt",
+      "child": "solmora-lux"
+    },
+    {
+      "parentA": "snock",
+      "parentB": "turtacle-terra",
+      "child": "snock-lux"
+    },
+    {
+      "parentA": "xenogard",
+      "parentB": "xenogard",
+      "child": "xenogard"
+    },
+    {
+      "parentA": "xenolord",
+      "parentB": "xenolord",
+      "child": "xenolord"
+    },
+    {
+      "parentA": "xenovader",
+      "parentB": "xenovader",
+      "child": "xenovader"
+    }
+  ],
+  "tieBreak": {
+    "rule": "higher",
+    "affectedPairs": 14010,
+    "totalPairs": 44687
+  }
+}
