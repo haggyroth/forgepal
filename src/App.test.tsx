@@ -118,3 +118,72 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('ForgePal')
   })
 })
+
+describe('App tabs', () => {
+  it('opens the calculator by default', () => {
+    visit('')
+    expect(screen.getByRole('tab', { name: 'Calculator' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tabpanel', { name: 'Calculator' })).toBeVisible()
+  })
+
+  it('opens the tab named in the link', async () => {
+    visit('tab=breeding')
+    expect(screen.getByRole('tab', { name: 'Breeding' })).toHaveAttribute('aria-selected', 'true')
+    expect(await screen.findByText(/Breeding dataset/i)).toBeInTheDocument()
+  })
+
+  it('ignores an unknown tab rather than showing nothing', () => {
+    visit('tab=teleporter')
+    expect(screen.getByRole('tabpanel', { name: 'Calculator' })).toBeVisible()
+  })
+
+  it('mirrors the tab into the URL and drops it again on the way back', async () => {
+    visit('')
+    await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
+    expect(window.location.search).toContain('tab=breeding')
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Calculator' }))
+    // The default is omitted, so an ordinary calculator link looks exactly as
+    // it did before tabs existed.
+    expect(window.location.search).not.toContain('tab=')
+  })
+
+  it('keeps the build in the URL across a tab switch', async () => {
+    // The regression the applyState change exists to prevent: the two effects
+    // both write the query, and either one rebuilding it wholesale would erase
+    // the other's params.
+    visit(`build=${toId('Ingot')}.3&level=12`)
+    await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
+
+    expect(window.location.search).toContain(`${toId('Ingot')}.3`)
+    expect(window.location.search).toContain('level=12')
+    expect(window.location.search).toContain('tab=breeding')
+  })
+
+  it('keeps the calculator mounted so switching back loses nothing', async () => {
+    // A shared build isn't persisted until edited; unmounting the calculator on
+    // a tab switch would drop it.
+    visit(`build=${toId('Ingot')}.3`)
+    await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
+
+    // Still in the DOM, just not on screen — which is the whole distinction.
+    expect(screen.getByLabelText('Ingot quantity')).toHaveValue(3)
+    expect(screen.getByLabelText('Ingot quantity')).not.toBeVisible()
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Calculator' }))
+    expect(screen.getByRole('tabpanel', { name: 'Calculator' })).toBeVisible()
+  })
+
+  it('does not build the breeding tab until it is opened', async () => {
+    visit('')
+    expect(screen.queryByText(/Breeding dataset/i)).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
+    expect(await screen.findByText(/Breeding dataset/i)).toBeInTheDocument()
+  })
+
+  it('reports the tie-break share rather than presenting it as settled', async () => {
+    visit('tab=breeding')
+    expect(await screen.findByText(/of all parent pairs/i)).toBeInTheDocument()
+  })
+})

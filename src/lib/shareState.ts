@@ -17,6 +17,7 @@
 
 import type { BuildListEntry } from './calculator'
 import type { ItemId } from '@/types/game'
+import { formatQuery, parseQuery } from './query'
 import { MAX_TECH_LEVEL } from './tech'
 
 const BUILD_PARAM = 'build'
@@ -48,18 +49,33 @@ export interface DecodeResult {
  * can strip the query entirely rather than leaving `?build=` behind.
  */
 export function encodeState(state: SharedState): string {
-  const params = new URLSearchParams()
+  return formatQuery(writeInto(new URLSearchParams(), state))
+}
 
+/**
+ * Update the build params in an existing query string, leaving the rest alone.
+ *
+ * The address-bar sync used to rebuild the whole query from build state, which
+ * was fine while the build list was the only thing in the URL. It isn't any
+ * more — `?tab=` lives there too — and a wholesale rewrite would drop it on the
+ * next quantity tweak.
+ */
+export function applyState(search: string, state: SharedState): string {
+  return formatQuery(writeInto(parseQuery(search), state))
+}
+
+function writeInto(params: URLSearchParams, state: SharedState): URLSearchParams {
   const entries = state.build
     .filter((entry) => Number.isFinite(entry.quantity) && entry.quantity > 0)
     .map((entry) => `${entry.itemId}${QUANTITY_SEPARATOR}${Math.floor(entry.quantity)}`)
 
   if (entries.length > 0) params.set(BUILD_PARAM, entries.join(ENTRY_SEPARATOR))
-  if (state.playerLevel !== null) params.set(LEVEL_PARAM, String(state.playerLevel))
+  else params.delete(BUILD_PARAM)
 
-  // URLSearchParams percent-encodes '.' and '_' in some engines; ours are safe
-  // characters and escaping them would make shared links unreadable.
-  return params.toString().replace(/%2E/gi, '.').replace(/%5F/gi, '_')
+  if (state.playerLevel !== null) params.set(LEVEL_PARAM, String(state.playerLevel))
+  else params.delete(LEVEL_PARAM)
+
+  return params
 }
 
 /**
@@ -73,7 +89,7 @@ export function decodeState(
   search: string,
   isKnownId: (id: ItemId) => boolean = () => true,
 ): DecodeResult {
-  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
+  const params = parseQuery(search)
   const build: BuildListEntry[] = []
   const unknownIds: string[] = []
   const seen = new Set<ItemId>()

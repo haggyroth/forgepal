@@ -46,8 +46,10 @@ next, both grounded in data already published by the same source.
       _Phase 2 done_ — `src/lib/breeding.ts`: `breed`, `parentsFor`, and a BFS
       `solve` returning the fewest-generation chain, every step flagged when it
       hinged on the contested tie-break.
-      _Remaining_ — a tab shell so this doesn't crowd the calculator, then the
-      breeding UI.
+      _Phase 3 done_ — tab shell with `?tab=` routing; the breeding tab and its
+      dataset load lazily.
+      _Remaining_ — the breeding UI: pair calculator, roster, and the solved
+      chain with tie-broken steps marked.
 - [ ] **Base production planner** — `base_building.json` already carries
       `worker_slots`, `workers` (suitability), `power`, and `energy_per_sec`, and
       we import the file while using almost none of it. Upgrades Requirements

@@ -22,13 +22,16 @@ The existing tools ([palcraft.xyz](https://www.palcraft.xyz/), [palworld.gg](htt
 - **Station & work info** — which workbench crafts it, and which Pal work suitability powers it
 - **Export** — Markdown, as a download or straight to the clipboard
 - **Shareable & persistent** — your build survives a reload, and a link reproduces it for someone else
+- **Breeding** — a separate tab, with the solver engine in place and its UI next
 - **Fully static** — no backend, no tracking, deploys to GitHub Pages
 
 ## Status
 
 **Live at [haggyroth.github.io/forgepal](https://haggyroth.github.io/forgepal/).**
 
-The calculator works end to end: search the catalogue, queue items and structures, get a full material list with drop sources, and export it as Markdown. See [ROADMAP.md](ROADMAP.md) for what's next.
+The calculator works end to end: search the catalogue, queue items and structures, get a full material list with drop sources, and export it as Markdown.
+
+Breeding now has its own tab. The engine behind it — pair resolution and a shortest-chain solver over your roster — is written and tested; the tab currently covers the dataset it runs on and where that data is uncertain. See [ROADMAP.md](ROADMAP.md) for what's next.
 
 ## Development
 
