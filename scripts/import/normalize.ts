@@ -7,9 +7,13 @@
 
 import type {
   DropSource,
+  ExpeditionReward,
   GameData,
   Item,
   ItemCategory,
+  ItemId,
+  MerchantListing,
+  PalHabitat,
   Recipe,
   RecipeInput,
   SourceKind,
@@ -296,6 +300,86 @@ function normalizeStructure(raw: RawStructure): Structure {
   }
 }
 
+/**
+ * Pal habitats.
+ *
+ * `dayNight` is narrowed rather than passed through: upstream only ever writes
+ * "both" or "night", so anything else — including a missing value — becomes
+ * null rather than being invented as "day".
+ */
+function normalizeHabitats(dataset: RawDataset): PalHabitat[] {
+  return Object.entries(dataset.locations.pals)
+    .map(([name, raw]) => ({
+      name,
+      regions: (raw.regions ?? []).filter(Boolean),
+      dayNight: raw.day_night === 'night' ? 'night' : raw.day_night === 'both' ? 'both' : null,
+    }))
+    .filter((habitat): habitat is PalHabitat => habitat.regions.length > 0)
+    .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+/** Vendor listings, inverted from shop-keyed upstream into item-keyed lookups. */
+function normalizeMerchantListings(dataset: RawDataset): Record<ItemId, MerchantListing[]> {
+  const byItem: Record<ItemId, MerchantListing[]> = {}
+
+  for (const shop of Object.values(dataset.merchants.shops)) {
+    const locations = (shop.locations ?? [])
+      .map((l) => [l.area, l.coordinates].filter(Boolean).join(' '))
+      .filter(Boolean)
+
+    for (const entry of shop.items ?? []) {
+      if (!entry.name) continue
+      const id = toId(entry.name)
+      // A missing price is not a missing listing. 476 of 587 upstream rows have
+      // no price, and requiring one here discarded 81% of the vendor data —
+      // the same mistake the drop parser made by requiring a percentage.
+      ;(byItem[id] ??= []).push({
+        merchant: shop.merchant,
+        currency: shop.currency ?? 'Gold Coin',
+        price: typeof entry.price === 'number' ? entry.price : null,
+        locations,
+      })
+    }
+  }
+
+  // Cheapest first — the useful ordering when deciding whether to buy. Listings
+  // with no recorded price sort last rather than counting as free.
+  for (const listings of Object.values(byItem)) {
+    listings.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity))
+  }
+  return byItem
+}
+
+/**
+ * Expedition rewards, inverted from mission-keyed upstream into item-keyed.
+ *
+ * Upstream's item pages omit expedition sources entirely — its own `gaps` field
+ * says so — which is the whole reason this file is worth importing.
+ */
+function normalizeExpeditionRewards(dataset: RawDataset): Record<ItemId, ExpeditionReward[]> {
+  const byItem: Record<ItemId, ExpeditionReward[]> = {}
+
+  for (const mission of dataset.expeditions.missions) {
+    for (const reward of mission.rewards ?? []) {
+      if (!reward.item) continue
+      const id = toId(reward.item)
+      ;(byItem[id] ??= []).push({
+        mission: mission.name,
+        durationHours: mission.duration_hours ?? null,
+        requiredFirepower: mission.required_firepower ?? null,
+        quantity: String(reward.quantity ?? '?'),
+        chance: reward.chance ?? null,
+      })
+    }
+  }
+
+  // Shortest expedition first.
+  for (const rewards of Object.values(byItem)) {
+    rewards.sort((a, b) => (a.durationHours ?? Infinity) - (b.durationHours ?? Infinity))
+  }
+  return byItem
+}
+
 export function normalize(dataset: RawDataset): GameData {
   const items = dataset.items.items.map(normalizeItem)
   const structures = dataset.building.structures.map(normalizeStructure)
@@ -329,5 +413,8 @@ export function normalize(dataset: RawDataset): GameData {
     items,
     structures,
     stations,
+    habitats: normalizeHabitats(dataset),
+    merchantListings: normalizeMerchantListings(dataset),
+    expeditionRewards: normalizeExpeditionRewards(dataset),
   }
 }
