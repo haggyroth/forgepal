@@ -75,6 +75,17 @@ These were considered for v1 and consciously deferred, not dropped.
 
 ## Technical debt
 
-- [ ] **Bundle size** — the 1.8 MB dataset inlines into the JS bundle (~1.22 MB minified, 163 kB gzipped), up from 1 MB after adding habitat, merchant, and expedition data. Split it out and fetch it as a static asset, or trim unused fields at import time. This is now the largest single piece of debt
+- [x] **Bundle size** — the dataset now builds into its own chunk, so the app-code
+      chunk fell from 1,223 kB to 223 kB (gzip 163 → 68 kB) and a code change no
+      longer invalidates ~92 kB gzipped of unchanged game data. Vite's
+      `json.stringify` also emits it as `JSON.parse('…')`, which parses far
+      faster than a megabyte of object literals.
+- [ ] **Trimming redundant fields from the dataset** — deliberately _not_ done, with
+      numbers: `RecipeInput.name` (51 kB) and `Recipe.stationName` (26 kB) duplicate
+      data already in the file, and interning the 891 distinct drop-source strings
+      would save a further 65 kB. That is 142 kB of 1,049 kB raw, or roughly 10 kB
+      gzipped once compressed — compression already collapses most of this
+      repetition. Not worth losing the unresolved-input name fallback and adding a
+      string-table indirection. Revisit only if the dataset grows substantially.
 - [x] **Component tests** — every component, the build-list hook, and `App`, plus a static guard on Tailwind utility usage that catches the class of bug render tests structurally cannot
 - [ ] Consider indexing items by category/station at import time rather than filtering at runtime
