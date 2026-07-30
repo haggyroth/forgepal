@@ -49,6 +49,14 @@ updates:
       prefix: chore
       prefix-development: chore
       include: scope
+    # No majors-ignore here, unlike npm above, and that is deliberate: actions
+    # advance almost entirely by major version — usually to move to a newer
+    # runner Node — so ignoring majors would mean never updating them at all.
+    #
+    # Worth knowing when reviewing one: actions used by ci.yml and codeql.yml
+    # are exercised on the pull request itself, but the Pages actions in
+    # deploy.yml only run on main. Split those out rather than merging them
+    # together, so a broken deploy isn't buried among unrelated bumps.
     groups:
       actions:
         patterns: ['*']
