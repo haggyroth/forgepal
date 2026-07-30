@@ -89,7 +89,9 @@ describe('buildRoute', () => {
     // Leather has 79 drop sources; routing all of them would make almost every
     // region a stop and the ranking meaningless.
     const route = routeFor([['Leather', 50]])
-    const pals = new Set(route.stops.flatMap((s) => s.materials.flatMap((m) => m.pals.map((p) => p.name))))
+    const pals = new Set(
+      route.stops.flatMap((s) => s.materials.flatMap((m) => m.pals.map((p) => p.name))),
+    )
     expect(pals.size).toBeLessThanOrEqual(5)
   })
 

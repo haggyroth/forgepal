@@ -52,7 +52,15 @@ describe('FarmingRoute', () => {
   it('collapses the long tail of regions behind a control', async () => {
     // A broad list touches many regions; showing all of them defeats the
     // ranking, so only the most productive few appear up front.
-    render(<FarmingRoute route={routeFor([['Cake', 3], ['Refined Ingot', 20], ['Cloth', 10]])} />)
+    render(
+      <FarmingRoute
+        route={routeFor([
+          ['Cake', 3],
+          ['Refined Ingot', 20],
+          ['Cloth', 10],
+        ])}
+      />,
+    )
 
     const more = screen.queryByRole('button', { name: /show \d+ more region/ })
     if (more) {

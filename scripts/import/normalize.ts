@@ -214,7 +214,11 @@ export function parseAlternativeStations(notes: string | undefined): string[] {
     .filter(Boolean)
 }
 
-function toRecipe(raw: RawRecipe | null, itemName: string, notes: string | undefined): Recipe | null {
+function toRecipe(
+  raw: RawRecipe | null,
+  itemName: string,
+  notes: string | undefined,
+): Recipe | null {
   if (!raw) return null
 
   const inputs: RecipeInput[] = Object.entries(raw.materials).map(([name, quantity]) => ({
@@ -397,10 +401,9 @@ export function normalize(dataset: RawDataset): GameData {
     workSuitability: structuresByName.get(raw.name)?.workSuitability ?? null,
   }))
 
-  const sources = [
-    ...(dataset.items.sources ?? []),
-    ...(dataset.building.sources ?? []),
-  ].map((s) => `${s.url} — ${s.what} (fetched ${s.fetched})`)
+  const sources = [...(dataset.items.sources ?? []), ...(dataset.building.sources ?? [])].map(
+    (s) => `${s.url} — ${s.what} (fetched ${s.fetched})`,
+  )
 
   return {
     meta: {

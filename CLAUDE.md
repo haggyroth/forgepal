@@ -21,6 +21,8 @@ npm run dev           # dev server
 npm run build         # tsc -b && vite build
 npm test              # vitest run
 npm run lint          # oxlint
+npm run format        # prettier --write .
+npm run format:check  # prettier --check . (enforced in CI)
 npm run data:import   # regenerate src/data/game-data.json
 npm run data:audit    # data quality report (also runs in CI)
 ```
@@ -77,12 +79,12 @@ Write a new adapter in `scripts/import/sources/` returning the same `RawDataset`
 
 Defined in `src/types/game.ts`. The load-bearing concept is `SourceKind`, which decides where recursion stops:
 
-| `sourceKind` | Meaning | Expanded? |
-|---|---|---|
-| `craftable` | Has a recipe | Yes |
-| `gathered` | Mined/chopped/farmed from the world | No — leaf |
-| `drop` | From Pals, mobs, or NPCs | No — leaf |
-| `unobtainable` | No recipe, no known source | No — flagged in UI |
+| `sourceKind`   | Meaning                             | Expanded?          |
+| -------------- | ----------------------------------- | ------------------ |
+| `craftable`    | Has a recipe                        | Yes                |
+| `gathered`     | Mined/chopped/farmed from the world | No — leaf          |
+| `drop`         | From Pals, mobs, or NPCs            | No — leaf          |
+| `unobtainable` | No recipe, no known source          | No — flagged in UI |
 
 `gathered` and `drop` leaves are the shopping list. `drop` leaves carry a `drops[]` array of Pal/mob sources with rates, so the UI can answer "where do I farm this?"
 
@@ -90,11 +92,12 @@ Defined in `src/types/game.ts`. The load-bearing concept is `SourceKind`, which 
 
 Data comes from [beliarance/palworld-kb](https://github.com/beliarance/palworld-kb), which is itself scraped from paldb.cc. Scraping loses information, and it has lost it in a specific, dangerous way:
 
-**Alternative recipes get flattened into a single AND-list.** The Crusher turns Stone *or* Ore *or* any Sphere into Paldium Fragment. Upstream records this as one recipe requiring Stone AND Ore AND one of every Sphere. That is wrong twice: the cost is nonsense, and it creates a recipe cycle (`Mega Sphere -> Paldium Fragment -> Mega Sphere`).
+**Alternative recipes get flattened into a single AND-list.** The Crusher turns Stone _or_ Ore _or_ any Sphere into Paldium Fragment. Upstream records this as one recipe requiring Stone AND Ore AND one of every Sphere. That is wrong twice: the cost is nonsense, and it creates a recipe cycle (`Mega Sphere -> Paldium Fragment -> Mega Sphere`).
 
 Known instances, all corrected in `overrides.ts`:
+
 - **Paldium Fragment** — caused 15 cycles on its own. Now classified `gathered` (which is also how players actually get it); real Crusher conversions kept in `alternativeRecipes`.
-- **Pal Souls** — Small/Medium/Large/Giant convert in *both* directions. Only the upgrade direction is kept as the primary recipe.
+- **Pal Souls** — Small/Medium/Large/Giant convert in _both_ directions. Only the upgrade direction is kept as the primary recipe.
 
 Consequences for anyone editing this area:
 
@@ -103,6 +106,7 @@ Consequences for anyone editing this area:
 3. **The calculator is defensively cycle-safe anyway** (`calculate` returns `cycles` rather than hanging). Keep it that way — bad data should degrade to a warning, never a frozen tab.
 
 Useful details upstream hides in a free-text `notes` string, already parsed in `normalize.ts`:
+
 - `"Crafts x10 per batch"` -> `Recipe.yield` (45 recipes; Arrow is x10, so costing it per-unit overstates materials tenfold)
 - `"Also craftable at: Improved Furnace, ..."` -> `Recipe.alternativeStationNames` (upstream's `station` is only ever the lowest tier)
 
@@ -116,7 +120,7 @@ Never guess a quantity. A known gap is better than a plausible wrong number.
 
 `src/lib/calculator.ts`. Two entry points:
 
-- **`calculate(buildList, index)`** — authoritative totals. Does a topological pass so demand is fully aggregated *before* costing. This matters: if 40 Ingots are needed across three recipes, Ore must be derived once from 40, not three times from partial subtotals. With batch recipes and their rounding, per-branch costing overcounts.
+- **`calculate(buildList, index)`** — authoritative totals. Does a topological pass so demand is fully aggregated _before_ costing. This matters: if 40 Ingots are needed across three recipes, Ore must be derived once from 40, not three times from partial subtotals. With batch recipes and their rounding, per-branch costing overcounts.
 - **`buildTree(itemId, qty, index)`** — display tree for one item. Branch quantities are per-branch and will not always sum to `calculate`'s figures. That is expected: the tree explains structure, the totals are what you take shopping. Don't "fix" the discrepancy by making the UI sum the tree.
 
 Batch recipes round up per craft, and the surplus is reported (`MaterialTotal.surplus`) rather than silently discarded.
@@ -128,6 +132,7 @@ Dark-only, by design — see the comment at the top of `src/index.css`. The pale
 Fonts are bundled via `@fontsource` and imported in `main.tsx`, not fetched from a CDN — the app makes no runtime network calls, and Google Fonts would be the sole exception.
 
 Tailwind 4 notes that have already bitten once:
+
 - Font weights are named utilities (`font-semibold`, `font-bold`). **`font-600` is not a class** and silently does nothing.
 - Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem.
 - Scrollable flex children need `min-h-0` on every ancestor in the chain; `min-height: auto` otherwise refuses to shrink and the list runs off the page instead of scrolling.
@@ -141,9 +146,11 @@ The catalogue renders at most 60 results and reports the true total. Rendering a
 
 ## Conventions
 
+- **Prettier owns formatting**; `.prettierrc.json` encodes the style the codebase already used (no semicolons, single quotes, 100 columns). Don't hand-tune whitespace — run `npm run format`. CI fails on unformatted code.
+- **`src/data/game-data.json` is in `.prettierignore` and must stay there.** The importer writes it with `JSON.stringify(data, null, 2)`; if Prettier reformatted it, every `npm run data:import` would produce a diff against the committed file and the weekly refresh workflow would open a PR for a change that isn't one.
 - Path alias `@/` -> `src/`. **Exception:** modules shared with `scripts/` (currently `src/lib/id.ts`) must use relative imports — `scripts/` compiles under `tsconfig.node.json`, which has no alias mapping.
 - Ids come from `toId(name)` and nothing else. It is the join key across every dataset; recipes reference inputs by name upstream, so both sides of a lookup must slugify identically.
-- Comments explain *why*, especially around upstream data quirks. The code is not self-documenting when the data is this adversarial.
+- Comments explain _why_, especially around upstream data quirks. The code is not self-documenting when the data is this adversarial.
 - Tests in `src/**/*.test.ts`. The `describe('the committed dataset')` block runs against real data on purpose — it is the tripwire for a bad import. Keep it.
 
 ## Deployment
@@ -166,12 +173,12 @@ One documented deviation from the skill: the version bump and doc updates go **i
 - Force pushes and branch deletion are blocked
 - Conversation resolution is required
 
-Two settings are deliberately *off*:
+Two settings are deliberately _off_:
 
 - **`required_linear_history`** — the workflow uses merge commits on purpose, to preserve branch history.
 - **`strict`** (require branch up to date before merging) — on a single-contributor repo that trades constant rebasing for almost no benefit.
 
-### The version bump and doc updates go *in* the branch
+### The version bump and doc updates go _in_ the branch
 
 This is a deliberate deviation from the git-workflow skill, which says to bump the version and update docs as a follow-up commit **directly on `main`**. With `enforce_admins` on, that is no longer possible.
 

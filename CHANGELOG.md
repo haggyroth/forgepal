@@ -4,6 +4,16 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] — 2026-07-29
+
+### Added
+
+- chore: Prettier config encoding the style the codebase already used — no semicolons, single quotes, 100 columns — plus `npm run format` / `format:check` and a CI gate. Chosen by measuring the existing code (0 semicolon line-endings, 230 single-quote imports vs 0 double, only 52 lines over 100) so adopting it reformats layout without changing the house style
+
+### Notes
+
+- `src/data/game-data.json` is deliberately in `.prettierignore`. The importer writes it with `JSON.stringify(data, null, 2)`; letting Prettier reformat it would make every import produce a diff and the weekly refresh workflow open a PR for a non-change. Verified the importer is still idempotent after adopting Prettier
+
 ## [1.2.0] — 2026-07-29
 
 ### Added
@@ -35,13 +45,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - chore(deps): bump `actions/checkout` v4→v7, `actions/setup-node` v4→v7, `github/codeql-action` v3→v4. Also clears the Node 20 deprecation warning every workflow run was emitting
 - chore(deps): bump `actions/configure-pages` v5→v6, `actions/upload-pages-artifact` v3→v5, `actions/deploy-pages` v4→v5. Split from the above because these run only on `main`, so pull-request CI cannot exercise them
 - chore(ci): `main` is fully protected — a pull request with green CI, CodeQL, and code-scanning checks is required for every change, with `enforce_admins` on so it cannot be bypassed. Force pushes and branch deletion blocked
-- docs: the version bump and doc updates now go *in* the branch rather than as a follow-up commit on `main`, which admin enforcement makes impossible. One PR per change, with the version and its changelog entry landing atomically alongside the code
+- docs: the version bump and doc updates now go _in_ the branch rather than as a follow-up commit on `main`, which admin enforcement makes impossible. One PR per change, with the version and its changelog entry landing atomically alongside the code
 
 ## [1.0.1] — 2026-07-28
 
 ### Fixed
 
-- fix(export): escape backslashes before pipes in Markdown table cells. Escaping only pipes turned `Odd\|Name` into `Odd\\|Name`, which Markdown reads as an escaped backslash followed by a *live* pipe, silently splitting the column. Latent — no current item name contains a backslash — but the dataset is regenerated from a scraped upstream. Found by CodeQL's first run on `main`
+- fix(export): escape backslashes before pipes in Markdown table cells. Escaping only pipes turned `Odd\|Name` into `Odd\\|Name`, which Markdown reads as an escaped backslash followed by a _live_ pipe, silently splitting the column. Latent — no current item name contains a backslash — but the dataset is regenerated from a scraped upstream. Found by CodeQL's first run on `main`
 
 ## [1.0.0] — 2026-07-28
 
@@ -57,7 +67,7 @@ First stable release. ForgePal does what it was built to do: queue any mix of Pa
 
 ### Fixed
 
-- fix(state): a shared link whose item ids had *all* been dropped from the dataset decoded to an empty state, so the fallback to saved state discarded the report of what was skipped — the case most needing an explanation was the one giving none
+- fix(state): a shared link whose item ids had _all_ been dropped from the dataset decoded to an empty state, so the fallback to saved state discarded the report of what was skipped — the case most needing an explanation was the one giving none
 - fix(data): the importer is now idempotent. `meta.importedAt` was stamped on every run, so the output file always differed even when upstream had not changed — the refresh workflow would have opened a noise PR every week
 
 ### Changed
@@ -107,7 +117,7 @@ First stable release. ForgePal does what it was built to do: queue any mix of Pa
 
 ### Notes
 
-- Technology *levels* are shown but not point costs; upstream records no point data
+- Technology _levels_ are shown but not point costs; upstream records no point data
 
 ## [0.4.0] — 2026-07-28
 

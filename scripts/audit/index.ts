@@ -46,8 +46,12 @@ async function main() {
   const all: Entry[] = [...data.items, ...data.structures]
   let problems = 0
 
-  console.log(`ForgePal data audit — Palworld ${data.meta.gameVersion}, upstream ${data.meta.updated}`)
-  console.log(`${all.length} entries (${data.items.length} items, ${data.structures.length} structures)`)
+  console.log(
+    `ForgePal data audit — Palworld ${data.meta.gameVersion}, upstream ${data.meta.updated}`,
+  )
+  console.log(
+    `${all.length} entries (${data.items.length} items, ${data.structures.length} structures)`,
+  )
 
   /* ---------------------------------------------------------- classification */
 
@@ -93,7 +97,9 @@ async function main() {
   } else {
     problems += 1
     console.log(`  ✗ GATHERED_MATERIALS names matching nothing in the dataset: ${stale.join(', ')}`)
-    console.log('    A name that matches nothing silently does nothing — the entry stays misclassified.')
+    console.log(
+      '    A name that matches nothing silently does nothing — the entry stays misclassified.',
+    )
   }
 
   const notGathered = GATHERED_MATERIALS.filter(
@@ -171,7 +177,11 @@ async function main() {
     console.log('\n  Most common uninterpreted phrases:')
     const phrases = withText.flatMap((e) => e.otherSources)
     for (const [phrase, count] of tally(phrases, (p) =>
-      p.replace(/\([^)]*\)/g, '').replace(/\s*-\s*.*$/, '').trim().slice(0, 46),
+      p
+        .replace(/\([^)]*\)/g, '')
+        .replace(/\s*-\s*.*$/, '')
+        .trim()
+        .slice(0, 46),
     ).slice(0, 8)) {
       console.log(`    ${String(count).padStart(4)}  ${phrase}`)
     }
@@ -193,8 +203,12 @@ async function main() {
   const coverage = (((all.length - unobtainable.length) / all.length) * 100).toFixed(1)
   console.log(`  ${coverage}% of entries have a known source or recipe`)
 
-  const byKind = new Map<SourceKind, number>(tally(all, (e) => e.sourceKind) as [SourceKind, number][])
-  console.log(`  ${byKind.get('craftable') ?? 0} craftable, ${byKind.get('drop') ?? 0} dropped, ${byKind.get('gathered') ?? 0} gathered, ${byKind.get('merchant') ?? 0} vendor-only`)
+  const byKind = new Map<SourceKind, number>(
+    tally(all, (e) => e.sourceKind) as [SourceKind, number][],
+  )
+  console.log(
+    `  ${byKind.get('craftable') ?? 0} craftable, ${byKind.get('drop') ?? 0} dropped, ${byKind.get('gathered') ?? 0} gathered, ${byKind.get('merchant') ?? 0} vendor-only`,
+  )
 
   if (problems > 0) {
     console.log(`\n✗ ${problems} issue(s) within our control. See above.\n`)

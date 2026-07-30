@@ -102,9 +102,12 @@ export function buildRoute(
         const materials = stops.get(region) ?? new Map<ItemId, RouteMaterial>()
         stops.set(region, materials)
 
-        const material =
-          materials.get(total.itemId) ??
-          { itemId: total.itemId, name: total.name, required: total.required, pals: [] }
+        const material = materials.get(total.itemId) ?? {
+          itemId: total.itemId,
+          name: total.name,
+          required: total.required,
+          pals: [],
+        }
         material.pals.push({
           name: drop.source,
           quantity: drop.quantity,

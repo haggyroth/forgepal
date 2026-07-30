@@ -48,9 +48,28 @@ const COLOUR_PREFIXES = [
 
 /** Colour families Tailwind 4 ships by default, so they need no @theme entry. */
 const BUILTIN_FAMILIES = new Set([
-  'slate', 'gray', 'zinc', 'neutral', 'stone',
-  'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
-  'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
 ])
 
 /** Font families Tailwind ships by default. */
@@ -58,8 +77,15 @@ const BUILTIN_FONTS = new Set(['sans', 'serif', 'mono'])
 
 /** Valid Tailwind font-weight utilities. Anything else — `font-600` — is not a class. */
 const FONT_WEIGHTS = new Set([
-  'thin', 'extralight', 'light', 'normal', 'medium',
-  'semibold', 'bold', 'extrabold', 'black',
+  'thin',
+  'extralight',
+  'light',
+  'normal',
+  'medium',
+  'semibold',
+  'bold',
+  'extrabold',
+  'black',
 ])
 
 function sourceFiles(dir: string, out: string[] = []): string[] {
@@ -91,8 +117,15 @@ function readTheme() {
 function classCandidates(source: string): string[] {
   return [...source.matchAll(/(?:className|class)\s*=\s*(?:\{`|"|'|`)([\s\S]*?)(?:`\}|"|'|`)/g)]
     .flatMap(([, body]) => body.split(/\s+/))
-    .map((token) => token.replace(/^(hover|focus|focus-visible|active|disabled|group-hover|odd|even|sm|md|lg|xl|dark|placeholder):/g, ''))
-    .filter((token) => token && !token.includes('[') && !token.includes('$') && !token.includes('{'))
+    .map((token) =>
+      token.replace(
+        /^(hover|focus|focus-visible|active|disabled|group-hover|odd|even|sm|md|lg|xl|dark|placeholder):/g,
+        '',
+      ),
+    )
+    .filter(
+      (token) => token && !token.includes('[') && !token.includes('$') && !token.includes('{'),
+    )
 }
 
 const files = sourceFiles(SRC)
@@ -112,7 +145,9 @@ describe('Tailwind theme tokens', () => {
       for (const raw of classCandidates(readFileSync(file, 'utf8'))) {
         // Strip any opacity modifier: bg-iron-900/40 -> bg-iron-900
         const token = raw.split('/')[0]
-        const match = new RegExp(`^(?:${COLOUR_PREFIXES.join('|')})-([a-z]{2,})-(\\d+)$`).exec(token)
+        const match = new RegExp(`^(?:${COLOUR_PREFIXES.join('|')})-([a-z]{2,})-(\\d+)$`).exec(
+          token,
+        )
         if (!match) continue
 
         const [, family, shade] = match

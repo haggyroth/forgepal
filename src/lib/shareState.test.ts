@@ -22,13 +22,23 @@ describe('encodeState', () => {
   })
 
   it('joins multiple entries', () => {
-    expect(encodeState(state([['mega-sphere', 20], ['ingot', 5]]))).toBe(
-      'build=mega-sphere.20_ingot.5',
-    )
+    expect(
+      encodeState(
+        state([
+          ['mega-sphere', 20],
+          ['ingot', 5],
+        ]),
+      ),
+    ).toBe('build=mega-sphere.20_ingot.5')
   })
 
   it('does not percent-encode its own separators', () => {
-    const encoded = encodeState(state([['a-b', 1], ['c-d', 2]]))
+    const encoded = encodeState(
+      state([
+        ['a-b', 1],
+        ['c-d', 2],
+      ]),
+    )
     expect(encoded).not.toContain('%')
   })
 
@@ -41,7 +51,15 @@ describe('encodeState', () => {
   })
 
   it('drops zero, negative, and non-finite quantities', () => {
-    expect(encodeState(state([['a', 0], ['b', -3], ['c', Number.NaN]]))).toBe('')
+    expect(
+      encodeState(
+        state([
+          ['a', 0],
+          ['b', -3],
+          ['c', Number.NaN],
+        ]),
+      ),
+    ).toBe('')
   })
 
   it('returns an empty string when there is nothing to share', () => {
@@ -55,7 +73,13 @@ describe('encodeState', () => {
 
 describe('decodeState', () => {
   it('round-trips a build list', () => {
-    const original = state([['mega-sphere', 20], ['ingot', 5]], 34)
+    const original = state(
+      [
+        ['mega-sphere', 20],
+        ['ingot', 5],
+      ],
+      34,
+    )
     const decoded = decodeState(encodeState(original), all).state
     expect(decoded).toEqual(original)
   })

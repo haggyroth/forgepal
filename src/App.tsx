@@ -35,9 +35,14 @@ export default function App() {
   const [restored] = useState(() => resolveInitialState(index))
 
   const [playerLevel, setPlayerLevel] = useState<number | null>(restored.state.playerLevel)
-  const { quantities, entries: buildEntries, add, setQuantity, remove, clear } = useBuildList(
-    restored.state.build,
-  )
+  const {
+    quantities,
+    entries: buildEntries,
+    add,
+    setQuantity,
+    remove,
+    clear,
+  } = useBuildList(restored.state.build)
   const [shared, setShared] = useState(false)
 
   const result = useMemo(() => calculate(buildEntries, index), [buildEntries, index])

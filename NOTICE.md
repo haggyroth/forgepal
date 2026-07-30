@@ -4,10 +4,10 @@ ForgePal's game data is derived from community-maintained Palworld datasets. Thi
 
 ## Upstream sources
 
-| Source | Used for | Terms |
-|--------|----------|-------|
+| Source                                                              | Used for                                                                | Terms                                            |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------ |
 | [beliarance/palworld-kb](https://github.com/beliarance/palworld-kb) | Items, recipes, crafting stations, structures, drop tables, tech levels | **No license file published.** See caveat below. |
-| [paldb.cc](https://paldb.cc/) | Ultimate upstream — `palworld-kb` is scraped from it | Community wiki; see site terms |
+| [paldb.cc](https://paldb.cc/)                                       | Ultimate upstream — `palworld-kb` is scraped from it                    | Community wiki; see site terms                   |
 
 Snapshot in use: `palworld-kb` @ game version **1.0**, data updated **2026-07-14**.
 

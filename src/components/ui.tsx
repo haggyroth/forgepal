@@ -101,7 +101,9 @@ export function Panel({
   return (
     <section
       className={`relative rounded-md border border-iron-800 bg-iron-900/70 p-5 backdrop-blur-sm ${
-        glow ? 'shadow-[0_0_0_1px_var(--color-ember-700)/20,0_8px_40px_-12px_oklch(0.68_0.19_52/0.28)]' : ''
+        glow
+          ? 'shadow-[0_0_0_1px_var(--color-ember-700)/20,0_8px_40px_-12px_oklch(0.68_0.19_52/0.28)]'
+          : ''
       } ${className}`}
     >
       {children}

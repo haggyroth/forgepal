@@ -52,7 +52,6 @@ export function BuildList({
         ) : undefined
       }
     >
-
       {rows.length === 0 ? (
         <p className="rounded-sm border border-dashed border-iron-800 px-4 py-8 text-center font-mono text-sm text-iron-600">
           Pick items from the catalogue to start a build.
