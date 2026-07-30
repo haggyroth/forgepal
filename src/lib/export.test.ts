@@ -118,6 +118,19 @@ describe('toMarkdown', () => {
     expect(empty).not.toContain('## Building')
   })
 
+  it('escapes backslashes before pipes, so the escape cannot be broken', () => {
+    // Escaping only pipes turns `Odd\\|Name` into `Odd\\\\|Name`, which Markdown
+    // reads as an escaped backslash followed by a live pipe — the column
+    // silently splits. Flagged by CodeQL as incomplete sanitization.
+    const model = modelFor([{ name: 'Mega Sphere', quantity: 1 }])
+    model.raw[0] = { name: 'Odd\\|Name', quantity: 1, madeAt: '', source: '' }
+    const rendered = toMarkdown(model)
+
+    // Backslash doubled, then the pipe escaped: Odd\|Name -> Odd\\\|Name
+    expect(rendered).toContain('Odd\\\\\\|Name')
+    expect(rendered).not.toContain('Odd\\\\|Name ')
+  })
+
   it('escapes pipe characters so they cannot break the table', () => {
     const model = modelFor([{ name: 'Mega Sphere', quantity: 1 }])
     model.raw[0] = { name: 'Odd | Name', quantity: 1, madeAt: '', source: 'a | b' }
