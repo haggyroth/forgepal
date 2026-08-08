@@ -30,15 +30,15 @@
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "@vitejs/plugin-react": "^6.0.3",
+    "@vitejs/plugin-react": "^6.0.5",
     "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^30.0.1",
-    "oxlint": "^1.71.0",
+    "oxlint": "^1.77.0",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.1",
+    "tsx": "^4.23.8",
     "typescript": "~6.0.2",
-    "vite": "^8.1.1",
+    "vite": "^8.2.0",
     "vitest": "^4.1.10"
   }
 }
