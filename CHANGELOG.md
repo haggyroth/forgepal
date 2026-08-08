@@ -6,6 +6,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Security
+
+- chore(deps): resolve [GHSA-2v37-7h3g-55p8](https://github.com/advisories/GHSA-2v37-7h3g-55p8) by bumping the transitive `nanoid` to 3.3.18. Not reachable from ForgePal — `nanoid` is a dev-only dependency of PostCSS, used at build time and never shipped in the bundle — so this is hygiene, not an exposure. No version bump: nothing in the deployed app changed
+
 ## [1.5.0] — 2026-07-30
 
 ### Added
