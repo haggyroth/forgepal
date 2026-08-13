@@ -1,32 +1,103 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { breedingData } from '@/data/breeding'
 import { buildBreedIndex } from '@/lib/breeding'
+import { applyBreeding, decodeBreeding } from '@/lib/breedingQuery'
+import { useRoster } from '@/hooks/useRoster'
 import { Section } from '@/components/Section'
+import { PairCalculator } from '@/components/breeding/PairCalculator'
+import { Roster } from '@/components/breeding/Roster'
+import { BreedPlanPanel } from '@/components/breeding/BreedPlanPanel'
+import type { PalId } from '@/types/breeding'
 
 /**
  * The breeding tab.
  *
  * Default-exported and loaded lazily, which is the whole reason the breeding
  * dataset is a separate JSON file: someone who only ever costs recipes should
- * never download 299 Pals. A static import anywhere in App would undo that on
- * the first render.
+ * never download 299 Pals. A static import anywhere in App would undo that.
  *
- * Phase 3 ships the shell and the dataset it stands on. The pair calculator and
- * the path solver are Phase 4 — the engine behind them is already in
- * `src/lib/breeding.ts` and tested.
+ * Three panels, in the order you use them: look a pair up, record what you own,
+ * then ask for a chain. The dataset and uncertainty panels stay at the bottom —
+ * they are the provenance, and provenance belongs after the tool, not in front of
+ * it.
  */
 export default function BreedingTab() {
   const index = useMemo(() => buildBreedIndex(breedingData), [])
   const { tieBreak, meta } = breedingData
   const share = (tieBreak.affectedPairs / tieBreak.totalPairs) * 100
 
+  /** Sorted once, by name — every picker shows the same order. */
+  const pals = useMemo(
+    () => [...breedingData.pals].sort((a, b) => a.name.localeCompare(b.name)),
+    [],
+  )
+
+  const isKnownId = useMemo(() => (id: PalId) => index.byId.has(id), [index])
+  const { roster, add, remove, clear } = useRoster(isKnownId)
+
+  // Resolved during the first render so a shared link is already answered rather
+  // than appearing a frame later. Unknown ids are dropped by decodeBreeding.
+  const [pair, setPair] = useState(() => {
+    const restored = decodeBreeding(window.location.search, isKnownId)
+    return { pairA: restored.pairA, pairB: restored.pairB }
+  })
+  const [target, setTarget] = useState<PalId | null>(
+    () => decodeBreeding(window.location.search, isKnownId).target,
+  )
+
+  // Mirror this tab's own params and nothing else. The calculator's build list
+  // and `?tab=` share the query string, and rebuilding it wholesale would erase
+  // them — applyBreeding touches only `pair` and `target`.
+  //
+  // replaceState, like every other writer here: changing a picker should not fill
+  // the history stack.
+  useEffect(() => {
+    const query = applyBreeding(window.location.search, { ...pair, target })
+    window.history.replaceState(
+      null,
+      '',
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
+    )
+  }, [pair, target])
+
+  const owned = useMemo(() => new Set(roster), [roster])
+
   return (
     <div className="mt-5 space-y-6">
+      <PairCalculator
+        index={index}
+        pals={pals}
+        pairA={pair.pairA}
+        pairB={pair.pairB}
+        onChange={setPair}
+        onAddToRoster={add}
+        inRoster={owned}
+        tieBreakShare={share}
+      />
+
+      <Roster
+        index={index}
+        pals={pals}
+        roster={roster}
+        onAdd={add}
+        onRemove={remove}
+        onClear={clear}
+      />
+
+      <BreedPlanPanel
+        index={index}
+        pals={pals}
+        roster={roster}
+        target={target}
+        onTargetChange={setTarget}
+        tieBreakShare={share}
+      />
+
       <Section
         id="breeding-dataset"
         title="Breeding dataset"
         aside={`Palworld ${meta.gameVersion}`}
-        glow
+        defaultOpen={false}
       >
         <p className="max-w-prose font-mono text-[0.78rem] leading-relaxed text-iron-400">
           Two parents produce a child deterministically: a fixed combination if one exists, and
@@ -44,6 +115,13 @@ export default function BreedingTab() {
         </dl>
       </Section>
 
+      {/*
+        Open by default, unlike the stats panel above it. The tie-break decides
+        roughly a third of generic pairs, and CLAUDE.md's rule is that this is not
+        a footnote — collapsing it by default would be a quiet step towards
+        presenting a coin-flip as settled. src/App.test.tsx asserts the share is
+        visible without interaction, which is what caught this.
+      */}
       <Section id="breeding-tiebreak" title="Where the data is uncertain">
         <p className="max-w-prose font-mono text-[0.78rem] leading-relaxed text-iron-400">
           When a target rank lands exactly between two Pals, one of them wins by a rule the sources
@@ -52,7 +130,7 @@ export default function BreedingTab() {
           <span className="tnum text-ember-400">{share.toFixed(1)}%</span> of all parent pairs (
           <span className="tnum">{tieBreak.affectedPairs.toLocaleString()}</span> of{' '}
           <span className="tnum">{tieBreak.totalPairs.toLocaleString()}</span>), so results that
-          depend on it will be marked rather than presented as settled.
+          depend on it are marked rather than presented as settled.
         </p>
 
         {meta.gaps.length > 0 ? (
