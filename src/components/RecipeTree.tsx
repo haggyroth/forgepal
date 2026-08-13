@@ -47,7 +47,7 @@ function TreeRoot({ node }: { node: RecipeNode }) {
         disabled={!hasChildren}
         className="flex w-full items-baseline gap-2 text-left disabled:cursor-default"
       >
-        <span aria-hidden className="w-2 font-mono text-xs text-iron-600">
+        <span aria-hidden className="w-2 font-mono text-xs text-iron-400">
           {hasChildren ? (open ? '−' : '+') : ''}
         </span>
         <span className="font-display text-sm font-semibold tracking-wide text-iron-100">
@@ -89,7 +89,7 @@ function TreeBranch({ node }: { node: RecipeNode }) {
         </span>
         <span className="font-mono text-[0.8rem] tnum text-iron-300">×{node.quantity}</span>
         {node.truncated ? (
-          <span className="font-mono text-[0.65rem] text-iron-700">(seen above)</span>
+          <span className="font-mono text-[0.65rem] text-iron-400">(seen above)</span>
         ) : null}
       </div>
 

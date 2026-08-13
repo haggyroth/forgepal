@@ -13,7 +13,7 @@ export function SectionHeading({ children, aside }: { children: ReactNode; aside
         {children}
       </h2>
       <div className="rule-fade h-px flex-1" />
-      {aside ? <span className="font-mono text-[0.7rem] text-iron-600">{aside}</span> : null}
+      {aside ? <span className="font-mono text-[0.7rem] text-iron-400">{aside}</span> : null}
     </div>
   )
 }
@@ -23,7 +23,7 @@ const SOURCE_STYLES: Record<SourceKind, { label: string; className: string }> = 
   gathered: { label: 'gather', className: 'text-verdigris-400 border-verdigris-400/30' },
   drop: { label: 'drop', className: 'text-ember-400 border-ember-500/30' },
   merchant: { label: 'buy', className: 'text-iron-300 border-iron-600' },
-  unobtainable: { label: 'unknown', className: 'text-iron-600 border-iron-700' },
+  unobtainable: { label: 'unknown', className: 'text-iron-400 border-iron-700' },
 }
 
 export function SourceBadge({ kind }: { kind: SourceKind }) {

@@ -113,23 +113,82 @@ function readTheme() {
   return { colours, fonts }
 }
 
-/** Class-name-ish strings, with arbitrary values and template holes removed. */
+/**
+ * Class-name-ish strings, with arbitrary values and template holes removed.
+ *
+ * Scans every quoted or backticked run in the file rather than trying to match a
+ * whole `className=...` expression. The narrower version missed a real bug: its
+ * body pattern was non-greedy and stopped at the first quote *inside* the
+ * attribute, so in
+ *
+ *   className={`base ${selected ? 'a text-iron-100' : 'b text-iron-500'}`}
+ *
+ * everything from the first `'` onward went unscanned — and `text-iron-500`,
+ * naming a shade that does not exist, sat in `Tabs.tsx` unnoticed. Conditional
+ * class strings are where a typo is *most* likely, since only one branch renders
+ * at a time.
+ *
+ * Over-collecting is harmless here: a non-class string simply fails the utility
+ * pattern below and is skipped.
+ */
 function classCandidates(source: string): string[] {
-  return [...source.matchAll(/(?:className|class)\s*=\s*(?:\{`|"|'|`)([\s\S]*?)(?:`\}|"|'|`)/g)]
-    .flatMap(([, body]) => body.split(/\s+/))
-    .map((token) =>
-      token.replace(
-        /^(hover|focus|focus-visible|active|disabled|group-hover|odd|even|sm|md|lg|xl|dark|placeholder):/g,
-        '',
-      ),
-    )
-    .filter(
-      (token) => token && !token.includes('[') && !token.includes('$') && !token.includes('{'),
-    )
+  return (
+    [...source.matchAll(/(?:"([^"\n]*)"|'([^'\n]*)'|`([^`]*)`)/g)]
+      .flatMap(([, dq, sq, bt]) => (dq ?? sq ?? bt ?? '').split(/\s+/))
+      // A backticked run swallows the quotes of any nested ternary, so tokens
+      // arrive as `'text-iron-500` or `hover:text-iron-300'}`. Trim the punctuation
+      // that cannot appear in a class name.
+      .map((token) => token.replace(/^['"`{}(),;]+|['"`{}(),;]+$/g, ''))
+      .map((token) =>
+        token.replace(
+          /^(hover|focus|focus-visible|active|disabled|group-hover|odd|even|sm|md|lg|xl|dark|placeholder):/g,
+          '',
+        ),
+      )
+      .filter(
+        (token) => token && !token.includes('[') && !token.includes('$') && !token.includes('{'),
+      )
+  )
 }
 
 const files = sourceFiles(SRC)
 const theme = readTheme()
+
+describe('the scanner itself', () => {
+  /**
+   * A guard on the guard. The previous extraction stopped at the first quote
+   * inside a `className`, so a class in a ternary branch was never checked — and
+   * an invalid `text-iron-500` lived in Tabs.tsx because of it. An audit with a
+   * blind spot is worse than none, because it reports success.
+   */
+  it('sees classes inside a conditional, not just the leading literal', () => {
+    // Backticks and the interpolation are escaped so this stays one template
+    // literal; it is the shape of the real Tabs.tsx className that hid the bug.
+    const source =
+      `<button className={\`base px-2 \${selected ` +
+      `? 'border-ember-500 text-iron-100' ` +
+      `: 'text-iron-500 hover:text-iron-300'}\`} />`
+    const found = classCandidates(source)
+
+    expect(found).toContain('text-iron-500')
+    expect(found).toContain('text-iron-100')
+    expect(found).toContain('border-ember-500')
+  })
+
+  it('reads both branches of a ternary in a plain string attribute', () => {
+    const found = classCandidates(`className={ok ? "text-verdigris-400" : "text-ember-400"}`)
+
+    expect(found).toContain('text-verdigris-400')
+    expect(found).toContain('text-ember-400')
+  })
+
+  it('drops arbitrary values and template holes', () => {
+    const found = classCandidates(`className="w-[86rem] text-iron-100"`)
+
+    expect(found).toContain('text-iron-100')
+    expect(found).not.toContain('w-[86rem]')
+  })
+})
 
 describe('Tailwind theme tokens', () => {
   it('finds source files and a theme to check against', () => {

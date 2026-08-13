@@ -6,6 +6,29 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.6.1] — 2026-08-12
+
+### Fixed
+
+- fix(a11y): every text colour now meets WCAG AA. `text-iron-600` was **2.24:1** against a panel with 38 usages and `text-iron-700` was **1.49:1** with 11, including two input placeholders — against a 4.5:1 bar that applies almost everywhere here, since the body text is 0.68–0.78rem mono and nowhere near the "large text" threshold. Both are now non-text colours; the affected text moved to `iron-400` (5.41:1 on the body, measured at 5.42:1 in the browser)
+- fix(ui): the inactive tab label named `text-iron-500`, a shade that is not in the palette. An undefined token is an invalid class, so the label had **no colour rule at all** and inherited one. Now `iron-400`, which is what it was meant to be
+- fix(audit): the Tailwind token guard was not scanning conditional class strings. Its `className` pattern stopped at the first quote _inside_ the attribute, so in ``className={`base ${on ? 'a' : 'b'}`}`` everything from `'a'` onward went unchecked — which is exactly where the `iron-500` above was hiding, and exactly where a typo is most likely, since only one branch renders at a time
+
+### Added
+
+- feat(a11y): Home and End move to the first and last tab, completing the ARIA tabs pattern the tablist already implemented arrows and a roving `tabIndex` for
+- test(a11y): axe-core over four real views — the empty calculator, a loaded build, the stale-link notice, the breeding tab — plus the error fallback, which is worth checking precisely because it only appears when something has already gone wrong
+- test(a11y): keyboard coverage for the tablist (arrows, wrapping, Home/End, roving `tabIndex`, and ignoring keys it does not own) and for toggling a collapsible section
+- test(a11y): `scripts/audit/contrast.test.ts` computes contrast from the `@theme` block itself, so it tracks the palette rather than a copy of it, and fails if a dim token returns to text use
+
+### Notes
+
+- The palette could not be fixed by lightening the two dim tokens: `iron-600` needs L ≥ 0.604 to clear 4.5:1 and `iron-400` is L 0.62, so they would have merged and the dim tier would have vanished rather than improved. Restricting them to borders, rules, and hover states keeps the tonal range intact where it costs nothing
+- Both new audits check themselves before drawing conclusions. The contrast maths is verified against known pairs (white on black at 21:1), and the axe suite asserts that a deliberately broken fragment _does_ report violations — otherwise an empty violations array is ambiguous between "clean" and "silently stopped evaluating"
+- Colour contrast is checked statically rather than through axe, because jsdom computes no cascade or layout: axe reports every pair as "incomplete", which reads like a pass and is not one
+- Border contrast is recorded, not enforced. `border-iron-700` is 1.55:1 on the body, below WCAG 1.4.11's 3:1 for a control boundary, but those controls are also identified by their own fill and label, and lightening every border to 3:1 would change the drawing-ink character of the whole UI. The ratios are pinned in the audit so a palette change surfaces them
+- `disabled:text-iron-700` is left alone in three places. WCAG 1.4.3 exempts inactive controls on purpose, and greying out a dead button is the conventional signal
+
 ## [1.6.0] — 2026-08-12
 
 ### Added

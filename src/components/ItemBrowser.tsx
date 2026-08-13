@@ -86,7 +86,7 @@ export function ItemBrowser({
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search items and structures…"
             aria-label="Search items and structures"
-            className="w-full rounded-sm border border-iron-700 bg-iron-950/60 px-3 py-2 font-mono text-sm text-iron-100 placeholder:text-iron-600 focus:border-ember-700"
+            className="w-full rounded-sm border border-iron-700 bg-iron-950/60 px-3 py-2 font-mono text-sm text-iron-100 placeholder:text-iron-400 focus:border-ember-700"
           />
 
           <select
@@ -145,7 +145,7 @@ export function ItemBrowser({
                   {entry.techLevel !== null ? (
                     <span
                       className={`shrink-0 font-mono text-[0.65rem] ${
-                        isLocked(entry, playerLevel) ? 'text-ember-500' : 'text-iron-600'
+                        isLocked(entry, playerLevel) ? 'text-ember-500' : 'text-iron-400'
                       }`}
                       title={
                         isLocked(entry, playerLevel)
@@ -162,7 +162,7 @@ export function ItemBrowser({
                     className={`shrink-0 font-mono text-sm transition-colors ${
                       inList.has(entry.id)
                         ? 'text-ember-500'
-                        : 'text-iron-700 group-hover:text-ember-400'
+                        : 'text-iron-400 group-hover:text-ember-400'
                     }`}
                   >
                     {inList.has(entry.id) ? '✓' : '+'}
@@ -172,13 +172,13 @@ export function ItemBrowser({
             ))}
 
             {results.length === 0 ? (
-              <li className="px-2 py-6 text-center font-mono text-sm text-iron-600">
+              <li className="px-2 py-6 text-center font-mono text-sm text-iron-400">
                 Nothing matches those filters.
               </li>
             ) : null}
 
             {total > results.length ? (
-              <li className="px-2 pt-3 text-center font-mono text-[0.7rem] text-iron-600">
+              <li className="px-2 pt-3 text-center font-mono text-[0.7rem] text-iron-400">
                 showing {results.length} of {total} — narrow your search
               </li>
             ) : null}

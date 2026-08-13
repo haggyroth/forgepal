@@ -37,7 +37,7 @@ export function SectionToggle({
       >
         <span
           aria-hidden
-          className={`font-mono text-[0.6rem] text-iron-600 transition-transform group-hover:text-ember-400 ${
+          className={`font-mono text-[0.6rem] text-iron-400 transition-transform group-hover:text-ember-400 ${
             open ? 'rotate-90' : ''
           }`}
         >
@@ -48,7 +48,7 @@ export function SectionToggle({
         </h2>
       </button>
       <div className="rule-fade h-px flex-1" />
-      {aside ? <span className="font-mono text-[0.7rem] text-iron-600">{aside}</span> : null}
+      {aside ? <span className="font-mono text-[0.7rem] text-iron-400">{aside}</span> : null}
     </div>
   )
 }

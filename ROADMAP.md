@@ -115,4 +115,13 @@ These were considered for v1 and consciously deferred, not dropped.
       already degraded to a warning rather than hanging, but nothing enforced that
       at the render layer, so a throw was still a blank page. The two are halves
       of the same rule.
+- [x] **Accessibility audit** — every text colour now meets WCAG AA, verified by a
+      contrast audit that reads the `@theme` block and converts oklch itself.
+      `text-iron-600` (2.24:1, 38 usages) and `text-iron-700` (1.49:1, 11) were
+      both well under the bar; they are non-text colours now, since lightening
+      them into compliance would have merged them with `iron-400`. Also found
+      `text-iron-500` on the inactive tab — a shade the palette never had, so the
+      class was invalid and the label inherited its colour. axe-core now runs over
+      the real composed views, and the tablist has Home/End to complete the ARIA
+      pattern.
 - [ ] Consider indexing items by category/station at import time rather than filtering at runtime
