@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { datasetStamp } from '@/data/meta'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Tabs } from '@/components/Tabs'
 import { applyTab, decodeTab, type TabId } from '@/lib/tabs'
 
@@ -50,19 +51,28 @@ export default function App() {
           rebuild the 1,300-entry item index on every switch and drop a shared
           build that hadn't been edited into persistence yet.
         */}
+        {/*
+          A boundary per panel, not one around the app: a throw in the calculator
+          should not cost you the breeding tools, and the shell stays usable so
+          there is somewhere to go from here.
+        */}
         <TabPanel id="calculator" active={tab === 'calculator'}>
           {visited.has('calculator') ? (
-            <Suspense fallback={<Loading what="recipe data" />}>
-              <CalculatorTab />
-            </Suspense>
+            <ErrorBoundary what="the calculator">
+              <Suspense fallback={<Loading what="recipe data" />}>
+                <CalculatorTab />
+              </Suspense>
+            </ErrorBoundary>
           ) : null}
         </TabPanel>
 
         <TabPanel id="breeding" active={tab === 'breeding'}>
           {visited.has('breeding') ? (
-            <Suspense fallback={<Loading what="breeding data" />}>
-              <BreedingTab />
-            </Suspense>
+            <ErrorBoundary what="the breeding tools">
+              <Suspense fallback={<Loading what="breeding data" />}>
+                <BreedingTab />
+              </Suspense>
+            </ErrorBoundary>
           ) : null}
         </TabPanel>
 

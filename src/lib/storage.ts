@@ -52,3 +52,8 @@ export function clearPersisted(): void {
     // Nothing to do; see savePersisted.
   }
 }
+
+// Clearing *everything* lives in `resetState.ts`, not here: this module owns the
+// pre-collection single-build key specifically, and the error boundary that needs
+// the full reset is in the shell, which must not import this module's encoding
+// dependencies.
