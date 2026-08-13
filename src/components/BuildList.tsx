@@ -40,14 +40,14 @@ export function BuildList({
             <button
               type="button"
               onClick={onShare}
-              className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+              className="font-mono text-[0.7rem] text-iron-400 transition-colors hover:text-ember-400"
             >
               {shared ? 'link copied ✓' : 'copy link'}
             </button>
             <button
               type="button"
               onClick={onClear}
-              className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+              className="font-mono text-[0.7rem] text-iron-400 transition-colors hover:text-ember-400"
             >
               clear all
             </button>
@@ -58,7 +58,7 @@ export function BuildList({
       {switcher}
 
       {rows.length === 0 ? (
-        <p className="rounded-sm border border-dashed border-iron-800 px-4 py-8 text-center font-mono text-sm text-iron-600">
+        <p className="rounded-sm border border-dashed border-iron-800 px-4 py-8 text-center font-mono text-sm text-iron-400">
           Pick items from the catalogue to start a build.
         </p>
       ) : (
@@ -78,7 +78,7 @@ export function BuildList({
                   {/* Wraps rather than truncates — the batch maths is the
                       whole reason this line exists, so losing its tail to an
                       ellipsis on narrow screens defeats the point. */}
-                  <div className="font-mono text-[0.68rem] leading-snug text-iron-600">
+                  <div className="font-mono text-[0.68rem] leading-snug text-iron-400">
                     {[
                       describeProduction(entry, index),
                       // Batch recipes can't make a partial craft, so 15 Arrows
@@ -104,7 +104,7 @@ export function BuildList({
                   type="button"
                   onClick={() => onRemove(itemId)}
                   aria-label={`Remove ${entry?.name ?? itemId}`}
-                  className="px-1 font-mono text-sm text-iron-700 transition-colors hover:text-ember-500"
+                  className="px-1 font-mono text-sm text-iron-400 transition-colors hover:text-ember-500"
                 >
                   ×
                 </button>

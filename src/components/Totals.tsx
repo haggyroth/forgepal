@@ -41,7 +41,7 @@ export function Totals({
   if (!hasAnything) {
     return (
       <Section id="requisition" title="Requisition">
-        <p className="py-6 text-center font-mono text-sm text-iron-600">Nothing queued yet.</p>
+        <p className="py-6 text-center font-mono text-sm text-iron-400">Nothing queued yet.</p>
       </Section>
     )
   }
@@ -62,7 +62,7 @@ export function Totals({
               <button
                 type="button"
                 onClick={onClearStock}
-                className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+                className="font-mono text-[0.7rem] text-iron-400 transition-colors hover:text-ember-400"
               >
                 clear stock
               </button>
@@ -129,7 +129,7 @@ export function Totals({
 
       {result.unresolved.length > 0 ? (
         <Section id="unresolved" title="Unknown materials">
-          <p className="mb-2 font-mono text-[0.7rem] text-iron-600">
+          <p className="mb-2 font-mono text-[0.7rem] text-iron-400">
             Referenced by a recipe but missing from the dataset.
           </p>
           <ul className="space-y-px">
@@ -185,7 +185,7 @@ function RawRow({
             aria-expanded={open}
             className="min-w-0 flex-1 truncate text-left font-mono text-sm text-iron-100 transition-colors hover:text-ember-400"
           >
-            <span aria-hidden className="mr-1.5 inline-block w-2 text-iron-600">
+            <span aria-hidden className="mr-1.5 inline-block w-2 text-iron-400">
               {open ? '−' : '+'}
             </span>
             {entry.name}
@@ -226,7 +226,7 @@ function RawRow({
           {notes.length > 0 ? (
             <ul className="mt-2 space-y-0.5">
               {notes.slice(0, 3).map((note) => (
-                <li key={note} className="font-mono text-[0.68rem] text-iron-600">
+                <li key={note} className="font-mono text-[0.68rem] text-iron-400">
                   {note}
                 </li>
               ))}
@@ -265,7 +265,7 @@ function StockInput({
       className={`w-16 shrink-0 rounded-sm border bg-iron-950/60 px-1.5 py-0.5 text-right font-mono text-[0.72rem] tnum [appearance:textfield] focus:border-ember-700 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
         value > 0
           ? 'border-verdigris-400/40 text-verdigris-400'
-          : 'border-iron-800 text-iron-400 placeholder:text-iron-700'
+          : 'border-iron-800 text-iron-400 placeholder:text-iron-400'
       }`}
     />
   )
@@ -281,7 +281,7 @@ function DropTable({ drops, habitats }: { drops: readonly DropSource[]; habitats
 
   return (
     <>
-      <div className="mb-1 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-600">
+      <div className="mb-1 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-400">
         Dropped by
       </div>
       <ul className="space-y-0.5">
@@ -292,7 +292,7 @@ function DropTable({ drops, habitats }: { drops: readonly DropSource[]; habitats
               {/* Where it lives, so a drop table reads as somewhere to go.
                   Absent for humans, NPCs, and legendaries with no wild spawn. */}
               {habitats.get(drop.source) ? (
-                <span className="ml-1.5 text-iron-600">
+                <span className="ml-1.5 text-iron-400">
                   {habitats.get(drop.source)!.regions.slice(0, 2).join(', ')}
                   {habitats.get(drop.source)!.dayNight === 'night' ? ' · night' : ''}
                 </span>
@@ -304,7 +304,7 @@ function DropTable({ drops, habitats }: { drops: readonly DropSource[]; habitats
             </span>
             <span className="w-10 shrink-0 text-right font-mono text-[0.72rem] tnum text-verdigris-400">
               {drop.chance === null ? (
-                <span className="text-iron-600" title="Drop rate not recorded upstream">
+                <span className="text-iron-400" title="Drop rate not recorded upstream">
                   ?
                 </span>
               ) : (
@@ -315,7 +315,7 @@ function DropTable({ drops, habitats }: { drops: readonly DropSource[]; habitats
         ))}
       </ul>
       {sorted.length > shown.length ? (
-        <div className="mt-1 font-mono text-[0.65rem] text-iron-700">
+        <div className="mt-1 font-mono text-[0.65rem] text-iron-400">
           +{sorted.length - shown.length} more sources
         </div>
       ) : null}
@@ -335,7 +335,7 @@ function MerchantTable({ listings }: { listings: readonly MerchantListing[] }) {
 
   return (
     <>
-      <div className="mb-1 mt-2 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-600">
+      <div className="mb-1 mt-2 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-400">
         Or buy from
       </div>
       <ul className="space-y-0.5">
@@ -344,12 +344,12 @@ function MerchantTable({ listings }: { listings: readonly MerchantListing[] }) {
             <span className="min-w-0 flex-1 truncate font-mono text-[0.72rem] text-iron-300">
               {listing.merchant}
               {listing.locations.length > 0 ? (
-                <span className="ml-1.5 text-iron-600">{listing.locations[0]}</span>
+                <span className="ml-1.5 text-iron-400">{listing.locations[0]}</span>
               ) : null}
             </span>
             <span className="shrink-0 font-mono text-[0.72rem] tnum text-iron-400">
               {listing.price === null ? (
-                <span className="text-iron-600" title="Price not recorded upstream">
+                <span className="text-iron-400" title="Price not recorded upstream">
                   price ?
                 </span>
               ) : (
@@ -360,7 +360,7 @@ function MerchantTable({ listings }: { listings: readonly MerchantListing[] }) {
         ))}
       </ul>
       {listings.length > shown.length ? (
-        <div className="mt-1 font-mono text-[0.65rem] text-iron-700">
+        <div className="mt-1 font-mono text-[0.65rem] text-iron-400">
           +{listings.length - shown.length} more vendors
         </div>
       ) : null}
@@ -379,7 +379,7 @@ function ExpeditionTable({ rewards }: { rewards: readonly ExpeditionReward[] }) 
 
   return (
     <>
-      <div className="mb-1 mt-2 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-600">
+      <div className="mb-1 mt-2 font-display text-[0.65rem] uppercase tracking-[0.15em] text-iron-400">
         Or send an expedition
       </div>
       <ul className="space-y-0.5">
@@ -388,7 +388,7 @@ function ExpeditionTable({ rewards }: { rewards: readonly ExpeditionReward[] }) 
             <span className="min-w-0 flex-1 truncate font-mono text-[0.72rem] text-iron-300">
               {reward.mission}
               {reward.durationHours !== null ? (
-                <span className="ml-1.5 text-iron-600">{formatHours(reward.durationHours)}</span>
+                <span className="ml-1.5 text-iron-400">{formatHours(reward.durationHours)}</span>
               ) : null}
             </span>
             <span className="shrink-0 font-mono text-[0.72rem] tnum text-verdigris-400">
@@ -398,7 +398,7 @@ function ExpeditionTable({ rewards }: { rewards: readonly ExpeditionReward[] }) 
         ))}
       </ul>
       {rewards.length > shown.length ? (
-        <div className="mt-1 font-mono text-[0.65rem] text-iron-700">
+        <div className="mt-1 font-mono text-[0.65rem] text-iron-400">
           +{rewards.length - shown.length} more expeditions
         </div>
       ) : null}
@@ -411,7 +411,7 @@ function Quantity({ total }: { total: MaterialTotal }) {
     <span className="w-16 shrink-0 text-right font-mono text-sm tnum text-iron-100">
       {total.required.toLocaleString()}
       {total.surplus > 0 ? (
-        <span className="ml-1 text-[0.65rem] text-iron-600" title={`${total.surplus} spare`}>
+        <span className="ml-1 text-[0.65rem] text-iron-400" title={`${total.surplus} spare`}>
           +{total.surplus}
         </span>
       ) : null}

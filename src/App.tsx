@@ -98,7 +98,7 @@ function TabPanel({ id, active, children }: { id: TabId; active: boolean; childr
 
 function Loading({ what }: { what: string }) {
   return (
-    <p role="status" className="mt-8 font-mono text-[0.72rem] text-iron-600">
+    <p role="status" className="mt-8 font-mono text-[0.72rem] text-iron-400">
       Loading {what}…
     </p>
   )
@@ -121,7 +121,7 @@ function Header() {
           href="https://github.com/haggyroth/forgepal"
           target="_blank"
           rel="noreferrer"
-          className="font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+          className="font-mono text-[0.7rem] text-iron-400 transition-colors hover:text-ember-400"
         >
           github ↗
         </a>
@@ -132,7 +132,7 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="mt-12 border-t border-iron-800 pt-5 font-mono text-[0.68rem] leading-relaxed text-iron-600">
+    <footer className="mt-12 border-t border-iron-800 pt-5 font-mono text-[0.68rem] leading-relaxed text-iron-400">
       <p>
         Palworld {datasetStamp.gameVersion} data, updated {datasetStamp.updated}. Unofficial fan
         project — not affiliated with Pocketpair.

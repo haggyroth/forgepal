@@ -42,14 +42,14 @@ export function FarmingRoute({ route }: { route: Route }) {
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="mt-3 font-mono text-[0.7rem] text-iron-600 transition-colors hover:text-ember-400"
+          className="mt-3 font-mono text-[0.7rem] text-iron-400 transition-colors hover:text-ember-400"
         >
           show {hidden} more region{hidden === 1 ? '' : 's'}
         </button>
       ) : null}
 
       {route.gathered.length > 0 ? (
-        <p className="mt-4 border-t border-iron-800 pt-3 font-mono text-[0.7rem] leading-relaxed text-iron-600">
+        <p className="mt-4 border-t border-iron-800 pt-3 font-mono text-[0.7rem] leading-relaxed text-iron-400">
           <span className="text-verdigris-400">Gather anywhere:</span>{' '}
           {route.gathered.map((g) => `${g.name} ×${g.required}`).join(', ')}
         </p>
@@ -57,7 +57,7 @@ export function FarmingRoute({ route }: { route: Route }) {
 
       {route.unroutable.length > 0 ? (
         <div className="mt-3 border-t border-iron-800 pt-3">
-          <p className="font-mono text-[0.7rem] leading-relaxed text-iron-600">
+          <p className="font-mono text-[0.7rem] leading-relaxed text-iron-400">
             {/* Bosses, humans and legendaries have no wild habitat, so there is
                 no region to send you to — say why rather than omitting them. */}
             <span className="text-ember-400">No wild spawn:</span>{' '}
@@ -83,7 +83,7 @@ function Stop({ stop }: { stop: RouteStop }) {
             night
           </span>
         ) : null}
-        <span className="shrink-0 font-mono text-[0.68rem] text-iron-600">
+        <span className="shrink-0 font-mono text-[0.68rem] text-iron-400">
           {stop.materials.length} item{stop.materials.length === 1 ? '' : 's'} · {stop.palCount} pal
           {stop.palCount === 1 ? '' : 's'}
         </span>

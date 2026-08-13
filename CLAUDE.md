@@ -177,7 +177,21 @@ Fonts are bundled via `@fontsource` and imported in `main.tsx`, not fetched from
 Tailwind 4 notes that have already bitten once:
 
 - Font weights are named utilities (`font-semibold`, `font-bold`). **`font-600` is not a class** and silently does nothing.
-- Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem.
+- Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem. This has now happened twice: the second was `text-iron-500` on the inactive tab label, a shade the palette never had, so the label inherited its colour instead. `scripts/audit/tailwind-tokens.test.ts` catches these — but note it missed that one for a while, because its scanner stopped at the first quote inside a `className` and never read the branches of a ternary. **Conditional class strings are where a typo is most likely**, since only one branch renders at a time.
+
+### Contrast
+
+**`iron-600` and `iron-700` are not text colours.** They are 2.24:1 and 1.49:1 against a panel, against a 4.5:1 bar that applies nearly everywhere here — the body text is 0.68–0.78rem mono, far below the size that would qualify for the 3:1 large-text allowance. Use them for borders, rules, and hover states; `iron-400` (5.41:1) is the dimmest text tone.
+
+Don't try to fix this by lightening the tokens. `iron-600` needs L ≥ 0.604 to clear 4.5:1 and `iron-400` is L 0.62, so the two would merge and the palette would lose a tier rather than gain contrast.
+
+`scripts/audit/contrast.test.ts` enforces this. It parses the `@theme` block rather than duplicating it, so editing the palette re-runs the real numbers, and it converts oklch → linear sRGB itself because no contrast tool reads oklch. Two things it deliberately does not do:
+
+- **It does not fail on border contrast.** `border-iron-700` is 1.55:1, under WCAG 1.4.11's 3:1 for a control boundary, but those controls are also identified by their fill and label, and lightening every border would change the drawing-ink character of the UI. The ratios are pinned so a palette change surfaces them; changing that is a design decision, not a test fix.
+- **It exempts `disabled:` variants**, because WCAG 1.4.3 exempts inactive controls and greying out a dead button is the conventional signal.
+
+Contrast is checked here rather than by axe because jsdom computes no cascade: axe reports every pair as "incomplete", which reads like a pass and is not one. `src/test/a11y.test.tsx` runs axe over the real composed views for everything else, and asserts that a deliberately broken fragment _does_ report violations — otherwise an empty result cannot be distinguished from axe having quietly stopped working.
+
 - Scrollable flex children need `min-h-0` on every ancestor in the chain; `min-height: auto` otherwise refuses to shrink and the list runs off the page instead of scrolling.
 
 Every panel is a `Section` — collapsible, with its state persisted per section in localStorage under `forgepal:sections:v1`. Two rules worth keeping:

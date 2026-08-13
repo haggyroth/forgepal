@@ -227,7 +227,7 @@ function TechLevelField({
         value={playerLevel ?? ''}
         placeholder="any"
         onChange={(event) => onChange(parsePlayerLevel(event.target.value))}
-        className="w-16 rounded-sm border border-iron-700 bg-iron-950/60 px-2 py-1 text-center font-mono text-sm tnum text-iron-100 placeholder:text-iron-700 focus:border-ember-700 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        className="w-16 rounded-sm border border-iron-700 bg-iron-950/60 px-2 py-1 text-center font-mono text-sm tnum text-iron-100 placeholder:text-iron-400 focus:border-ember-700 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       />
     </label>
   )

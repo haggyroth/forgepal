@@ -68,7 +68,7 @@ export function Requirements({ tech }: { tech: TechRequirements }) {
       ) : null}
 
       {tech.highestLevel !== null && tech.drivenBy ? (
-        <p className="mt-3 font-mono text-[0.68rem] text-iron-600">
+        <p className="mt-3 font-mono text-[0.68rem] text-iron-400">
           Gated by {tech.drivenBy} at Technology {tech.highestLevel}.
         </p>
       ) : null}

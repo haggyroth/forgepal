@@ -97,7 +97,7 @@ export class ErrorBoundary extends Component<Props, State> {
         </div>
 
         <details className="mt-4">
-          <summary className="cursor-pointer font-mono text-[0.68rem] text-iron-600 hover:text-iron-400">
+          <summary className="cursor-pointer font-mono text-[0.68rem] text-iron-400 hover:text-iron-100">
             error detail
           </summary>
           <pre className="mt-2 overflow-x-auto rounded-sm bg-iron-950/80 p-3 font-mono text-[0.68rem] leading-relaxed text-iron-400">

@@ -56,7 +56,7 @@ export default function BreedingTab() {
         </p>
 
         {meta.gaps.length > 0 ? (
-          <ul className="mt-4 space-y-2 border-l border-iron-800 pl-4 font-mono text-[0.7rem] leading-relaxed text-iron-600">
+          <ul className="mt-4 space-y-2 border-l border-iron-800 pl-4 font-mono text-[0.7rem] leading-relaxed text-iron-400">
             {meta.gaps.map((gap) => (
               <li key={gap}>{gap}</li>
             ))}
@@ -70,7 +70,7 @@ export default function BreedingTab() {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <dt className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-iron-600">
+      <dt className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-iron-400">
         {label}
       </dt>
       <dd className="mt-1 font-display text-2xl font-bold tnum text-iron-100">
