@@ -24,8 +24,13 @@ import { Totals } from '@/components/Totals'
  * App becomes a shell, not that the calculator changes. The one move is the
  * tech-level control, which came out of the global header because it gates
  * which recipes are unlocked and means nothing to the other tabs.
+ *
+ * Default-exported and loaded lazily, like BreedingTab. This module's static
+ * import of `gameData` is what makes that matter: while the shell imported this
+ * component eagerly, the 1.88 MB item catalogue sat in the initial chunk for
+ * every visitor, including one who only wanted the breeding tab.
  */
-export function CalculatorTab() {
+export default function CalculatorTab() {
   const index = useMemo(() => buildIndex(gameData), [])
   const entries = useMemo<Entry[]>(() => [...gameData.items, ...gameData.structures], [])
   const stations = useMemo(

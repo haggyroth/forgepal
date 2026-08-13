@@ -1,11 +1,17 @@
 import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
-import { gameData } from '@/data'
-import { CalculatorTab } from '@/components/CalculatorTab'
+import { datasetStamp } from '@/data/meta'
 import { Tabs } from '@/components/Tabs'
 import { applyTab, decodeTab, type TabId } from '@/lib/tabs'
 
-// Lazy on purpose: the breeding dataset is a separate chunk, and someone who
-// only ever costs recipes should never download 299 Pals.
+// Both tabs are lazy, and the shell imports neither dataset.
+//
+// Breeding was split first, on the reasoning that someone who only ever costs
+// recipes should never download 299 Pals. That dataset is 6.8 kB gzipped; the
+// item catalogue this shell used to import eagerly is 93 kB. The rule was being
+// applied to the cheap half and not the expensive one, so a visitor landing on
+// ?tab=breeding parsed 1.88 MB of items before first paint — to render the game
+// version in the footer, which now comes from meta.json instead.
+const CalculatorTab = lazy(() => import('@/components/CalculatorTab'))
 const BreedingTab = lazy(() => import('@/components/BreedingTab'))
 
 export default function App() {
@@ -45,12 +51,16 @@ export default function App() {
           build that hadn't been edited into persistence yet.
         */}
         <TabPanel id="calculator" active={tab === 'calculator'}>
-          <CalculatorTab />
+          {visited.has('calculator') ? (
+            <Suspense fallback={<Loading what="recipe data" />}>
+              <CalculatorTab />
+            </Suspense>
+          ) : null}
         </TabPanel>
 
         <TabPanel id="breeding" active={tab === 'breeding'}>
           {visited.has('breeding') ? (
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading what="breeding data" />}>
               <BreedingTab />
             </Suspense>
           ) : null}
@@ -76,10 +86,10 @@ function TabPanel({ id, active, children }: { id: TabId; active: boolean; childr
   )
 }
 
-function Loading() {
+function Loading({ what }: { what: string }) {
   return (
     <p role="status" className="mt-8 font-mono text-[0.72rem] text-iron-600">
-      Loading breeding data…
+      Loading {what}…
     </p>
   )
 }
@@ -114,7 +124,7 @@ function Footer() {
   return (
     <footer className="mt-12 border-t border-iron-800 pt-5 font-mono text-[0.68rem] leading-relaxed text-iron-600">
       <p>
-        Palworld {gameData.meta.gameVersion} data, updated {gameData.meta.updated}. Unofficial fan
+        Palworld {datasetStamp.gameVersion} data, updated {datasetStamp.updated}. Unofficial fan
         project — not affiliated with Pocketpair.
       </p>
     </footer>

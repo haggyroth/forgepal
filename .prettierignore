@@ -9,6 +9,7 @@ package-lock.json
 # would open a PR every week for a change that isn't one. Never format it.
 src/data/game-data.json
 src/data/breeding-data.json
+src/data/meta.json
 
 # Upstream snapshots, git-ignored but present locally after an import.
 scripts/import/sources/.cache
