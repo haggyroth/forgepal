@@ -89,6 +89,14 @@ These were considered for v1 and consciously deferred, not dropped.
       longer invalidates ~92 kB gzipped of unchanged game data. Vite's
       `json.stringify` also emits it as `JSON.parse('…')`, which parses far
       faster than a megabyte of object literals.
+- [x] **Get the dataset off the initial critical path** — splitting it into its own
+      chunk stopped a code change invalidating it, but the chunk was still fetched
+      on every page load: `App.tsx` read the game version off `gameData` for the
+      footer, so `index.html` `modulepreload`ed all 93 kB gzipped of items even
+      for a visitor who opened `?tab=breeding`. The footer now reads a generated
+      `src/data/meta.json` and both tabs are lazy. Initial critical path 185 → 81 kB
+      gzipped; the breeding path ~193 → ~90 kB. Cost is one extra round trip on the
+      calculator, which is byte-neutral.
 - [ ] **Trimming redundant fields from the dataset** — deliberately _not_ done, with
       numbers: `RecipeInput.name` (51 kB) and `Recipe.stationName` (26 kB) duplicate
       data already in the file, and interning the 891 distinct drop-source strings

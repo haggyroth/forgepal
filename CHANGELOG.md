@@ -6,9 +6,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.5.1] — 2026-08-12
+
+### Changed
+
+- perf(app): the calculator tab is lazily loaded and the shell no longer imports the dataset, cutting the initial critical path from 185 kB gzipped to 81 kB. The lazy-loading had been applied to the cheap dataset and not the expensive one: breeding was split so nobody downloads 299 Pals unnecessarily (6.8 kB gzipped) while the shell eagerly imported the 1.88 MB item catalogue (93 kB gzipped) — which `index.html` then `modulepreload`ed, so a visitor opening `?tab=breeding` fetched the entire item dataset before first paint
+- perf(data): the two provenance facts the footer shows are generated into their own `src/data/meta.json`. Reading them off `game-data.json` was the reason the shell depended on the dataset at all — a version number in the footer was pulling 1.88 MB into the entry chunk. `meta` stays in `game-data.json`, which the data audit and the Markdown export both read; the new file is a projection, and `src/data/meta.test.ts` asserts the two agree
+
+### Fixed
+
+- test(app): `App.test.tsx` awaits the calculator's chunk through a `visitCalculator` helper. Its synchronous queries had been passing by accident of module caching — React caches a resolved `lazy` component, so whichever test mounted the calculator first paid the wait and the rest inherited it, which made the suite pass or fail on test order
+
 ### Security
 
-- chore(deps): resolve [GHSA-2v37-7h3g-55p8](https://github.com/advisories/GHSA-2v37-7h3g-55p8) by bumping the transitive `nanoid` to 3.3.18. Not reachable from ForgePal — `nanoid` is a dev-only dependency of PostCSS, used at build time and never shipped in the bundle — so this is hygiene, not an exposure. No version bump: nothing in the deployed app changed
+- chore(deps): resolve [GHSA-2v37-7h3g-55p8](https://github.com/advisories/GHSA-2v37-7h3g-55p8) by bumping the transitive `nanoid` to 3.3.18. Not reachable from ForgePal — `nanoid` is a dev-only dependency of PostCSS, used at build time and never shipped in the bundle — so this is hygiene, not an exposure
+
+### Notes
+
+- `meta.json` deliberately omits `importedAt`. The shell never displays it, and leaving it out means the file changes only when upstream's version or date does — so a re-import stays a no-op and the weekly refresh workflow has nothing to open a PR about
+- The calculator is the default tab, so its chunk moved off the initial download and onto one extra round trip. Shell paint is faster for everyone and the breeding path drops from ~193 kB gzipped to ~90 kB; the calculator path is byte-neutral (+1.3 kB of chunk boundaries) with one more request
+- Lazy-loading defers the first mount only. The `visited` set still keeps a tab mounted once opened, so switching back does not rebuild the item index or drop an unedited shared build
 
 ## [1.5.0] — 2026-07-30
 
