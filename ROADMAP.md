@@ -105,4 +105,14 @@ These were considered for v1 and consciously deferred, not dropped.
       repetition. Not worth losing the unresolved-input name fallback and adding a
       string-table indirection. Revisit only if the dataset grows substantially.
 - [x] **Component tests** — every component, the build-list hook, and `App`, plus a static guard on Tailwind utility usage that catches the class of bug render tests structurally cannot
+- [x] **Tests for the persistence and URL layer** — `storage`, `sectionState`,
+      `inventoryState`, `query`, `resetState`, and `useBuilds`. Coverage had been
+      inverted relative to failure severity: the recipe engine had 429 lines of
+      tests against 292 of source while the layer holding saved work had none, and
+      a persistence bug is the one that eats the user's work silently. Includes
+      the throwing-`localStorage` paths those `try`/`catch` blocks were written for.
+- [x] **Fail safely in the UI** — an `ErrorBoundary` per tab panel. `calculate`
+      already degraded to a warning rather than hanging, but nothing enforced that
+      at the render layer, so a throw was still a blank page. The two are halves
+      of the same rule.
 - [ ] Consider indexing items by category/station at import time rather than filtering at runtime

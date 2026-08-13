@@ -6,6 +6,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-08-12
+
+### Added
+
+- feat(app): every tab panel has its own error boundary, so a render throw shows a recovery panel instead of a blank page. One per panel rather than one around the app — a throw in the calculator must not cost you the breeding tools, and the shell stays usable so the fallback has somewhere to go from. The engine already degraded to a warning rather than hanging; nothing enforced the same at the render layer, so adversarial data could still reach a white screen
+- feat(app): the fallback offers a plain reload first and a destructive "clear saved data" second, in that order on purpose. A corrupt persisted payload is the likeliest cause of a throw here, and the fix for it discards build lists, inventory, and panel layout — so it must not be the button you hit by reflex
+- chore(lib): `resetState.ts` clears every `forgepal:` key. Prefix-based rather than a list, because a reset assembled from the named clears would have missed `forgepal:builds:v1` — appearing to work and then throwing again on reload
+
+### Fixed
+
+- test(state): the persistence and URL layer now has tests — `storage`, `sectionState`, `inventoryState`, `query`, `resetState`, and the `useBuilds` hook, 84 cases in total. Coverage had been inverted relative to failure severity: `calculator.ts` carried 429 lines of tests against 292 of source, while the layer holding the user's saved work had none. A wrong total is visible; a persistence bug silently eats a saved build and is found out later, with nothing to recover from
+- test(state): the throwing-`localStorage` paths are covered for the first time — Safari private browsing, disabled site data, and a full quota. Those `try`/`catch` blocks were written for a documented reason and had never been exercised
+
+### Notes
+
+- Tests, not features, are the bulk of this release, but it is a minor rather than a patch because the error boundary is user-facing behaviour that did not exist before
+- The boundary wraps `Suspense`, not the reverse, so a lazy chunk that fails to load is caught as well. A stale `index.html` pointing at a chunk hash that no longer exists after a deploy throws exactly there
+- `resetState.ts` imports nothing, and that is load-bearing. The first cut imported `resetPersistedState` from `lib/storage.ts`, which pulls in `shareState` -> `query` + `tech`; putting that in the shell added two `modulepreload`ed chunks to `index.html` and quietly undid part of 1.5.1. Initial critical path is 81.34 kB gzipped, up 0.77 kB for the boundary itself
+- The Tailwind token guard earned its keep again, rejecting `text-iron-500`, `text-iron-200`, and `border-ember-600` — none of which exist in the `@theme` block. The palette is deliberately sparse and an undefined shade is an invalid class that silently does nothing
+
 ## [1.5.1] — 2026-08-12
 
 ### Changed

@@ -66,12 +66,15 @@ src/lib/
   search.ts              Catalogue search, filtering, and ranking.
   query.ts               Query-string parse/format. Every URL writer uses it.
   tabs.ts                Which tool is showing, and its `?tab=` encoding.
+  resetState.ts          Clears every `forgepal:` key. Imports nothing, on
+                         purpose — the shell's ErrorBoundary uses it.
 src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
 src/components/
   ui.tsx                 SourceBadge, Stepper, Panel.
   Section.tsx            Collapsible panel: heading, toggle, ARIA. Use this,
                          not Panel + a hand-rolled heading.
   Tabs.tsx               Top-level tool switcher (full ARIA tablist).
+  ErrorBoundary.tsx      Catches a render throw per tab panel. See below.
   CalculatorTab.tsx      The crafting calculator. App is only a shell.
   BreedingTab.tsx        The breeding tools. Default export — lazily loaded.
   ItemBrowser.tsx        Search + category filters + results.
@@ -195,6 +198,18 @@ Every panel is a `Section` — collapsible, with its state persisted per section
 That last clause is the load-bearing half, and it was wrong for a while: `App.tsx` imported `gameData` for a footer string, which kept the 93 kB-gzipped item catalogue in the entry chunk and had `index.html` `modulepreload` it, so lazy-loading a tab component alone changed nothing. If the shell ever imports `@/data` or `@/data/breeding` again, the splitting is undone no matter how the tabs are loaded — `src/App.test.tsx` renders the footer synchronously to keep that honest.
 
 Lazy loading defers a tab's first mount and nothing else; the `visited` set still keeps it mounted afterwards, so the hidden-not-unmounted rule above is unaffected.
+
+**Anything else the shell imports has to be as light as `meta.json`.** This is easy to break by accident and not via `@/data`: the first cut of `ErrorBoundary` imported `resetPersistedState` from `lib/storage.ts`, which imports `shareState` -> `query` + `tech` for its encoding, and that alone put two new `modulepreload`ed chunks in `index.html`. Hence `lib/resetState.ts`, which imports nothing. Check `dist/index.html` after touching the shell — it should reference the entry chunk and the stylesheet, and nothing else.
+
+### Failing safely
+
+**Each tab panel has its own `ErrorBoundary`; the app does not have one around the whole tree.** A throw in the calculator must not cost you the breeding tools, and the shell — header, tabs, footer — has to stay usable so the fallback has somewhere to go from.
+
+The boundary wraps the `Suspense`, not the other way round, so a lazy chunk that fails to load is caught too. That is a real case, not a hypothetical: a stale `index.html` pointing at a chunk hash that no longer exists after a deploy throws exactly here.
+
+The engine was already defended — `calculate` returns its `cycles` rather than hanging, per the note above — but until this existed the UI was not, so bad data could still reach a blank page. That asymmetry is the thing to preserve: **`calculate` degrading to a warning and the boundary catching a render throw are two halves of the same rule**, which is that adversarial upstream data never takes the page down.
+
+The fallback offers a plain reload first and a destructive "clear saved data" second, deliberately in that order — a corrupt persisted payload is the likeliest cause, and the fix for it discards the user's build lists. Recovery clears via `resetState.ts` rather than `clearPersisted`, which only removes the pre-collection key and would leave the actual corrupt collection in place, appearing to work and then throwing again.
 
 The catalogue renders at most 60 results and reports the true total. Rendering all ~1,320 entries is slow and useless — search is the intended way through the list.
 
