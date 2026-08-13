@@ -13,7 +13,7 @@
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { GameData } from '../../src/types/game.ts'
+import type { DatasetStamp, GameData } from '../../src/types/game.ts'
 import type { BreedingData } from '../../src/types/breeding.ts'
 import { normalizeBreeding } from './normalize-breeding.ts'
 import { loadRawDataset } from './sources/palworld-kb.ts'
@@ -25,6 +25,12 @@ const OUT_FILE = join(OUT_DIR, 'game-data.json')
 // A separate file, not another key in game-data.json: the calculator chunk
 // should not carry breeding data it never reads.
 const BREEDING_FILE = join(OUT_DIR, 'breeding-data.json')
+// The same reasoning one level up: the app shell renders the game version in
+// its footer, and reading that off game-data.json put the whole item catalogue
+// in the initial download. `meta` stays in game-data.json too — the audit and
+// the Markdown export both read it there — so this file is a projection of it,
+// kept honest by src/data/meta.test.ts.
+const STAMP_FILE = join(OUT_DIR, 'meta.json')
 
 async function main() {
   console.log('ForgePal data import\n')
@@ -65,9 +71,30 @@ async function main() {
 
   console.log(`\n✓ ${unchanged ? 'no change' : 'wrote'} ${OUT_FILE}`)
 
+  await writeStamp(data)
   await writeBreeding(raw)
 
   console.log(`  game version ${data.meta.gameVersion}, upstream updated ${data.meta.updated}\n`)
+}
+
+/**
+ * Write the footer stamp.
+ *
+ * No importedAt-preservation dance here, unlike the two datasets: the
+ * projection deliberately omits `importedAt`, so these bytes change only when
+ * upstream's version or date actually changes and a re-import is a no-op for
+ * free.
+ */
+async function writeStamp(data: GameData) {
+  const stamp: DatasetStamp = {
+    gameVersion: data.meta.gameVersion,
+    updated: data.meta.updated,
+  }
+  const next = `${JSON.stringify(stamp, null, 2)}\n`
+  const previous = await readFile(STAMP_FILE, 'utf8').catch(() => null)
+
+  await writeFile(STAMP_FILE, next)
+  console.log(`✓ ${previous === next ? 'no change' : 'wrote'} ${STAMP_FILE}`)
 }
 
 async function writeBreeding(raw: Parameters<typeof normalizeBreeding>[0]) {

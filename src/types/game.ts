@@ -153,6 +153,24 @@ export interface DatasetMeta {
 }
 
 /**
+ * The two provenance facts the app shell displays in its footer.
+ *
+ * Generated into its own `meta.json` so the shell can render them without
+ * importing `game-data.json`. Reading `meta` off the full dataset for a footer
+ * string pulled all 1.88 MB of items into the initial chunk, which meant a
+ * visitor who opened `?tab=breeding` downloaded the entire item catalogue to
+ * display a version number.
+ *
+ * Derived from `DatasetMeta` rather than redeclared, so the two cannot drift in
+ * type. `src/data/meta.test.ts` checks they do not drift in value either.
+ *
+ * Deliberately excludes `importedAt`: the shell never shows it, and leaving it
+ * out means this file changes only when upstream data actually changes, so it
+ * stays invisible to the weekly refresh workflow.
+ */
+export type DatasetStamp = Pick<DatasetMeta, 'gameVersion' | 'updated'>
+
+/**
  * Where a Pal lives, so a drop table can become a route.
  *
  * Keyed by the Pal's display name, which is what `DropSource.source` carries.

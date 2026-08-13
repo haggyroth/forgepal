@@ -50,6 +50,13 @@ src/data/game-data.json      Generated + COMMITTED. Never hand-edit.
 src/data/breeding-data.json  Generated + COMMITTED. Separate file on purpose —
                              Pals are not items, and the calculator's chunk must
                              not carry breeding data it never reads.
+src/data/meta.json           Generated + COMMITTED. The same rule one level up:
+                             the shell shows the game version in its footer, and
+                             reading that off game-data.json put the whole item
+                             catalogue in the entry chunk. A projection of
+                             game-data.json's `meta`, which stays there because
+                             the audit and the export read it — meta.test.ts
+                             asserts the two agree.
 src/types/game.ts        The schema. Everything downstream depends on this, not upstream.
 src/lib/
   id.ts                  Name -> stable id slug. Shared by app and scripts.
@@ -183,7 +190,11 @@ Every panel is a `Section` — collapsible, with its state persisted per section
 - **Inactive tabs are hidden, not unmounted.** A collapsed panel is something you put away; a tab is something you flip back to. Unmounting would rebuild the 1,300-entry item index on every switch and drop a shared build that hadn't been edited into persistence yet.
 - **Every URL writer touches only its own params**, via `applyState` / `applyTab` on top of `query.ts`. Two effects write the query now and more will; anything that rebuilds it wholesale silently erases the others.
 
-A new tab should be a default export loaded through `lazy()`, so its code and data stay out of the initial download.
+**Every tab is a default export loaded through `lazy()`, including the default one**, so no tab's data is in the initial download. The shell imports neither dataset — only `src/data/meta.json` for the footer.
+
+That last clause is the load-bearing half, and it was wrong for a while: `App.tsx` imported `gameData` for a footer string, which kept the 93 kB-gzipped item catalogue in the entry chunk and had `index.html` `modulepreload` it, so lazy-loading a tab component alone changed nothing. If the shell ever imports `@/data` or `@/data/breeding` again, the splitting is undone no matter how the tabs are loaded — `src/App.test.tsx` renders the footer synchronously to keep that honest.
+
+Lazy loading defers a tab's first mount and nothing else; the `visited` set still keeps it mounted afterwards, so the hidden-not-unmounted rule above is unaffected.
 
 The catalogue renders at most 60 results and reports the true total. Rendering all ~1,320 entries is slow and useless — search is the intended way through the list.
 
