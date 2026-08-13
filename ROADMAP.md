@@ -30,7 +30,7 @@
 The upstream dataset has 19 files; we now use 5. These are the two worth building
 next, both grounded in data already published by the same source.
 
-- [ ] **Breeding path solver** — `breeding.json` carries the full CombiRank
+- [x] **Breeding path solver** — `breeding.json` carries the full CombiRank
       formula plus all 299 ranks and 164 special combos, so results are
       _computable_, not just searchable:
       `target = floor((rankA + rankB + 1) / 2)`, nearest rank wins, ties break
@@ -48,8 +48,15 @@ next, both grounded in data already published by the same source.
       hinged on the contested tie-break.
       _Phase 3 done_ — tab shell with `?tab=` routing; the breeding tab and its
       dataset load lazily.
-      _Remaining_ — the breeding UI: pair calculator, roster, and the solved
-      chain with tie-broken steps marked.
+      _Phase 4 done_ — the UI: pair calculator with the inverse lookup, a
+      persisted roster, and the solved chain numbered by generation with contested
+      steps marked in all three panels. `pair` and `target` are in the URL; the
+      roster is not, because a link should carry the question and let the
+      recipient's own Pals answer it.
+      _Possible follow-ups, none scoped_ — a "what can I make from this roster?"
+      browse over `reachableFrom`, which is already exported and unused by the UI;
+      passive-skill inheritance, which upstream does not publish and would need a
+      second source.
 - [ ] **Base production planner** — `base_building.json` already carries
       `worker_slots`, `workers` (suitability), `power`, and `energy_per_sec`, and
       we import the file while using almost none of it. Upgrades Requirements

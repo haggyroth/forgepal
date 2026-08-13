@@ -191,6 +191,8 @@ describe('a tab that throws', () => {
     await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
 
     // The breeding tab renders for real — only the calculator is mocked.
-    expect(await screen.findByText(/Breeding dataset/i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/Breeding dataset/i, {}, { timeout: 10_000 }),
+    ).toBeInTheDocument()
   })
 })

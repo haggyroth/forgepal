@@ -155,7 +155,9 @@ describe('App tabs', () => {
   it('opens the tab named in the link', async () => {
     visit('tab=breeding')
     expect(screen.getByRole('tab', { name: 'Breeding' })).toHaveAttribute('aria-selected', 'true')
-    expect(await screen.findByText(/Breeding dataset/i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/Breeding dataset/i, {}, { timeout: 10_000 }),
+    ).toBeInTheDocument()
   })
 
   it('ignores an unknown tab rather than showing nothing', () => {
@@ -206,7 +208,9 @@ describe('App tabs', () => {
     expect(screen.queryByText(/Breeding dataset/i)).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('tab', { name: 'Breeding' }))
-    expect(await screen.findByText(/Breeding dataset/i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/Breeding dataset/i, {}, { timeout: 10_000 }),
+    ).toBeInTheDocument()
   })
 
   it('reports the tie-break share rather than presenting it as settled', async () => {

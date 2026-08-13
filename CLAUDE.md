@@ -68,6 +68,8 @@ src/lib/
   tabs.ts                Which tool is showing, and its `?tab=` encoding.
   resetState.ts          Clears every `forgepal:` key. Imports nothing, on
                          purpose — the shell's ErrorBoundary uses it.
+  breedingQuery.ts       `?pair=` and `?target=`. See the URL rule below.
+  rosterState.ts         The Pals you own. Local only, never in the URL.
 src/hooks/useBuildList.ts  Build-list state (insertion-ordered Map).
 src/components/
   ui.tsx                 SourceBadge, Stepper, Panel.
@@ -77,6 +79,8 @@ src/components/
   ErrorBoundary.tsx      Catches a render throw per tab panel. See below.
   CalculatorTab.tsx      The crafting calculator. App is only a shell.
   BreedingTab.tsx        The breeding tools. Default export — lazily loaded.
+  breeding/              Its panels: PairCalculator, Roster, BreedPlanPanel,
+                         plus PalSelect and the TieBroken marker.
   ItemBrowser.tsx        Search + category filters + results.
   BuildList.tsx          Selected items with quantity steppers.
   Totals.tsx             Requisition (raw), intermediates, drop sourcing.
@@ -205,7 +209,17 @@ Every panel is a `Section` — collapsible, with its state persisted per section
 
 - **The tab _is_ in the URL** (`?tab=breeding`). It says which tool you are pointing someone at, not how you like the page arranged. `?tab=calculator` is never written, so every link shared before tabs existed still means what it meant then.
 - **Inactive tabs are hidden, not unmounted.** A collapsed panel is something you put away; a tab is something you flip back to. Unmounting would rebuild the 1,300-entry item index on every switch and drop a shared build that hadn't been edited into persistence yet.
-- **Every URL writer touches only its own params**, via `applyState` / `applyTab` on top of `query.ts`. Two effects write the query now and more will; anything that rebuilds it wholesale silently erases the others.
+- **Every URL writer touches only its own params**, via `applyState` / `applyTab` / `applyBreeding` on top of `query.ts`. Three effects write the query now; anything that rebuilds it wholesale silently erases the others.
+
+### What goes in a link
+
+The rule the three URL writers follow, stated once because it is the thing most easily got wrong by adding "just one more param":
+
+**A link carries the question, not your stuff.** The build list, the tech level, the active tab, the breeding pair, and the breeding target are all in the URL — each says what you are asking. The inventory and the breeding roster are not, and both would be trivial to add.
+
+The reason is the same in each case, and it is not privacy. Encoding your inventory shows the recipient a requisition already reduced by materials they do not own; encoding your roster shows them a breeding chain starting from Pals they do not have. Both then look like answers while being unusable, which is worse than showing them nothing — an empty roster at least explains itself. See `inventoryState.ts` and `rosterState.ts`, which each carry the argument.
+
+Collapse state is excluded for a different reason again: it is a view preference, and imposing the sender's layout is merely rude rather than misleading.
 
 **Every tab is a default export loaded through `lazy()`, including the default one**, so no tab's data is in the initial download. The shell imports neither dataset — only `src/data/meta.json` for the footer.
 
@@ -273,7 +287,18 @@ This is better than a follow-up PR, not merely a workaround:
 - the changelog entry sits in the same diff as the code it describes, where a reviewer can check it
 - one PR per change instead of two
 
-The bump rules themselves are unchanged: `feat/*` → minor, `fix/*` → patch, and no bump for `chore`, `docs`, `refactor`, `test`, or `style`.
+The bump rules themselves are unchanged: `feat/*` → minor, `fix/*` → patch, and no bump for `chore`, `docs`, `refactor`, `test`, or `style`. In practice `perf/*` has taken a patch — see the 1.2.2 and 1.5.1 entries.
+
+### Tag the release after merging
+
+**A version bump is not a release until it is tagged.** Tag `main` after the merge and create a GitHub Release whose notes are that version's `CHANGELOG.md` section verbatim — the changelog is already the hard part, the tag is the cheap half:
+
+```bash
+git tag -a v1.7.0 -m "v1.7.0 — short summary" && git push origin v1.7.0
+gh release create v1.7.0 --title "v1.7.0 — short summary" --notes-file <(sed -n '/## \[1.7.0\]/,/## \[1/p' CHANGELOG.md | sed '1d;$d')
+```
+
+This step used to be implicit and the backlog reached **ten untagged versions** (v1.0.1 → 1.6.1) before anyone noticed. Recovering it meant walking `main` first-parent to find where each version actually landed. Tagging at merge time costs nothing; reconstructing it later is archaeology.
 
 ### Reviewing Dependabot action bumps
 

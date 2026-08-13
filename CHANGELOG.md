@@ -6,7 +6,30 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
-## [1.6.1] — 2026-08-12
+## [1.7.0] — 2026-08-13
+
+### Added
+
+- feat(breeding): the breeding UI — a pair calculator, a roster of the Pals you own, and the solved chain from one to the other. The engine and its tests have been in place since 1.5.0; this is what makes them reachable, and the solver's question ("I own these, I want that, what is the shortest chain?") is the thing no other Palworld calculator answers
+- feat(breeding): the pair calculator resolves A + B, says whether the answer came from a fixed combination or the rank formula, and lists other pairs that make the same child — clicking one loads it, so an unreachable pair has somewhere to go
+- feat(breeding): the roster persists locally and the chain is recomputed from it, so every suggested cross starts from something you own or something an earlier step produced
+- feat(breeding): the chain is numbered and generation-labelled, with parents you already own picked out in verdigris and the final step badged as the target. Steps are runnable top to bottom — a guarantee from the engine, since a species is recorded at the earliest generation it can be reached
+- feat(breeding): `pair` and `target` go in the URL, so a lookup or a goal can be linked. The roster deliberately does not — see the note below
+- feat(breeding): contested results are marked wherever they appear, in all three panels, with a footnote defining the badge and giving the 31.4% share
+
+### Fixed
+
+- fix(docs): 1.6.1 was dated 2026-08-12; it merged on the 13th
+
+### Notes
+
+- **The roster stays out of the URL**, which is the one design decision here worth arguing about. A breeding link carries the _question_ and lets the recipient's own roster answer it. Encoding the sender's Pals would either clobber the recipient's roster or show them a chain built from parents they do not have — and a chain you cannot start is worse than no answer, because it reads as a plan. Same reasoning as the calculator's inventory
+- The unreachable case reports how many of the 299 species your roster reaches, rather than only saying no. With one Pal almost everything is unreachable, so "your roster is too small yet" is the useful answer. That figure comes from `reachableFrom`, because `solve` returns null on failure and its own `reachableCount` goes with it
+- All of it landed in the lazily-loaded breeding chunk: 1.28 → 5.47 kB gzipped, with the entry chunk unchanged at 62.87 kB. Someone who only costs recipes still downloads none of this
+- The provenance panels moved below the tools and the dataset stats now start collapsed, but **"Where the data is uncertain" stays open** — collapsing it would have been a quiet step towards presenting a coin-flip as settled, and `src/App.test.tsx` failed when I tried, which is exactly what that test is for
+- A native `<select>` over all 299 Pals rather than the catalogue's search-and-filter list. 299 is small enough that the option list costs nothing, and the browser supplies keyboard typeahead, screen-reader support, and a mobile picker for free — the 1,320-entry catalogue is why _that_ one needed search instead
+
+## [1.6.1] — 2026-08-13
 
 ### Fixed
 
