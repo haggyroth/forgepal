@@ -310,6 +310,19 @@ Three rules, all of which exist because the alternative failed silently rather t
 
 `npm audit --audit-level=high` gates CI. Dependabot security updates cover advisories published against already-merged code; the CI gate covers the other direction, a PR that introduces a vulnerable dependency. It reads the live advisory database, so an unchanged commit can start failing — that is accepted deliberately.
 
+### The deploy is gated on CI
+
+`deploy.yml` triggers on `workflow_run` after CI concludes, not on `push`. The two used to race: both fired on a push to `main`, and the deploy did not check the result.
+
+That was reachable rather than theoretical because branch protection runs **`strict: false`** — required checks are green for a PR's own head commit, not for the merge result — so a merge commit could reach production having never been built by anything.
+
+Two consequences to keep in mind when editing it:
+
+- **Check out `github.event.workflow_run.head_sha`.** `workflow_run` defaults to the default branch, so without this the deploy can publish something newer than the commit that passed.
+- **It stays a separate workflow rather than a job in CI.** CI cancels in-progress runs per ref, which is correct for a test run and wrong for a publish — a mid-publish cancellation is exactly what `concurrency: pages, cancel-in-progress: false` exists to prevent.
+
+The deploy also smoke-checks the published site: the page returns 200, every JS/CSS asset `index.html` names resolves, and no dataset chunk is `modulepreload`ed. A successful artifact upload is not a working site, and both of those failure modes are documented as real here.
+
 ### Reviewing Dependabot action bumps
 
 Actions used by `ci.yml` and `codeql.yml` are exercised on the pull request itself. The Pages actions in `deploy.yml` only run on `main`, so **split those into their own PR** — otherwise a broken deploy arrives buried among unrelated bumps.

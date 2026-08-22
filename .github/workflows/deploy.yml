@@ -1,7 +1,19 @@
 name: Deploy to GitHub Pages
 
+# Gated on CI rather than racing it.
+#
+# Both this and CI used to trigger on `push: main` independently, so they ran in
+# parallel and Deploy did not care about the result. That mattered because
+# branch protection runs `strict: false` — required checks are green for a PR's
+# own head commit, not for the merge result — so a merge commit could reach
+# production having never been built or tested by anything.
+#
+# workflow_run fires only after CI reports a conclusion, and the job guard below
+# drops anything that is not a success.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -10,7 +22,10 @@ permissions:
   pages: write
   id-token: write
 
-# Let a running deploy finish rather than cancelling it mid-publish.
+# Let a running deploy finish rather than cancelling it mid-publish. This is why
+# the deploy stays its own workflow rather than becoming a job in CI: CI cancels
+# in-progress runs per ref, which is right for a test run and wrong for a
+# publish.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -19,8 +34,15 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    # A manual dispatch has no workflow_run payload, so allow it through.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # workflow_run runs against the default branch by default. Check out
+          # the exact commit CI verified, or the deploy could publish something
+          # newer than the thing that passed.
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
@@ -50,3 +72,61 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
+
+      # A successful upload is not a working site. The two failure modes this
+      # catches are both documented as real for this deploy: assets 404ing
+      # because `base` resolved wrongly, and index.html referencing a chunk hash
+      # that no longer exists. Neither would otherwise turn the workflow red.
+      - name: Smoke check the published site
+        env:
+          URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+
+          echo "Checking $URL"
+          code=000
+          # Pages propagation is not instant.
+          for _ in $(seq 1 10); do
+            code=$(curl -sS -o body.html -w '%{http_code}' "$URL" || echo 000)
+            [ "$code" = "200" ] && break
+            sleep 6
+          done
+          if [ "$code" != "200" ]; then
+            echo "::error::Published site returned $code"
+            exit 1
+          fi
+
+          # Every script/stylesheet index.html names must actually resolve.
+          assets=$(grep -oE '(src|href)="[^"]+\.(js|css)"' body.html | cut -d'"' -f2)
+          if [ -z "$assets" ]; then
+            echo "::error::index.html references no JS or CSS — the build is not what we think it is"
+            exit 1
+          fi
+
+          origin=$(printf '%s' "$URL" | sed -E 's|(https://[^/]+).*|\1|')
+          # read loop rather than `for asset in $assets`: that relies on word
+          # splitting, which behaves differently across shells and silently
+          # concatenated both asset paths into one malformed URL when tested.
+          failed=0
+          while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            case "$asset" in
+              http*) asset_url="$asset" ;;
+              /*)    asset_url="${origin}${asset}" ;;
+              *)     asset_url="${URL%/}/${asset#./}" ;;
+            esac
+            asset_code=$(curl -sS -o /dev/null -w '%{http_code}' "$asset_url" || echo 000)
+            echo "  $asset_code  $asset_url"
+            [ "$asset_code" = "200" ] || failed=1
+          done <<< "$assets"
+          [ "$failed" = "0" ] || { echo "::error::One or more assets did not resolve"; exit 1; }
+
+          # The shell must not pull in either dataset. This invariant is asserted
+          # in unit tests against the module graph; here it is checked against
+          # the artifact that actually shipped.
+          if grep -qE 'modulepreload[^>]*(game-data|breeding-data)' body.html; then
+            echo "::error::index.html preloads a dataset chunk — the code splitting has regressed"
+            exit 1
+          fi
+
+          echo "Smoke check passed."
