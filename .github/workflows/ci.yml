@@ -5,6 +5,14 @@ on:
     branches: [main]
   pull_request:
 
+# Stated explicitly rather than inherited. The repository default is currently
+# read-only, so this changes nothing today — but that default lives in repo
+# settings, outside this file, and flipping it to "read and write" for some
+# unrelated workflow would silently widen the token here on every PR, fork PRs
+# included. The other three workflows already declare theirs.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -14,15 +22,34 @@ jobs:
     name: Lint, test, build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      # Actions are pinned to immutable commit SHAs, not tags: a tag is a
+      # pointer and can be repointed at other code. Dependabot's github-actions
+      # ecosystem updates SHA pins and keeps the trailing version comment.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
         run: npm ci
+
+      # Gating rather than reporting, and at `high` rather than everything.
+      #
+      # Gating because Dependabot security updates now cover the "advisory
+      # published against code already merged" case, which leaves CI responsible
+      # for the other direction: a PR that *introduces* a vulnerable dependency
+      # should not go green.
+      #
+      # `high` because a wall of low-severity advisories in transitive dev
+      # dependencies is how a check like this gets ignored and then deleted.
+      #
+      # Known trade-off: this reads the live advisory database, so a commit that
+      # has not changed can start failing. That is real information, and with
+      # the tree currently clean it should be rare.
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
 
       - name: Lint
         run: npm run lint
@@ -36,6 +63,7 @@ jobs:
       # Fails only on problems within our control — a stale curated override,
       # or upstream text matching a pattern we claim to parse but didn't.
       # Upstream's own gaps are reported, not treated as failures.
+      # Note this audits *game data*, not dependencies — see the step above.
       - name: Audit data quality
         run: npm run data:audit
 
