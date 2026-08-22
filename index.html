@@ -2,6 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Content-Security-Policy as a meta tag, because GitHub Pages serves no
+      custom headers. The point here is less XSS — React escapes by default and
+      there is no dangerouslySetInnerHTML, innerHTML, or eval anywhere in src/ —
+      than enforcement of an invariant this project already claims.
+
+      "No backend, no runtime network calls" is stated throughout CLAUDE.md and
+      is currently maintained by discipline alone: it is why fonts are bundled
+      via @fontsource rather than fetched from Google, and why the dataset is
+      committed rather than requested. `connect-src 'none'` makes the browser
+      hold that line, so the first piece of code that tries to reach an external
+      origin fails loudly instead of quietly becoming the exception.
+
+      Two notes for anyone editing this:
+        - font-src needs data:. At least one bundled face is inlined as a
+          data: URI by the build, so 'self' alone blocks it.
+        - connect-src 'none' blocks same-origin fetch/XHR too, not just
+          external. That is intended — the app makes none — but it means
+          adding any runtime request, even to our own origin, requires
+          relaxing this to 'self' rather than just working.
+        - style-src needs 'unsafe-inline'. Tailwind v4 and React both set inline
+          styles at runtime; removing it breaks rendering rather than hardening
+          anything.
+        - frame-ancestors is ignored in a meta CSP (header-only). It is omitted
+          rather than left in to look reassuring while doing nothing.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta

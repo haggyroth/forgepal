@@ -195,6 +195,22 @@ Tailwind 4 notes that have already bitten once:
 - Font weights are named utilities (`font-semibold`, `font-bold`). **`font-600` is not a class** and silently does nothing.
 - Every colour used must exist in the `@theme` block. A reference to an undefined shade (`bg-forge-900`) is an invalid class, so the preceding utility wins and the bug looks like a specificity problem. This has now happened twice: the second was `text-iron-500` on the inactive tab label, a shade the palette never had, so the label inherited its colour instead. `scripts/audit/tailwind-tokens.test.ts` catches these — but note it missed that one for a while, because its scanner stopped at the first quote inside a `className` and never read the branches of a ternary. **Conditional class strings are where a typo is most likely**, since only one branch renders at a time.
 
+### Content-Security-Policy
+
+`index.html` carries a CSP as a `<meta>` tag, since GitHub Pages serves no custom headers.
+
+Its real job is not XSS — React escapes by default and there is no `dangerouslySetInnerHTML`, `innerHTML`, or `eval` in `src/`. It is **enforcement of the no-runtime-network-calls invariant**, which was otherwise maintained by discipline alone. `connect-src 'none'` means the first code that tries to reach an external origin fails loudly rather than quietly becoming the exception.
+
+Three things that will bite anyone editing it, all found by testing rather than reasoning:
+
+- **`font-src` needs `data:`.** The build inlines at least one bundled face as a data: URI, so `'self'` alone blocks it and the page silently falls back to system fonts.
+- **`style-src` needs `'unsafe-inline'`.** Tailwind v4 and React both set inline styles at runtime.
+- **`connect-src 'none'` blocks same-origin `fetch`/XHR too.** Intended, but adding any runtime request — even to our own origin — means relaxing it to `'self'`, not just writing the call.
+
+`frame-ancestors` is deliberately absent: it is ignored in a meta CSP, and including it would look like clickjacking protection while providing none.
+
+Verify changes against `npm run preview`, not `npm run dev` — the dev server's HMR websocket needs `connect-src` and would mislead you.
+
 ### Contrast
 
 **`iron-600` and `iron-700` are not text colours.** They are 2.24:1 and 1.49:1 against a panel, against a 4.5:1 bar that applies nearly everywhere here — the body text is 0.68–0.78rem mono, far below the size that would qualify for the 3:1 large-text allowance. Use them for borders, rules, and hover states; `iron-400` (5.41:1) is the dimmest text tone.
