@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-08-22
+
+### Added
+
+- feat(security): a Content-Security-Policy, as a `<meta>` tag since GitHub Pages serves no custom headers. Its real job is enforcement rather than XSS defence — `connect-src 'none'` makes the browser hold the "no backend, no runtime network calls" invariant that CLAUDE.md states throughout and that was previously maintained by discipline alone. Verified both directions: the app renders with all 27 font faces loading as real families and the lazy breeding chunk intact, and an external fetch, a same-origin fetch, and an injected external script are all refused
+
+### Notes
+
+- Three directives were settled by testing a production build rather than by reasoning about one. `font-src` needs `data:` because the build inlines a bundled face as a data: URI, and `'self'` alone would have dropped the page to system fonts silently. `style-src` needs `'unsafe-inline'` for Tailwind v4 and React runtime styles. `frame-ancestors` is omitted rather than included, because a meta CSP ignores it and leaving it in would look like clickjacking protection while providing none
+- Check CSP changes against `npm run preview`, never `npm run dev` — the dev server's HMR websocket needs `connect-src` and would hide exactly the problem you are looking for
+- `connect-src 'none'` blocks same-origin `fetch`/XHR as well as external. Deliberate, but adding any runtime request later means relaxing the directive rather than just writing the call
+
 ## [1.7.0] — 2026-08-13
 
 ### Added
