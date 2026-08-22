@@ -97,6 +97,18 @@ The deployed site must not depend on a third-party host at runtime, and a diff o
 
 **The importer must stay idempotent** for that to work. `meta.importedAt` is deliberately preserved when nothing else changed; if it were stamped on every run, the refresh workflow would open a PR every week announcing a change that isn't one. Anything else non-deterministic added to the output has the same problem.
 
+### Upstream is pinned to a commit
+
+`REF` in `sources/palworld-kb.ts` is a 40-character sha, not `main`. Three things follow, and all of them are the point:
+
+- **The import is reproducible.** Re-running it later produces the same bytes, which is what makes the committed dataset a meaningful artifact rather than a snapshot of whatever upstream said that morning.
+- **The pin is the integrity check.** `raw.githubusercontent.com` at a commit sha is content-addressed, so a per-file checksum would restate that guarantee rather than add one.
+- **The download cache is keyed by the ref** (`.cache/<ref>/`), so invalidation is automatic and correct. The previous flat cache never expired, which meant `npm run data:import` silently stopped fetching on any machine that had run it once — it re-read six local files and reported `no change`, while CI on a clean checkout always fetched. Local and CI disagreed and nothing said so.
+
+`data-refresh.yml` resolves upstream `main` weekly and, if the pin has moved, bumps it and re-imports — proposing **the pin and the regenerated data in one PR**, so the upstream change is reviewable rather than only its downstream effect. If the pin moved but the output is byte-identical, it leaves the pin alone rather than opening a PR for a doc-only upstream change.
+
+That workflow watches all of `src/data/`, not just `game-data.json`. It used to watch and stage only the latter, so a change confined to `breeding-data.json` was reported as "no change" and never proposed.
+
 ### Adding a new data source
 
 Write a new adapter in `scripts/import/sources/` returning the same `RawDataset`, then swap it in `index.ts`. Nothing else should need to change. If a source change ripples past `normalize.ts`, the abstraction has leaked — fix that rather than patching downstream.

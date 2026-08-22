@@ -12,11 +12,47 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const REPO = 'beliarance/palworld-kb'
-const REF = 'main'
+
+/**
+ * Pinned to a commit, not a branch.
+ *
+ * `main` used to be the ref, which meant the weekly refresh workflow ingested
+ * whatever upstream said at that moment and a re-run months later could not
+ * reproduce the committed dataset. Upstream is a third-party scrape that
+ * publishes no license and offers no stability guarantee, so "whatever is there
+ * now" is not a defensible input to an unattended job holding `contents: write`.
+ *
+ * Pinning also *is* the integrity check. `raw.githubusercontent.com` at a commit
+ * sha is content-addressed — the bytes cannot change under a fixed ref without
+ * breaking git's own hashing — so a separate per-file checksum would restate
+ * the same guarantee rather than add one.
+ *
+ * Bumping this is a reviewed change, like the dataset it produces.
+ * `.github/workflows/data-refresh.yml` proposes the bump and the regenerated
+ * data together, in one PR, so the upstream change is reviewable rather than
+ * only its downstream effect.
+ */
+const REF = 'cf9ecbe832e3a2a9e2d78d6579a082d968b68f17'
+
 const BASE = `https://raw.githubusercontent.com/${REPO}/${REF}/data`
 
-/** Cached downloads so repeated import runs don't hammer GitHub. Git-ignored. */
-const CACHE_DIR = join(import.meta.dirname, '.cache')
+/** Give up rather than hang the scheduled job until GitHub's 6-hour limit. */
+const FETCH_TIMEOUT_MS = 30_000
+
+/**
+ * Cached downloads so repeated import runs don't hammer GitHub. Git-ignored.
+ *
+ * Keyed by the pinned ref, which makes invalidation automatic and correct: the
+ * cache is only ever consulted for the exact upstream commit it was fetched
+ * from, and bumping REF misses cleanly.
+ *
+ * The previous flat `.cache/` never expired, so on any machine that had run the
+ * importer once, `npm run data:import` stopped fetching entirely — it re-read
+ * six local files and reported success, including the reassuring `no change`
+ * idempotency message. CI always fetched because it starts from a clean
+ * checkout, so local and CI silently disagreed.
+ */
+const CACHE_DIR = join(import.meta.dirname, '.cache', REF)
 
 export interface RawRecipe {
   station: string | null
@@ -165,14 +201,18 @@ async function fetchCached<T>(file: string): Promise<T> {
   const cachePath = join(CACHE_DIR, file)
 
   try {
-    return JSON.parse(await readFile(cachePath, 'utf8')) as T
+    const cached = JSON.parse(await readFile(cachePath, 'utf8')) as T
+    // Say so. A fully cached run used to print nothing at all about where its
+    // data came from, and absence is not something anyone notices.
+    console.log(`  cached   ${file}`)
+    return cached
   } catch {
     // Cache miss is the normal path on a clean checkout; fall through to network.
   }
 
   const url = `${BASE}/${file}`
   console.log(`  fetching ${url}`)
-  const res = await fetch(url)
+  const res = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
   if (!res.ok) {
     throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`)
   }
