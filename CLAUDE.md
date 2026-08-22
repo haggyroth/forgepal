@@ -300,6 +300,16 @@ gh release create v1.7.0 --title "v1.7.0 — short summary" --notes-file <(sed -
 
 This step used to be implicit and the backlog reached **ten untagged versions** (v1.0.1 → 1.6.1) before anyone noticed. Recovering it meant walking `main` first-parent to find where each version actually landed. Tagging at merge time costs nothing; reconstructing it later is archaeology.
 
+### Workflow conventions
+
+Three rules, all of which exist because the alternative failed silently rather than loudly:
+
+- **Every workflow declares its own `permissions`.** The repo default is read-only, so an omission costs nothing today — but that default lives in repo settings, and widening it there would silently upgrade the token in any workflow that did not say otherwise.
+- **Actions are pinned to full commit SHAs**, with the version in a trailing comment. A tag is a mutable pointer. Dependabot updates SHA pins and maintains the comment, so this costs nothing ongoing. Note `github/codeql-action`'s tags are _annotated_, so the ref sha is the tag object — dereference to the commit before pinning.
+- **Node comes from `.nvmrc`** via `node-version-file:`, and `package.json` `engines` states the floor. Previously four workflows each hardcoded `node-version: 22` while development happened on 26, which is why `src/test/setup.ts` carries a Node-26 `localStorage` shim.
+
+`npm audit --audit-level=high` gates CI. Dependabot security updates cover advisories published against already-merged code; the CI gate covers the other direction, a PR that introduces a vulnerable dependency. It reads the live advisory database, so an unchanged commit can start failing — that is accepted deliberately.
+
 ### Reviewing Dependabot action bumps
 
 Actions used by `ci.yml` and `codeql.yml` are exercised on the pull request itself. The Pages actions in `deploy.yml` only run on `main`, so **split those into their own PR** — otherwise a broken deploy arrives buried among unrelated bumps.
