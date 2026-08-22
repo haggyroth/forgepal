@@ -20,6 +20,7 @@ React 19 + TypeScript + Vite 8 + Tailwind 4. Vitest for tests, Oxlint for lintin
 npm run dev           # dev server
 npm run build         # tsc -b && vite build
 npm test              # vitest run
+npm run test:e2e      # playwright, against a production build
 npm run lint          # oxlint
 npm run format        # prettier --write .
 npm run format:check  # prettier --check . (enforced in CI)
@@ -327,6 +328,16 @@ gh release create v1.7.0 --title "v1.7.0 — short summary" --notes-file <(sed -
 ```
 
 This step used to be implicit and the backlog reached **ten untagged versions** (v1.0.1 → 1.6.1) before anyone noticed. Recovering it meant walking `main` first-parent to find where each version actually landed. Tagging at merge time costs nothing; reconstructing it later is archaeology.
+
+### End-to-end tests
+
+`npm run test:e2e` runs Playwright against a **production build served at `/forgepal/`**, not the dev server at `/`. That is the whole point of the suite rather than a detail: the unit suite already covers every module in isolation, and what it cannot see is the built artifact and the base path production actually serves.
+
+`playwright.config.ts` therefore sets `GITHUB_ACTIONS=1` on **both** the build and the preview. Setting it only on the build produced a `dist` referencing `/forgepal/…` served by a preview rooted at `/`, and vite's SPA fallback answered every asset request with `index.html` at **HTTP 200 and `Content-Type: text/html`** — the module never executed, the page stayed blank, and no status code was ever wrong. That failure was found by writing these tests, and it is why the deploy smoke check now asserts content-type and not just status.
+
+It lives in its own `e2e.yml`, not as a job in CI, for two reasons: a flaky browser test must not block the required `Lint, test, build` check, and — since `deploy.yml` gates on CI's workflow conclusion — a browser test inside CI would block production deploys too.
+
+Chromium only. This checks composition and the production path, not cross-browser rendering.
 
 ### Workflow conventions
 
