@@ -115,9 +115,22 @@ jobs:
               /*)    asset_url="${origin}${asset}" ;;
               *)     asset_url="${URL%/}/${asset#./}" ;;
             esac
-            asset_code=$(curl -sS -o /dev/null -w '%{http_code}' "$asset_url" || echo 000)
-            echo "  $asset_code  $asset_url"
+            # Status *and* content-type. A 200 is not enough on its own: when a
+            # base path is wrong, an SPA fallback answers asset requests with
+            # index.html at HTTP 200 and Content-Type: text/html, the module
+            # never executes, and the page is blank with nothing returning an
+            # error. Observed for real while setting up the e2e suite.
+            # The trailing newline matters: curl -w emits none, so `read` hits
+            # EOF, returns non-zero, and `set -e` kills the script mid-loop.
+            read -r asset_code asset_type < <(
+              curl -sS -o /dev/null -w '%{http_code} %{content_type}\n' "$asset_url" || echo "000 none"
+            )
+            echo "  $asset_code  $asset_type  $asset_url"
             [ "$asset_code" = "200" ] || failed=1
+            case "$asset:$asset_type" in
+              *.js:*javascript*|*.css:*css*) ;;
+              *) echo "::error::$asset_url served as $asset_type"; failed=1 ;;
+            esac
           done <<< "$assets"
           [ "$failed" = "0" ] || { echo "::error::One or more assets did not resolve"; exit 1; }
 
