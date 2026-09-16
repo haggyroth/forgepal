@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.8.1] — 2026-09-15
+
+### Changed
+
+- perf(calculator): memoise the recursive `buildTree` expansion in the Breakdown panel. It ran once per item on every render, so a quantity change to one row rebuilt the whole build list's trees; the expansion is now keyed on (item, quantity) and unchanged rows skip both the computation and the subtree render
+
 ## [1.8.0] — 2026-08-22
 
 ### Added
