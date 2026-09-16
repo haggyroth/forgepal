@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { buildTree, type GameIndex, type RecipeNode } from '@/lib/calculator'
 import type { ItemId } from '@/types/game'
 import { Section } from './Section'
@@ -24,17 +24,36 @@ export function RecipeTree({
   return (
     <Section id="breakdown" title="Breakdown" aside="per branch" defaultOpen={false}>
       <div className="space-y-4">
-        {rows.map(([itemId, quantity]) => {
-          const tree = buildTree(itemId, quantity, index)
-          if (!tree) return null
-          return <TreeRoot key={itemId} node={tree} />
-        })}
+        {rows.map(([itemId, quantity]) => (
+          <TreeItem key={itemId} itemId={itemId} quantity={quantity} index={index} />
+        ))}
       </div>
     </Section>
   )
 }
 
-function TreeRoot({ node }: { node: RecipeNode }) {
+/**
+ * buildTree is the expensive half of this panel — a recursive expansion of one
+ * item's recipe. Computing it inside RecipeTree's render loop rebuilt every
+ * item's tree whenever any quantity changed; memoising per (itemId, quantity)
+ * means a tweak to one item leaves the rest untouched. index is built once and
+ * memoised in CalculatorTab, so it is a stable dependency.
+ */
+function TreeItem({
+  itemId,
+  quantity,
+  index,
+}: {
+  itemId: ItemId
+  quantity: number
+  index: GameIndex
+}) {
+  const tree = useMemo(() => buildTree(itemId, quantity, index), [itemId, quantity, index])
+  if (!tree) return null
+  return <TreeRoot node={tree} />
+}
+
+const TreeRoot = memo(function TreeRoot({ node }: { node: RecipeNode }) {
   const [open, setOpen] = useState(true)
   const hasChildren = node.children.length > 0
 
@@ -70,7 +89,7 @@ function TreeRoot({ node }: { node: RecipeNode }) {
       ) : null}
     </div>
   )
-}
+})
 
 function TreeBranch({ node }: { node: RecipeNode }) {
   const hasChildren = node.children.length > 0
