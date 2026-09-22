@@ -30,15 +30,20 @@ export function BuildSwitcher({
 }) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(name)
-  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const [confirmingId, setConfirmingId] = useState<string | null>(null)
   const input = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (editing) input.current?.select()
   }, [editing])
 
-  // A pending "delete?" must not carry over to whatever you switch to.
-  useEffect(() => setConfirmingDelete(false), [activeId])
+  // A pending "delete?" belongs to the build it was asked about, so it is held
+  // as that id rather than a boolean and the question is derived — asked about
+  // the active build, or not asked. That is what removes the effect that used
+  // to clear it, which spent a second render on every switch computing what can
+  // simply be read off. Switching back to that build still asks: the question
+  // never changed hands, and that is the one deliberate difference.
+  const confirmingDelete = confirmingId === activeId
 
   const commit = () => {
     onRename(draft)
@@ -101,14 +106,14 @@ export function BuildSwitcher({
         <Action
           onClick={() => {
             onDelete()
-            setConfirmingDelete(false)
+            setConfirmingId(null)
           }}
           danger
         >
           really delete?
         </Action>
       ) : (
-        <Action onClick={() => setConfirmingDelete(true)}>delete</Action>
+        <Action onClick={() => setConfirmingId(activeId)}>delete</Action>
       )}
     </div>
   )
