@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.8.2] — 2026-09-22
+
+### Fixed
+
+- fix(ui): the build switcher's pending "delete?" is now held as the id it was asked about rather than a boolean, so it is derived during render instead of cleared by an effect. oxlint 1.83.0's `react(set-state-in-effect)` flagged that effect, and removing it drops a render on every build switch. The question still does not follow you to another build — "new", "duplicate", and a shared link all move the active build without the select being touched — and switching back to the build you armed asks again rather than dropping it, which is the one deliberate behaviour change. Four tests pin the flow, which had none before
+
 ## [1.8.1] — 2026-09-15
 
 ### Changed
